@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Nest</string>
+    <string name="title_home">Home</string>
+    <string name="title_catalog">Catalog</string>
+    <string name="title_assess">Assess</string>
+    <string name="title_task">Task</string>
+    <string name="title_profile">Profile</string>
+</resources>
