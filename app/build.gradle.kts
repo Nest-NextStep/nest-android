@@ -1,3 +1,7 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
+val apiUrl: String = gradleLocalProperties(rootDir, project.providers).getProperty("API_URL")
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -24,15 +28,24 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "API_URL", "\"$apiUrl\"")
+        }
+
+        debug {
+            buildConfigField("String", "API_URL", "\"$apiUrl\"")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    
     buildFeatures {
         viewBinding = true
         buildConfig = true
