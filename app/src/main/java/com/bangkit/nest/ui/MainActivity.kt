@@ -1,10 +1,11 @@
-package com.bangkit.nest
+package com.bangkit.nest.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bangkit.nest.R
 import com.bangkit.nest.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
