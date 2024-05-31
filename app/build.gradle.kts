@@ -27,11 +27,11 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "API_URL", "")
+//            buildConfigField("String", "API_URL", "")
         }
 
         debug {
-            buildConfigField("String", "API_URL", "")
+//            buildConfigField("String", "API_URL", "")
         }
     }
 
