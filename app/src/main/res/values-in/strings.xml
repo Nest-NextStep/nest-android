@@ -6,8 +6,12 @@
     <string name="title_task">Task</string>
     <string name="title_profile">Profile</string>
     <string name="title_login_page">Welcome back! Glad to see you, again!</string>
+    <string name="title_register_page">Hello! Register to get started</string>
+    <string name="name">Name</string>
+    <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="login">Login</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="no_account">Don\'t have an account?</string>
