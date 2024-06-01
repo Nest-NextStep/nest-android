@@ -8,18 +8,23 @@
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/gray</item>
+        <item name="colorSecondaryVariant">@color/gray_variant</item>
         <item name="colorOnSecondary">@color/white</item>
 
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/white</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        <item name="android:fontFamily">@font/urbanist</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
+        <item name="android:textViewStyle">@style/CustomTextView</item>
     </style>
 
+    <!-- Navbar style -->
     <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
     </style>
-
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="colorSurfaceContainer">@color/white</item>
 
@@ -34,5 +39,33 @@
         <item name="colorOnSurfaceVariant">?attr/colorSecondary</item>
     </style>
 
-    <style name="Theme.Nest" parent="Base.Theme.Nest"/>
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">@dimen/s_corner_radius</item>
+    </style>
+    <!-- Button style -->
+    <style name="Widget.App.Button" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
+    <!-- Text style -->
+    <style name="CustomTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Body</item>
+    </style>
+    <style name="TextAppearance.Heading1" parent="">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Heading2" parent="">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Heading3" parent="">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Body" parent="">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Theme.Nest" parent="Base.Theme.Nest" />
 </resources>
