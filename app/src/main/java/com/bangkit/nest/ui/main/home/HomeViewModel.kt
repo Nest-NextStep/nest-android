@@ -1,12 +1,13 @@
-package com.bangkit.nest.ui.catalog
+package com.bangkit.nest.ui.main.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class CatalogViewModel : ViewModel() {
+class HomeViewModel : ViewModel() {
+
     private val _text = MutableLiveData<String>().apply {
-        value = "This is catalog Fragment"
+        value = "This is home Fragment"
     }
     val text: LiveData<String> = _text
 }

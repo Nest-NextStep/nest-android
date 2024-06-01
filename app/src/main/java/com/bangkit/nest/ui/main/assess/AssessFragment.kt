@@ -1,4 +1,4 @@
-package com.bangkit.nest.ui.profile
+package com.bangkit.nest.ui.main.assess
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import com.bangkit.nest.databinding.FragmentProfileBinding
+import com.bangkit.nest.databinding.FragmentAssessBinding
 
-class ProfileFragment : Fragment() {
+class AssessFragment : Fragment() {
 
-    private var _binding: FragmentProfileBinding? = null
+    private var _binding: FragmentAssessBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +22,14 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val profileViewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
+        val assessViewModel =
+            ViewModelProvider(this).get(AssessViewModel::class.java)
 
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentAssessBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textProfile
-        profileViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textAssess
+        assessViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

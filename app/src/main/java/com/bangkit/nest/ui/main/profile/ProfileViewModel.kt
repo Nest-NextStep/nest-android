@@ -1,12 +1,12 @@
-package com.bangkit.nest.ui.task
+package com.bangkit.nest.ui.main.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class TaskViewModel : ViewModel() {
+class ProfileViewModel : ViewModel() {
     private val _text = MutableLiveData<String>().apply {
-        value = "This is task Fragment"
+        value = "This is profile Fragment"
     }
     val text: LiveData<String> = _text
 }

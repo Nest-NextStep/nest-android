@@ -1,4 +1,4 @@
-package com.bangkit.nest.ui.catalog
+package com.bangkit.nest.ui.main.catalog
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
