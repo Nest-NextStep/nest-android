@@ -2,14 +2,14 @@ package com.bangkit.nest.ui.auth.login
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.bangkit.nest.R
 import com.bangkit.nest.databinding.FragmentLoginBinding
 import com.bangkit.nest.utils.ViewModelFactory
-import com.bangkit.nest.data.Result
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -30,7 +30,10 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("LoginFragment", "Success")
+
+        binding?.registerNowTextView?.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_login_to_navigation_register)
+        }
 
 //        val email = ""
 //        val password = ""

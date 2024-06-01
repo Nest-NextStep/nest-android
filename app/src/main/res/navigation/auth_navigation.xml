@@ -9,6 +9,16 @@
         android:id="@+id/navigation_login"
         android:name="com.bangkit.nest.ui.auth.login.LoginFragment"
         android:label="@string/login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_register"
+            app:destination="@id/navigation_register" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_register"
+        android:name="com.bangkit.nest.ui.auth.register.RegisterFragment"
+        android:label="@string/register"
+        tools:layout="@layout/fragment_register" />
 
 </navigation>
