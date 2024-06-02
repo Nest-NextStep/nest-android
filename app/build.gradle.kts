@@ -31,11 +31,11 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "API_URL", "\"$apiUrl\"")
+            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
         }
 
         debug {
-            buildConfigField("String", "API_URL", "\"$apiUrl\"")
+            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
         }
     }
 
@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.glide)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.activity)
 
     //testing
     testImplementation(libs.junit)
