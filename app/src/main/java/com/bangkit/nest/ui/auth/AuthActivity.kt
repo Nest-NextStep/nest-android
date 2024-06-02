@@ -1,7 +1,6 @@
 package com.bangkit.nest.ui.auth
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.bangkit.nest.databinding.ActivityAuthBinding
 

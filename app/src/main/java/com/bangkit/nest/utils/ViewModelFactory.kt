@@ -19,7 +19,7 @@ class ViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(userPrefRepository, authRepository) as T
+                LoginViewModel(authRepository) as T
             }
 
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
