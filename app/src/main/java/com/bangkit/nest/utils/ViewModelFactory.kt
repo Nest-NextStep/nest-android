@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangkit.nest.data.repository.AuthRepository
 import com.bangkit.nest.data.repository.UserPrefRepository
 import com.bangkit.nest.di.Injection
-import com.bangkit.nest.ui.auth.login.LoginFragment
 import com.bangkit.nest.ui.auth.login.LoginViewModel
 import com.bangkit.nest.ui.auth.register.RegisterViewModel
 import com.bangkit.nest.ui.main.MainViewModel
