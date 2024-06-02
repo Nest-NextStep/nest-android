@@ -10,6 +10,7 @@
     <string name="name">Name</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
+    <string name="username_or_email">Username / Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="login">Login</string>
@@ -18,5 +19,16 @@
     <string name="register_now">Register now</string>
     <string name="have_account">Already have an account?</string>
     <string name="login_now">Login now</string>
-    <string name="register">register</string>
+    <string name="register">Register</string>
+    <string name="success">Success</string>
+    <string name="failed">Failed</string>
+    <string name="continue_">Continue</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="logout">Logout</string>
+    <string name="register_success">Your account is successfully created. Please login to continue</string>
+    <string name="password_mismatch">Password doesn\'t match</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="empty_field">Field can\'t be empty</string>
 </resources>

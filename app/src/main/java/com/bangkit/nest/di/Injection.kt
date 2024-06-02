@@ -16,7 +16,8 @@ object Injection {
     fun provideAuthRepository(context: Context): AuthRepository {
         val apiService = ApiConfig.getApiService()
         return AuthRepository.getInstance(
-            apiService
+            apiService,
+            provideUserPrefRepository(context)
         )
     }
 }
