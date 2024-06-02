@@ -1,3 +1,7 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
+val apiUrl: String = gradleLocalProperties(rootDir, project.providers).getProperty("API_URL")
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -27,11 +31,11 @@ android {
                 "proguard-rules.pro"
             )
 
-//            buildConfigField("String", "API_URL", "")
+            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
         }
 
         debug {
-//            buildConfigField("String", "API_URL", "")
+            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
         }
     }
 
@@ -65,6 +69,7 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.glide)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.activity)
 
     //testing
     testImplementation(libs.junit)
