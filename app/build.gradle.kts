@@ -1,6 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
-val apiUrl: String = gradleLocalProperties(rootDir, project.providers).getProperty("API_URL")
+//val apiUrl: String = gradleLocalProperties(rootDir, project.providers).getProperty("API_URL")
 
 plugins {
     alias(libs.plugins.android.application)
@@ -29,11 +29,11 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "API_URL", "\"$apiUrl\"")
+            //buildConfigField("String", "API_URL", "\"$apiUrl\"")
         }
 
         debug {
-            buildConfigField("String", "API_URL", "\"$apiUrl\"")
+            //buildConfigField("String", "API_URL", "\"$apiUrl\"")
         }
     }
 
@@ -41,6 +41,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
+
 
     kotlinOptions {
         jvmTarget = "1.8"
@@ -49,6 +53,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
     }
 }
 
@@ -64,6 +69,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.room.common)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -74,4 +80,14 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.logging.interceptor)
+
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
+
+    debugImplementation(libs.androidx.ui.tooling)
 }
