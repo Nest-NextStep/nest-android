@@ -17,8 +17,19 @@
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
         <item name="android:fontFamily">@font/urbanist</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <item name="android:textViewStyle">@style/CustomTextView</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+    </style>
+
+    <!-- Small component style -->
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">@dimen/s_corner_radius</item>
+    </style>
+    <!-- Medium component style -->
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">@dimen/m_corner_radius</item>
     </style>
 
     <!-- Navbar style -->
@@ -27,21 +38,15 @@
     </style>
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="colorSurfaceContainer">@color/white</item>
-
         <!-- Active indicator color -->
         <item name="colorSecondaryContainer">@color/white</item>
-
         <!-- Active icon and label color -->
         <item name="colorOnSecondaryContainer">?attr/colorPrimary</item>
         <item name="colorOnSurface">?attr/colorPrimary</item>
-
         <!-- Inactive icon and label color -->
         <item name="colorOnSurfaceVariant">?attr/colorSecondary</item>
     </style>
 
-    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
-        <item name="cornerSize">@dimen/s_corner_radius</item>
-    </style>
     <!-- Button style -->
     <style name="Widget.App.Button" parent="Widget.Material3.Button">
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
@@ -66,6 +71,49 @@
     <style name="TextAppearance.Body" parent="">
         <item name="android:textSize">15sp</item>
     </style>
+
+    <!-- Alert dialog style -->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Body.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.PositiveButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.NegativeButton</item>
+    </style>
+    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.Material3">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="backgroundInsetStart">@dimen/activity_horizontal_margin</item>
+        <item name="backgroundInsetEnd">@dimen/activity_horizontal_margin</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+    <!-- Alert dialog title text style -->
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textAppearance">@style/TextAppearance.Heading2</item>
+    </style>
+    <!-- Alert dialog body text style -->
+    <style name="MaterialAlertDialog.App.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textAppearance">@style/TextAppearance.Body</item>
+    </style>
+    <!-- Alert dialog positive button style -->
+    <style name="Widget.App.PositiveButton" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.PositiveButton</item>
+    </style>
+    <style name="ThemeOverlay.App.PositiveButton" parent="ThemeOverlay.Material3.Button">
+        <item name="colorContainer">?attr/colorPrimary</item>
+        <item name="colorOnContainer">?attr/colorOnPrimary</item>
+    </style>
+    <!-- Alert dialog negative button style -->
+    <style name="Widget.App.NegativeButton" parent="Widget.Material3.Button.TonalButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.NegativeButton</item>
+        <item name="android:layout_marginEnd">@dimen/s_horizontal_margin</item>
+    </style>
+    <style name="ThemeOverlay.App.NegativeButton" parent="ThemeOverlay.Material3.Button.TonalButton">
+        <item name="colorContainer">@color/lighter_gray</item>
+        <item name="colorOnContainer">@color/white</item>
+    </style>
+
 
     <style name="Theme.Nest" parent="Base.Theme.Nest" />
 </resources>

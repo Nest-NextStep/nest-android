@@ -22,13 +22,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setupView()
-        setStatusBarTextColor(true)
-
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 val intent = Intent(this, AuthActivity::class.java)
@@ -38,6 +31,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupView()
+        setStatusBarTextColor(isDark = true)
     }
 
     private fun setupView() {

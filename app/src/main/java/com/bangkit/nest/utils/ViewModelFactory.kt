@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangkit.nest.data.repository.AuthRepository
 import com.bangkit.nest.data.repository.UserPrefRepository
 import com.bangkit.nest.di.Injection
-import com.bangkit.nest.ui.auth.login.LoginFragment
 import com.bangkit.nest.ui.auth.login.LoginViewModel
+import com.bangkit.nest.ui.auth.register.RegisterViewModel
 import com.bangkit.nest.ui.main.MainViewModel
 
 class ViewModelFactory(
@@ -19,11 +19,17 @@ class ViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(userPrefRepository, authRepository) as T
+                LoginViewModel(authRepository) as T
             }
+
+            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
+                RegisterViewModel(authRepository) as T
+            }
+
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(userPrefRepository) as T
             }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
@@ -39,17 +45,5 @@ class ViewModelFactory(
                     Injection.provideAuthRepository(context)
                 )
             }.also { instance = it }
-//        @JvmStatic
-//        fun getInstance(context: Context): ViewModelFactory {
-//            if (INSTANCE == null) {
-//                synchronized(ViewModelFactory::class.java) {
-//                    INSTANCE = ViewModelFactory(
-//                        Injection.provideUserPrefRepository(context),
-//                        Injection.provideAuthRepository(context)
-//                    )
-//                }
-//            }
-//            return INSTANCE as ViewModelFactory
-//        }
     }
 }

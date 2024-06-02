@@ -31,11 +31,11 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "API_URL", "\"$apiUrl\"")
+            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
         }
 
         debug {
-            buildConfigField("String", "API_URL", "\"$apiUrl\"")
+            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
         }
     }
 
