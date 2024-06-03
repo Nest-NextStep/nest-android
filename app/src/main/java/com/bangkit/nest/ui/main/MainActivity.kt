@@ -55,4 +55,8 @@ class MainActivity : AppCompatActivity() {
         windowInsetsController.isAppearanceLightStatusBars = isDark
     }
 
+    fun setBottomNavigationVisibility(isVisible: Boolean) {
+        binding.navView.isVisible = isVisible
+    }
+
 }
