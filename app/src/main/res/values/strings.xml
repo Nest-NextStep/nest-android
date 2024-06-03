@@ -31,8 +31,4 @@
     <string name="password_mismatch">Password doesn\'t match</string>
     <string name="invalid_email">Invalid email address</string>
     <string name="empty_field">Field can\'t be empty</string>
-    <string name="logout_confirmation">Are you sure you want to log out?</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="hello">Hello</string>
-    <string name="edit_profile">Edit profile</string>
 </resources>

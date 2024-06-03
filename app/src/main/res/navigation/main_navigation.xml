@@ -34,5 +34,4 @@
         android:name="com.bangkit.nest.ui.main.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
-
 </navigation>

@@ -9,7 +9,6 @@ import com.bangkit.nest.di.Injection
 import com.bangkit.nest.ui.auth.login.LoginViewModel
 import com.bangkit.nest.ui.auth.register.RegisterViewModel
 import com.bangkit.nest.ui.main.MainViewModel
-import com.bangkit.nest.ui.main.profile.ProfileViewModel
 
 class ViewModelFactory(
     private val userPrefRepository: UserPrefRepository,
@@ -25,10 +24,6 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(authRepository) as T
-            }
-
-            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
-                ProfileViewModel(userPrefRepository) as T
             }
 
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
