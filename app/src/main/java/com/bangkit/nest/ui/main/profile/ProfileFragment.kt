@@ -40,8 +40,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as? MainActivity)?.setBottomNavigationVisibility(false)
-
         binding?.editProfileButton?.setOnClickListener {
             Toast.makeText(requireContext(), "Button clicked", Toast.LENGTH_SHORT).show()
         }
