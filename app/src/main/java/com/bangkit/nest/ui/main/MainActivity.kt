@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bangkit.nest.R
@@ -44,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         navView.setupWithNavController(navController)
-
     }
 
     private fun setStatusBarTextColor(isDark: Boolean) {
@@ -55,5 +55,8 @@ class MainActivity : AppCompatActivity() {
         windowInsetsController.isAppearanceLightStatusBars = isDark
     }
 
+    fun setBottomNavigationVisibility(isVisible: Boolean) {
+        binding.navView.isVisible = isVisible
+    }
 
 }
