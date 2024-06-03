@@ -3,12 +3,12 @@
     <style name="Base.Theme.Nest" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple</item>
-        <item name="colorPrimaryVariant">@color/purple_30</item>
+        <item name="colorPrimaryVariant">@color/purple_300</item>
         <item name="colorOnPrimary">@color/white</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/gray</item>
-        <item name="colorSecondaryVariant">@color/gray_variant</item>
+        <item name="colorSecondaryVariant">@color/gray_400</item>
         <item name="colorOnSecondary">@color/white</item>
 
         <!-- Customize your theme here. -->
@@ -110,10 +110,9 @@
         <item name="android:layout_marginEnd">@dimen/s_horizontal_margin</item>
     </style>
     <style name="ThemeOverlay.App.NegativeButton" parent="ThemeOverlay.Material3.Button.TonalButton">
-        <item name="colorContainer">@color/lighter_gray</item>
+        <item name="colorContainer">@color/gray_200</item>
         <item name="colorOnContainer">@color/white</item>
     </style>
-
 
     <style name="Theme.Nest" parent="Base.Theme.Nest" />
 </resources>
