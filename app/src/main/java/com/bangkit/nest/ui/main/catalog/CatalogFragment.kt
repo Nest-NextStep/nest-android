@@ -43,8 +43,10 @@ class CatalogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.scrollView?.post {
+            binding?.scrollView?.scrollTo(0, 0)
+        }
         setupSearch()
-
         observeViewModel()
         viewModel.getAllMajor()
     }
