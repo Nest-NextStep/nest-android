@@ -23,7 +23,7 @@ class AuthRepository private constructor(
             val response = apiService.loginUser(request)
 
             // save session
-            userPrefRepository.saveSession(UserModel(email, email, true))
+            userPrefRepository.saveSession(UserModel(email, "john", true))
 
             emit(Result.Success(response))
         } catch (e: Exception) {
@@ -47,7 +47,7 @@ class AuthRepository private constructor(
 
 
     companion object {
-        private const val TAG = "LoginViewModel"
+        private const val TAG = "AuthRepository"
 
         @Volatile
         private var instance: AuthRepository? = null

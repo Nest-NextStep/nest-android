@@ -10,6 +10,10 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.bangkit.nest.data.local.entity.UserModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.first
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 
@@ -39,6 +43,19 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
+    suspend fun saveMajors(majors: List<String>) {
+        val namesString = Json.encodeToString(majors)
+        dataStore.edit { preferences ->
+            preferences[MAJORS_KEY] = namesString
+        }
+    }
+
+    suspend fun getMajors(): List<String> {
+        val preferences = dataStore.data.first()
+        val namesString = preferences[MAJORS_KEY] ?: return emptyList()
+        return Json.decodeFromString(namesString)
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserPreference? = null
@@ -46,6 +63,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val USERNAME_KEY = stringPreferencesKey("username")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
+        private val MAJORS_KEY = stringPreferencesKey("recommendedMajors")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {
