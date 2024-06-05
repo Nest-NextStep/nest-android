@@ -3,6 +3,8 @@ package com.bangkit.nest.ui.main.catalog
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -42,28 +44,68 @@ class CatalogFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupSearch()
-        getAllMajor()
+
+        observeViewModel()
+        viewModel.getAllMajor()
+    }
+
+    private fun observeViewModel() {
+        viewModel.state.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    setupLoading()
+                }
+                is Result.Success -> {
+                    setupSuccess(viewModel.majorRecommended.value ?: emptyList(), viewModel.majorsAll.value ?: emptyList())
+                }
+                is Result.Error -> {
+                    setupError(result.error)
+                }
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupSearch() {
         binding?.root?.setOnTouchListener { _, _ ->
             hideKeyboard()
-            binding?.searchEditText?.clearFocus()
+            val query = binding?.searchEditText?.text
+            if (query.isNullOrEmpty()) {
+                binding?.searchEditText?.clearFocus()
+            }
             false
         }
 
+        binding?.searchEditTextLayout?.setEndIconOnClickListener {
+            viewModel.getAllMajor()
+            hideKeyboard()
+            binding?.searchEditText?.clearFocus()
+            binding?.searchEditText?.text = null
+        }
+
+        binding?.searchEditText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val query = s.toString()
+                if (query.isNotEmpty()) {
+                    findMajor(query)
+                } else {
+                    viewModel.getAllMajor()
+                }
+            }
+        })
+
+
         binding?.searchEditText?.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE || event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER) {
-                val query = binding?.searchEditText?.text
-                if (!query.isNullOrEmpty()) {
-                    findMajor(query.toString())
-                } else {
-                    getAllMajor()
-                }
-
                 hideKeyboard()
-                binding?.searchEditText?.clearFocus()
+                val query = binding?.searchEditText?.text
+                if (query.isNullOrEmpty()) {
+                    binding?.searchEditText?.clearFocus()
+                }
                 true
             } else {
                 false
@@ -81,23 +123,6 @@ class CatalogFragment : Fragment() {
 
     private fun findMajor(query: String) {
         viewModel.findMajor(query.toString()).observe(viewLifecycleOwner) { result ->
-            if (result != null) {
-                when (result) {
-                    is Result.Loading -> {
-                        setupLoading()
-                    }
-                    is Result.Success -> {
-                        setupSuccess(result.data.majorRecommended, result.data.majorsAll)
-                    }
-                    is Result.Error -> {
-                        setupError(result.error)
-                    }
-                }
-            }
-        }
-    }
-    private fun getAllMajor() {
-        viewModel.getAllMajor().observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
