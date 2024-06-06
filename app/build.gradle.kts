@@ -28,13 +28,13 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-//            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+//            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
+            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
         }
 
         debug {
-            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-//            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+//            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
+            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
 
         }
 
