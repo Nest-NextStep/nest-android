@@ -11,26 +11,26 @@ import androidx.navigation.ui.setupWithNavController
 import com.bangkit.nest.R
 import com.bangkit.nest.databinding.ActivityMainBinding
 import com.bangkit.nest.ui.auth.AuthActivity
-import com.bangkit.nest.utils.ViewModelFactory
+//import com.bangkit.nest.utils.ViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val viewModel by viewModels<MainViewModel> {
-        ViewModelFactory.getInstance(this)
-    }
+//    private val viewModel by viewModels<MainViewModel> {
+//        ViewModelFactory.getInstance(this)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel.getSession().observe(this) { user ->
-            if (!user.isLogin) {
-                val intent = Intent(this, AuthActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-                finish()
-            }
-        }
+//        viewModel.getSession().observe(this) { user ->
+//            if (!user.isLogin) {
+//                val intent = Intent(this, AuthActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//                startActivity(intent)
+//                finish()
+//            }
+//        }
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

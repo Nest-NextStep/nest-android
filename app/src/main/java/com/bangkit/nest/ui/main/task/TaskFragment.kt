@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.nest.databinding.FragmentTaskBinding
+import com.bangkit.nest.R
+import androidx.navigation.fragment.findNavController
 
 class TaskFragment : Fragment() {
 
@@ -32,6 +34,11 @@ class TaskFragment : Fragment() {
         taskViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
+        binding.addTaskButton.setOnClickListener {
+            findNavController().navigate(R.id.action_taskFragment_to_addTaskFragment)
+        }
+
         return root
     }
 

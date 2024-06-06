@@ -28,20 +28,26 @@ android {
                 "proguard-rules.pro"
             )
 
-//            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
+//            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
         }
 
         debug {
-//            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
+//            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+
         }
+
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
+
 
     kotlinOptions {
         jvmTarget = "1.8"
@@ -50,6 +56,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
     }
 }
 
@@ -65,6 +72,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.room.common)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.glide)
     implementation(libs.androidx.datastore.preferences)
@@ -86,4 +94,17 @@ dependencies {
     //room
     implementation(libs.androidx.room.runtime)
     ksp(libs.room.compiler)
+
+    //compose
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-extended")
+
+    //time picker
+    implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
+
+    debugImplementation(libs.androidx.ui.tooling)
 }
