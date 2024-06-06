@@ -1,11 +1,8 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-
-val apiUrl: String = "https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io"
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.jetbrains.kotlin.plugin.serialization)
     id("kotlin-parcelize")
 }
 
@@ -31,11 +28,13 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "API_URL", "\"$apiUrl\"")
+            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
+//            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
         }
 
         debug {
-            buildConfigField("String", "API_URL", "\"$apiUrl\"")
+            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
+//            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
         }
     }
 
@@ -86,6 +85,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.logging.interceptor)
+
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlinx.serialization.json)
 
     //room
     implementation(libs.androidx.room.runtime)

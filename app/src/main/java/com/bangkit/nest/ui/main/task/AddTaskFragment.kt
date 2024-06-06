@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -29,6 +30,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
@@ -36,6 +38,8 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
@@ -57,6 +61,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
@@ -64,6 +69,7 @@ import androidx.fragment.app.viewModels
 import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.Task
 import com.bangkit.nest.ui.Typography
+import com.bangkit.nest.ui.h3TextStyle
 import com.bangkit.nest.ui.main.MainActivity
 import com.bangkit.nest.ui.main.task.components.CustomDurationDialogComponent
 import com.bangkit.nest.ui.task.AddTaskViewModel
@@ -126,11 +132,47 @@ class AddTaskFragment : Fragment() {
 
         val focusRequester = FocusRequester()
 
+
         Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = "Create New Task",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            style = h3TextStyle
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(
+                            onClick = { /* Handle back navigation */ },
+                            modifier = Modifier
+                                .background(colorResource(R.color.purple), CircleShape)
+                                .width(36.dp)
+                                .height(36.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_back_arrow),
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.width(20.dp).height(20.dp)
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.White
+                    ),
+                    modifier = Modifier.padding(16.dp).background(Color.White),
+                    actions = {},
+                )
+            },
+            modifier = Modifier.background(Color.White)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(top = it.calculateTopPadding())
                     .background(colorResource(R.color.white)),
             ) {
                 Column(
@@ -186,14 +228,17 @@ class AddTaskFragment : Fragment() {
                                 )
                                 .background(selectedPriority.color, RoundedCornerShape(8.dp))
                         ) {
+                            val containerColor = colorResource(R.color.white)
                             TextField(
                                 value = titleText,
                                 singleLine = true,
-                                colors = TextFieldDefaults.textFieldColors(
-                                    containerColor = colorResource(R.color.white),
+                                colors = TextFieldDefaults.colors(
+                                    focusedContainerColor = containerColor,
+                                    unfocusedContainerColor = containerColor,
+                                    disabledContainerColor = containerColor,
+                                    cursorColor = colorResource(R.color.purple),
                                     focusedIndicatorColor = Color.Transparent,
                                     unfocusedIndicatorColor = Color.Transparent,
-                                    cursorColor = colorResource(R.color.purple)
                                 ),
                                 onValueChange = {
                                     titleText = it
@@ -339,11 +384,13 @@ class AddTaskFragment : Fragment() {
                                 TextField(
                                     value = focusTimeText,
                                     onValueChange = { focusTimeText = it },
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        containerColor = Color.Transparent,
+                                    colors = TextFieldDefaults.colors(
+                                        focusedContainerColor = Color.Transparent,
+                                        unfocusedContainerColor = Color.Transparent,
+                                        disabledContainerColor = Color.Transparent,
+                                        cursorColor = colorResource(R.color.purple),
                                         focusedIndicatorColor = Color.Transparent,
                                         unfocusedIndicatorColor = Color.Transparent,
-                                        cursorColor = colorResource(R.color.purple)
                                     ),
                                     modifier = Modifier
                                         .weight(1f)
@@ -396,11 +443,13 @@ class AddTaskFragment : Fragment() {
                                 TextField(
                                     value = breakTimeText,
                                     onValueChange = { breakTimeText = it },
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        containerColor = Color.Transparent,
+                                    colors = TextFieldDefaults.colors(
+                                        focusedContainerColor = Color.Transparent,
+                                        unfocusedContainerColor = Color.Transparent,
+                                        disabledContainerColor = Color.Transparent,
+                                        cursorColor = colorResource(R.color.purple),
                                         focusedIndicatorColor = Color.Transparent,
                                         unfocusedIndicatorColor = Color.Transparent,
-                                        cursorColor = colorResource(R.color.purple)
                                     ),
                                     modifier = Modifier
                                         .weight(1f)
@@ -470,6 +519,7 @@ class AddTaskFragment : Fragment() {
                     Button(
                         onClick = {
                             val task = Task(
+                                id = 1,
                                 title = titleText.text,
                                 date = LocalDate.now(),
                                 startTime = taskStartTime,
@@ -478,7 +528,8 @@ class AddTaskFragment : Fragment() {
                                 focusTime = focusTimeText.text.toIntOrNull() ?: 30,
                                 breakTime = breakTimeText.text.toIntOrNull() ?: 10,
                                 priority = selectedPriority.displayText,
-                                repeat = repeatSwitch
+                                isRepeated = repeatSwitch,
+                                isCompleted = false
                             )
                             addTaskViewModel.addTask(task)
                         },
