@@ -1,10 +1,12 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
-//val apiUrl: String = gradleLocalProperties(rootDir, project.providers).getProperty("API_URL")
+val apiUrl: String = "https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io"
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.devtools.ksp)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -29,11 +31,11 @@ android {
                 "proguard-rules.pro"
             )
 
-            //buildConfigField("String", "API_URL", "\"$apiUrl\"")
+            buildConfigField("String", "API_URL", "\"$apiUrl\"")
         }
 
         debug {
-            //buildConfigField("String", "API_URL", "\"$apiUrl\"")
+            buildConfigField("String", "API_URL", "\"$apiUrl\"")
         }
     }
 
@@ -63,30 +65,41 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.room.common)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.glide)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.activity)
+
+    //testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.glide)
+    //retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.logging.interceptor)
 
+    //room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.room.compiler)
+
+    //compose
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
+
+    //time picker
     implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
 
     debugImplementation(libs.androidx.ui.tooling)
