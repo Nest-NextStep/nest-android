@@ -8,9 +8,6 @@ Nest is a cutting-edge mobile application designed to revolutionize educational 
 </p>
 
 ## Tech Stack
-
-### Tools:
-
 <p>
     <a href="#"><img alt="Android Studio" src="https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white"></a>
 </p>
