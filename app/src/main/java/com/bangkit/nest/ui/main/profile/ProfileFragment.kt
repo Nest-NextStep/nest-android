@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -25,6 +26,7 @@ class ProfileFragment : Fragment() {
     private val viewModel by viewModels<ProfileViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +69,7 @@ class ProfileFragment : Fragment() {
             .show()
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

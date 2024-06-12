@@ -8,12 +8,12 @@
     <color name="gray_variant">#6A707C</color>
     <color name="lighter_gray">#B9B9B9</color>
     <color name="lightest_gray">#F7F8F9</color>
-    <color name="soft_red">#FF7676</color>
     <color name="gray_400">#6A707C</color>
     <color name="gray_300">#828282</color>
     <color name="gray_200">#B9B9B9</color>
     <color name="gray_100">#F7F8F9</color>
     <color name="gray_50">#F3F3F3</color>
+    <color name="soft_red">#FF7676</color>
     <color name="red">#DC3545</color>
     <color name="yellow">#FFB36D</color>
     <color name="green">#BEE797</color>

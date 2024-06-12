@@ -153,7 +153,6 @@ class CatalogFragment : Fragment() {
             allMajorTextView.isVisible = false
             allMajorRecyclerView.isVisible = false
         }
-
     }
 
     private fun setupSuccess(recommendedMajors: List<MajorItem>, anotherMajors: List<MajorItem>) {
@@ -164,26 +163,23 @@ class CatalogFragment : Fragment() {
             recommendedMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             if (recommendedMajors.isNotEmpty()) {
                 recommendedMajorRecyclerView.isVisible = true
+                noRecommendedMajorTextView.isVisible = false
                 setListMajorData(recommendedMajorRecyclerView, recommendedMajors, "recommended")
             } else {
                 recommendedMajorRecyclerView.isVisible = false
                 noRecommendedMajorTextView.isVisible = true
-                // Adjust constraints for allMajorTextView
-                val layoutParams = allMajorTextView.layoutParams as ConstraintLayout.LayoutParams
-                layoutParams.topToBottom = R.id.noRecommendedMajorTextView
-                allMajorTextView.layoutParams = layoutParams
             }
 
             allMajorTextView.isVisible = true
             allMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             if (anotherMajors.isNotEmpty()) {
                 allMajorRecyclerView.isVisible = true
+                noAnotherMajorTextView.isVisible = false
                 setListMajorData(allMajorRecyclerView, anotherMajors, "another")
             } else {
                 allMajorRecyclerView.isVisible = false
                 noAnotherMajorTextView.isVisible = true
             }
-
         }
     }
 

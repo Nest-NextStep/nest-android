@@ -23,20 +23,6 @@ class MajorRepository private constructor(
             val username = userModel.username
             val response = apiService.getMajorByUsername(username)
 
-            // TODO:save recommended major
-//            val existingMajors = runBlocking { userPrefRepository.getMajors() }
-//            if (existingMajors.isEmpty()) {
-//                val majors: List<String> = response.majorRecommended.map { it.majorName!! }
-//                val majorList = listOf("manajemen")
-//                runBlocking {
-//                    userPrefRepository.saveMajors(majorList)
-//                }
-//            }
-            val majorList = listOf("teknik informatika", "manajemen")
-            runBlocking {
-                userPrefRepository.saveMajors(majorList)
-            }
-
             emit(Result.Success(response))
         } catch (e: Exception) {
             Log.d(TAG, "Failed to get all major: ${e.message.toString()} ")
@@ -74,6 +60,10 @@ class MajorRepository private constructor(
                     majorsAll.add(major)
                 }
             }
+
+            Log.d(TAG, recommendedMajors.toString())
+            Log.d(TAG, majorRecommended.toString())
+
 
             val categorizedResponse = AllMajorResponse(
                 majorsAll = majorsAll,
