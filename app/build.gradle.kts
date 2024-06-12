@@ -89,10 +89,12 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
 
-
     //room
     implementation(libs.androidx.room.runtime)
     ksp(libs.room.compiler)
+
+    //autotextview
+    implementation("me.grantland:autofittextview:0.2.1")
 
     //compose
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
