@@ -52,6 +52,14 @@
     <style name="Widget.App.Button" parent="Widget.Material3.Button">
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
     </style>
+    <style name="Widget.App.Button.Elevated" parent="Widget.Material3.Button.ElevatedButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/gray_150</item>
+        <item name="elevation">2dp</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
     <!-- Text style -->
     <style name="CustomTextView" parent="Widget.MaterialComponents.TextView">
@@ -67,6 +75,10 @@
     </style>
     <style name="TextAppearance.Heading3" parent="">
         <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Heading5" parent="">
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="TextAppearance.Body" parent="">
@@ -108,10 +120,10 @@
     <style name="Widget.App.NegativeButton" parent="Widget.Material3.Button.TonalButton">
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.NegativeButton</item>
-        <item name="android:layout_marginEnd">@dimen/s_horizontal_margin</item>
+        <item name="android:layout_marginEnd">@dimen/activity_horizontal_margin</item>
     </style>
     <style name="ThemeOverlay.App.NegativeButton" parent="ThemeOverlay.Material3.Button.TonalButton">
-        <item name="colorContainer">@color/lighter_gray</item>
+        <item name="colorContainer">@color/gray_200</item>
         <item name="colorOnContainer">@color/white</item>
     </style>
 

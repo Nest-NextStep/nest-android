@@ -1,16 +1,23 @@
 package com.bangkit.nest.ui.main.catalog
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.MajorItem
+import com.bangkit.nest.data.repository.MajorRepository
 import com.bangkit.nest.databinding.ItemAnotherMajorBinding
 import com.bangkit.nest.databinding.ItemRecommendedMajorBinding
 
-class ListMajorAdapter(private val type: String) :
+class ListMajorAdapter(
+    private val type: String,
+    private val fragment: CatalogFragment
+) :
     ListAdapter<MajorItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -34,10 +41,6 @@ class ListMajorAdapter(private val type: String) :
             is RecommendedMajorViewHolder -> holder.bind(item)
             is AnotherMajorViewHolder -> holder.bind(item)
         }
-
-        holder.itemView.setOnClickListener {
-            //TODO
-        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -48,19 +51,31 @@ class ListMajorAdapter(private val type: String) :
         }
     }
 
-    class RecommendedMajorViewHolder(val binding: ItemRecommendedMajorBinding) :
+    inner class RecommendedMajorViewHolder(val binding: ItemRecommendedMajorBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MajorItem) {
             binding.textViewMajorName.text = item.majorName
             binding.textViewMajorDescription.text = item.majorDescription
+
+            itemView.setOnClickListener {
+                Log.d("ListMajorAdapter", "clicked")
+                item.majorId?.let { fragment.saveMajorId(it) }
+                fragment.findNavController().navigate(R.id.action_catalog_to_catalogDetail)
+            }
         }
     }
 
-    class AnotherMajorViewHolder(val binding: ItemAnotherMajorBinding) :
+    inner class AnotherMajorViewHolder(val binding: ItemAnotherMajorBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MajorItem) {
             binding.textViewMajorName.text = item.majorName
             binding.textViewMajorDescription.text = item.majorDescription
+
+            itemView.setOnClickListener {
+                Log.d("ListMajorAdapter", "clicked")
+                item.majorId?.let { fragment.saveMajorId(it) }
+                fragment.findNavController().navigate(R.id.action_catalog_to_catalogDetail)
+            }
         }
     }
 
@@ -70,12 +85,12 @@ class ListMajorAdapter(private val type: String) :
 
         private val DIFF_CALLBACK= object : DiffUtil.ItemCallback<MajorItem>() {
             override fun areItemsTheSame(oldItem: MajorItem, newItem: MajorItem): Boolean {
-                return oldItem == newItem
+                return oldItem.majorId == newItem.majorId
             }
 
             @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(oldItem: MajorItem, newItem: MajorItem): Boolean {
-                return oldItem == newItem
+                return oldItem.majorName == newItem.majorName
             }
         }
     }
