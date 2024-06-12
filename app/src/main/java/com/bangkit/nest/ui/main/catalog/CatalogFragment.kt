@@ -161,12 +161,12 @@ class CatalogFragment : Fragment() {
 
             recommendedMajorTextView.isVisible = true
             recommendedMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recommendedMajorRecyclerView.isVisible = true
+            setListMajorData(recommendedMajorRecyclerView, recommendedMajors, "recommended")
+
             if (recommendedMajors.isNotEmpty()) {
-                recommendedMajorRecyclerView.isVisible = true
                 noRecommendedMajorTextView.isVisible = false
-                setListMajorData(recommendedMajorRecyclerView, recommendedMajors, "recommended")
             } else {
-                recommendedMajorRecyclerView.isVisible = false
                 noRecommendedMajorTextView.isVisible = true
             }
 
