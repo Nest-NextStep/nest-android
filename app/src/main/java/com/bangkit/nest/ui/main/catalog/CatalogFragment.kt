@@ -47,8 +47,16 @@ class CatalogFragment : Fragment() {
             binding?.scrollView?.scrollTo(0, 0)
         }
         setupSearch()
+        setupAdapter()
         observeViewModel()
         viewModel.getAllMajor()
+    }
+
+    private fun setupAdapter() {
+        binding?.apply {
+            allMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recommendedMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
     private fun observeViewModel() {
@@ -160,7 +168,6 @@ class CatalogFragment : Fragment() {
             progressBar.isVisible = false
 
             recommendedMajorTextView.isVisible = true
-            recommendedMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             recommendedMajorRecyclerView.isVisible = true
             setListMajorData(recommendedMajorRecyclerView, recommendedMajors, "recommended")
 
@@ -171,7 +178,6 @@ class CatalogFragment : Fragment() {
             }
 
             allMajorTextView.isVisible = true
-            allMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             if (anotherMajors.isNotEmpty()) {
                 allMajorRecyclerView.isVisible = true
                 noAnotherMajorTextView.isVisible = false
@@ -199,9 +205,13 @@ class CatalogFragment : Fragment() {
     }
 
     private fun setListMajorData(recyclerView: RecyclerView, majors: List<MajorItem>, viewType: String) {
-        val adapter = ListMajorAdapter(viewType)
+        val adapter = ListMajorAdapter(viewType, this)
         adapter.submitList(majors)
         recyclerView.adapter = adapter
+    }
+
+    fun saveMajorId(id: Int) {
+        viewModel.saveMajorId(id)
     }
 
     override fun onDestroyView() {

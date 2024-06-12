@@ -15,15 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="24dp"
+        android:padding="16dp"
         >
 
         <!-- Media -->
         <ImageView
+            android:id="@+id/imageViewUniversityLogo"
             android:layout_width="90dp"
             android:layout_height="90dp"
             tools:srcCompat="@drawable/ic_education"
-            tools:tint="@color/soft_red"
+            tools:tint="?attr/colorSecondary"
             android:scaleType="fitCenter"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/major_icon"
@@ -36,13 +37,16 @@
             android:orientation="vertical"
             android:layout_marginStart="20dp"
             >
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/textViewUniversityName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="@string/university_name"
-                android:textAppearance="@style/TextAppearance.Heading3"
+                android:textAppearance="@style/TextAppearance.Heading5"
                 android:textColor="@color/black"
+                android:maxLines="2"
+                app:minTextSize="15sp"
+                app:precision="0.5"
                 />
             <TextView
                 android:id="@+id/textUniversityLocation"
@@ -63,6 +67,7 @@
                 />
 
             <Button
+                android:id="@+id/buttonUniversity"
                 style="@style/Widget.App.Button.Elevated"
                 android:text="@string/check_university"
                 android:layout_marginTop="10dp"

@@ -7,10 +7,10 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="12dp"
     android:layout_marginBottom="8dp"
+    android:layout_marginHorizontal="16dp"
     style="?attr/materialCardViewElevatedStyle"
     app:cardElevation="4dp"
     app:cardBackgroundColor="@color/white"
-    tools:layout_marginHorizontal="16dp"
     >
 
     <LinearLayout
@@ -50,11 +50,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             tools:text="@string/major_description"
-            android:lines="5"
+            android:lines="3"
             android:gravity="center_vertical"
             android:textColor="@color/black"
             app:minTextSize="12sp"
-            app:maxTextSize="15sp"
             app:precision="0.5"
             />
 
