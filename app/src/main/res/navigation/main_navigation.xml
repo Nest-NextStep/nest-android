@@ -26,12 +26,22 @@
     <fragment
         android:id="@+id/navigation_task"
         android:name="com.bangkit.nest.ui.main.task.TaskFragment"
-        android:label="@string/title_task"
-        tools:layout="@layout/fragment_task" />
+        android:label="Task"
+        tools:layout="@layout/fragment_task" >
+        <action
+            android:id="@+id/action_taskFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.bangkit.nest.ui.main.task.AddTaskFragment"
+        android:label="Add_Task" />
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.bangkit.nest.ui.main.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
 </navigation>

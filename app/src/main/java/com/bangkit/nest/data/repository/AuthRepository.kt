@@ -47,7 +47,7 @@ class AuthRepository private constructor(
 
 
     companion object {
-        private const val TAG = "LoginViewModel"
+        private const val TAG = "AuthRepository"
 
         @Volatile
         private var instance: AuthRepository? = null

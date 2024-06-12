@@ -34,7 +34,6 @@
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
         android:hint="@string/username_or_email"
         >
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/usernameEmailEditText"
             android:layout_width="match_parent"

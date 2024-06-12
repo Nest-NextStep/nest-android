@@ -3,6 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_catalog">Catalog</string>
     <string name="title_assess">Assess</string>
+    <string name="title_new_task">Create New Task</string>
     <string name="title_task">Task</string>
     <string name="title_profile">Profile</string>
     <string name="title_login_page">Welcome back! Glad to see you, again!</string>
@@ -31,4 +32,15 @@
     <string name="password_mismatch">Password doesn\'t match</string>
     <string name="invalid_email">Invalid email address</string>
     <string name="empty_field">Field can\'t be empty</string>
+    <string name="logout_confirmation">Are you sure you want to log out?</string>
+    <string name="profile_picture">Profile picture</string>
+    <string name="hello">Hello</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="searchbar_hint">Search major</string>
+    <string name="recommended_major">Your recommended majors</string>
+    <string name="all_major">Check out another majors</string>
+    <string name="major_icon">Icon major</string>
+    <string name="major_name">Major Name</string>
+    <string name="major_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</string>
+    <string name="no_data">No data found</string>
 </resources>
