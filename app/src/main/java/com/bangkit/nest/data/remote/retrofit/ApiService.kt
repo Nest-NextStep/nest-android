@@ -28,7 +28,7 @@ interface ApiService {
 
     @GET("major/detail/{id}")
     suspend fun getMajorDetail (
-        @Path("id") id: Long
+        @Path("id") id: Int
     ): DetailMajorResponse
 
 

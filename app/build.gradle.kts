@@ -29,6 +29,7 @@ android {
             )
 
             buildConfigField("String", "API_URL", "\"https://trim-mote-425811-i0.et.r.appspot.com/\"")
+
         }
 
         debug {
@@ -88,10 +89,12 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
 
-
     //room
     implementation(libs.androidx.room.runtime)
     ksp(libs.room.compiler)
+
+    //autotextview
+    implementation("me.grantland:autofittextview:0.2.1")
 
     //compose
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
@@ -100,9 +103,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
+    debugImplementation(libs.androidx.ui.tooling)
 
     //time picker
     implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
 
-    debugImplementation(libs.androidx.ui.tooling)
 }

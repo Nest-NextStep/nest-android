@@ -44,5 +44,6 @@
         app:labelVisibilityMode="labeled"
         app:itemPaddingTop="20dp"
         app:itemPaddingBottom="20dp"
+        android:layout_marginBottom="16dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,13 +12,13 @@ class CatalogViewModel(
 ) : ViewModel() {
 
     private val _majorRecommended = MutableLiveData<List<MajorItem>>()
-    val majorRecommended: LiveData<List<MajorItem>> get() = _majorRecommended
+    val majorRecommended: LiveData<List<MajorItem>> = _majorRecommended
 
     private val _majorsAll = MutableLiveData<List<MajorItem>>()
-    val majorsAll: LiveData<List<MajorItem>> get() = _majorsAll
+    val majorsAll: LiveData<List<MajorItem>> = _majorsAll
 
     private val _state = MutableLiveData<Result<Unit>>()
-    val state: LiveData<Result<Unit>> get() = _state
+    val state: LiveData<Result<Unit>> = _state
 
     private var isDataLoaded = false
 
@@ -46,9 +46,8 @@ class CatalogViewModel(
         }
     }
 
-    fun getDetailMajor(majorId: Long) =
-        majorRepository.getDetailMajor(majorId)
-
     fun findMajor(majorName: String) =
         majorRepository.findMajor(majorName)
+
+    fun saveMajorId(id: Int) = majorRepository.saveMajorId(id)
 }

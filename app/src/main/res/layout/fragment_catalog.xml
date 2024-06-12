@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         >
 
         <ProgressBar
@@ -101,8 +101,7 @@
             app:layout_constraintTop_toBottomOf="@id/recommendedMajorTextView"
             android:scrollbars="vertical"
             tools:visibility="invisible"
-            android:layout_marginBottom="32dp"
-            android:paddingBottom="32dp"
+            android:paddingBottom="40dp"
             tools:listitem="@layout/item_recommended_major"
             tools:itemCount="0"
             />
@@ -145,11 +144,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/allMajorTextView"
-            android:scrollbars="vertical"
+            android:scrollbars="none"
             tools:listitem="@layout/item_another_major"
             tools:visibility="visible"
             tools:itemCount="5"
-            android:paddingBottom="50dp"
+            android:paddingBottom="90dp"
             />
 
         <TextView
