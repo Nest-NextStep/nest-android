@@ -47,7 +47,7 @@ class LoginFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fieldValidation(binding?.usernameEmailEditTextLayout, binding?.usernameEmailEditText)
+        fieldValidation(binding?.emailEditTextLayout, binding?.emailEditText)
         fieldValidation(binding?.passwordEditTextLayout, binding?.passwordEditText)
 
         binding?.registerNowTextView?.setOnClickListener {
@@ -57,7 +57,7 @@ class LoginFragment : Fragment() {
         binding?.root?.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 hideKeyboard()
-                binding?.usernameEmailEditText?.clearFocus()
+                binding?.emailEditText?.clearFocus()
                 binding?.passwordEditText?.clearFocus()
             }
             false
@@ -66,13 +66,13 @@ class LoginFragment : Fragment() {
         binding?.loginButton?.setOnClickListener {
             hideKeyboard()
 
-            val usernameEmail = binding?.usernameEmailEditText?.text.toString()
+            val usernameEmail = binding?.emailEditText?.text.toString()
             val password = binding?.passwordEditText?.text.toString()
             var isValidInput = true
 
             // Field validation
             if (usernameEmail.isEmpty()) {
-                binding?.usernameEmailEditTextLayout?.error = getString(R.string.empty_field)
+                binding?.emailEditTextLayout?.error = getString(R.string.empty_field)
                 isValidInput = false
             }
             if (password.isEmpty()) {

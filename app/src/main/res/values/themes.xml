@@ -23,10 +23,7 @@
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <item name="android:textViewStyle">@style/CustomTextView</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
-        <item name="materialSearchBarStyle">@style/CustomSearchBar</item>
-<!--        <item name="materialSearchViewStyle">@style/CustomSearchView</item>-->
     </style>
-
     <!-- Small component style -->
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerSize">@dimen/s_corner_radius</item>
@@ -114,26 +111,10 @@
         <item name="android:layout_marginEnd">@dimen/s_horizontal_margin</item>
     </style>
     <style name="ThemeOverlay.App.NegativeButton" parent="ThemeOverlay.Material3.Button.TonalButton">
-        <item name="colorContainer">@color/gray_200</item>
+        <item name="colorContainer">@color/lighter_gray</item>
         <item name="colorOnContainer">@color/white</item>
     </style>
 
-    <style name="CustomSearchBar" parent="Widget.Material3.SearchBar.Outlined">
-        <item name="defaultMarginsEnabled">false</item>
-        <item name="strokeColor">?attr/colorSecondary</item>
-        <item name="backgroundTint">@color/white</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.SmallComponent</item>
-        <item name="android:textAppearance">@style/TextAppearance.SearchBar</item>
-    </style>
-    <style name="TextAppearance.SearchBar" parent="TextAppearance.Material3.SearchBar">
-        <item name="android:textColorHint">@color/gray_300</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="CustomSearchView" parent="Widget.Material3.SearchView">
-        <item name="backgroundTint">@color/purple_300</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.SmallComponent</item>
-    </style>
 
     <style name="Theme.Nest" parent="Base.Theme.Nest" />
 </resources>

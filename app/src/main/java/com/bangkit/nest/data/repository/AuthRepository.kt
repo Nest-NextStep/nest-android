@@ -23,7 +23,11 @@ class AuthRepository private constructor(
             val response = apiService.loginUser(request)
 
             // save session
-            userPrefRepository.saveSession(UserModel(email, "john", true))
+            userPrefRepository.saveSession(UserModel(email, response.username, response.accessToken, true))
+            val majors: List<String> = response.recommendedMajor?.map { it.majorName.orEmpty() } ?: emptyList()
+            Log.d(TAG, majors.toString())
+
+            userPrefRepository.saveMajors(majors)
 
             emit(Result.Success(response))
         } catch (e: Exception) {
