@@ -34,7 +34,6 @@
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
         android:hint="@string/username_or_email"
         >
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/usernameEmailEditText"
             android:layout_width="match_parent"
@@ -147,7 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.10123119" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineBottom"

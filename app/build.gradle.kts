@@ -29,12 +29,12 @@ android {
             )
 
 //            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+            buildConfigField("String", "API_URL", "\"https://fb0e89e5-3807-4716-9746-43d98a1f4c09.mock.pstmn.io\"")
         }
 
         debug {
 //            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+            buildConfigField("String", "API_URL", "\"https://fb0e89e5-3807-4716-9746-43d98a1f4c09.mock.pstmn.io/\"")
 
         }
 
