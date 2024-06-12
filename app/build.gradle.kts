@@ -28,14 +28,11 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
+            buildConfigField("String", "API_URL", "\"https://trim-mote-425811-i0.et.r.appspot.com/\"")
         }
 
         debug {
-            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-//            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-        }
-
+            buildConfigField("String", "API_URL", "\"https://trim-mote-425811-i0.et.r.appspot.com/\"")
         }
 
     }
@@ -90,6 +87,7 @@ dependencies {
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
+
 
     //room
     implementation(libs.androidx.room.runtime)
