@@ -11,17 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bangkit.nest.R
 import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.response.MajorItem
 import com.bangkit.nest.databinding.FragmentCatalogBinding
 import com.bangkit.nest.utils.ViewModelFactory
+import com.bangkit.nest.utils.dpToPx
 
 class CatalogFragment : Fragment() {
 
@@ -170,23 +169,30 @@ class CatalogFragment : Fragment() {
             recommendedMajorTextView.isVisible = true
             recommendedMajorRecyclerView.isVisible = true
             setListMajorData(recommendedMajorRecyclerView, recommendedMajors, "recommended")
-
-            if (recommendedMajors.isNotEmpty()) {
-                noRecommendedMajorTextView.isVisible = false
-            } else {
-                noRecommendedMajorTextView.isVisible = true
-            }
+            val isEmptyRecommended = recommendedMajors.isEmpty()
+            updateBottomPadding(isEmptyRecommended)
+            noRecommendedMajorTextView.isVisible = isEmptyRecommended
 
             allMajorTextView.isVisible = true
-            if (anotherMajors.isNotEmpty()) {
-                allMajorRecyclerView.isVisible = true
-                noAnotherMajorTextView.isVisible = false
-                setListMajorData(allMajorRecyclerView, anotherMajors, "another")
-            } else {
-                allMajorRecyclerView.isVisible = false
-                noAnotherMajorTextView.isVisible = true
-            }
+            val isEmptyAnother = anotherMajors.isEmpty()
+            allMajorRecyclerView.isVisible = !isEmptyAnother
+            noAnotherMajorTextView.isVisible = isEmptyAnother
+            setListMajorData(allMajorRecyclerView, anotherMajors, "another")
         }
+    }
+
+    private fun updateBottomPadding(isEmpty: Boolean) {
+        val paddingInPixels = if (isEmpty) {
+            80.dpToPx(requireContext()) // Adjust this value based on your UI requirements
+        } else {
+            32.dpToPx(requireContext()) // Adjust this value based on your UI requirements
+        }
+        binding?.recommendedMajorRecyclerView?.setPadding(
+            0,
+            0,
+            0,
+            paddingInPixels
+        )
     }
 
     private fun setupError(errorMessage: String) {

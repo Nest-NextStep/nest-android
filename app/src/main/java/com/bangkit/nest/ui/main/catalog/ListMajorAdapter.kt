@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.MajorItem
-import com.bangkit.nest.data.repository.MajorRepository
 import com.bangkit.nest.databinding.ItemAnotherMajorBinding
 import com.bangkit.nest.databinding.ItemRecommendedMajorBinding
 
@@ -19,6 +18,8 @@ class ListMajorAdapter(
     private val fragment: CatalogFragment
 ) :
     ListAdapter<MajorItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -36,6 +37,7 @@ class ListMajorAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        Log.d("item", "$holder $position")
         val item = getItem(position)
         when (holder) {
             is RecommendedMajorViewHolder -> holder.bind(item)
@@ -58,7 +60,6 @@ class ListMajorAdapter(
             binding.textViewMajorDescription.text = item.majorDescription
 
             itemView.setOnClickListener {
-                Log.d("ListMajorAdapter", "clicked")
                 item.majorId?.let { fragment.saveMajorId(it) }
                 fragment.findNavController().navigate(R.id.action_catalog_to_catalogDetail)
             }
