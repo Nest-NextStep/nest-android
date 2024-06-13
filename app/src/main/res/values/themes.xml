@@ -84,6 +84,9 @@
     <style name="TextAppearance.Body" parent="">
         <item name="android:textSize">15sp</item>
     </style>
+    <style name="TextAppearance.DialogBody" parent="">
+        <item name="android:textSize">16sp</item>
+    </style>
 
     <!-- Alert dialog style -->
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
@@ -105,7 +108,7 @@
     </style>
     <!-- Alert dialog body text style -->
     <style name="MaterialAlertDialog.App.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
-        <item name="android:textAppearance">@style/TextAppearance.Body</item>
+        <item name="android:textAppearance">@style/TextAppearance.DialogBody</item>
     </style>
     <!-- Alert dialog positive button style -->
     <style name="Widget.App.PositiveButton" parent="Widget.Material3.Button">

@@ -8,6 +8,7 @@ import com.bangkit.nest.data.remote.response.AllMajorResponse
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
 import com.bangkit.nest.data.remote.response.FindMajorResponse
 import com.bangkit.nest.data.remote.response.MajorItem
+import com.bangkit.nest.data.remote.response.TokenResponse
 import com.bangkit.nest.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -62,6 +63,10 @@ class MajorRepository private constructor(
             emit(Result.Error(e.message.toString()))
         }
     }
+
+//    fun refreshToken(): LiveData<Result<TokenResponse>> {
+//
+//    }
 
     fun findMajor(majorName: String): LiveData<Result<AllMajorResponse>> = liveData {
         emit(Result.Loading)
