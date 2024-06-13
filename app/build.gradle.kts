@@ -29,7 +29,6 @@ android {
             )
 
             buildConfigField("String", "API_URL", "\"https://trim-mote-425811-i0.et.r.appspot.com/\"")
-
         }
 
         debug {
@@ -88,6 +87,7 @@ dependencies {
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
+
 
     //room
     implementation(libs.androidx.room.runtime)

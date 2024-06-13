@@ -11,7 +11,6 @@
     <string name="name">Name</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
-    <string name="username_or_email">Username / Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="login">Login</string>
@@ -23,6 +22,8 @@
     <string name="register">Register</string>
     <string name="success">Success</string>
     <string name="failed">Failed</string>
+    <string name="failed_login_body">Please check your input again!</string>
+    <string name="short_password">Password must be at least 6 characters</string>
     <string name="continue_">Continue</string>
     <string name="ok">OK</string>
     <string name="yes">Yes</string>

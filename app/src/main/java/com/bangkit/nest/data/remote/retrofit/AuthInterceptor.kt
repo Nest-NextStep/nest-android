@@ -2,10 +2,12 @@ package com.bangkit.nest.data.remote.retrofit
 
 import android.util.Log
 import com.bangkit.nest.data.Result
-import com.bangkit.nest.data.repository.AuthRepository
-import com.bangkit.nest.data.repository.MajorRepository
+import com.bangkit.nest.data.remote.request.RefreshTokenRequest
+import com.bangkit.nest.data.remote.response.TokenResponse
 import com.bangkit.nest.data.repository.UserPrefRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -16,7 +18,7 @@ class AuthInterceptor private constructor(
     private lateinit var response: Response
 
     private val apiService by lazy {
-        ApiConfig(this).getApiService()
+        ApiConfig().getApiService()
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -32,41 +34,51 @@ class AuthInterceptor private constructor(
 
             response = chain.proceed(request)
 
-//            if (response.code == 401) {
-//
-//                response.close()
-//
-//                runBlocking {
-//                    apiService.refreshToken(token.toString()).collect {result ->
-//                        is Result.Loading -> {
-//
-//                        }
-//                        is Result.Success -> {
-//                            userPrefRepository.saveToken(result.data)
-//                        }
-//                        is Result.Error -> {
-//                            Log.e(TAG, "Failed refreshing token: " + result.error)
-//                        }
-//                    }
-//                }
-//
-//                val newToken = runBlocking {
-//                    userPrefRepository.getToken()
-//                }
-//
-//                val newRequest = chain.request().newBuilder()
-//                    .addHeader("Authorization", "Bearer $newToken")
-//                    .build()
-//
-//                response = chain.proceed(newRequest)
-//
-//            }
+            if (response.code == 401) {
+
+                response.close()
+
+                val refreshToken = runBlocking { userPrefRepository.getRefreshToken() }
+
+                val result = runBlocking {
+                    refreshAccessToken(refreshToken)
+                }
+
+                when (result) {
+                    is Result.Success -> {
+                        runBlocking { userPrefRepository.saveToken(result.data.accessToken) }
+                        val newToken = runBlocking { userPrefRepository.getToken() }
+                        val newRequest = chain.request().newBuilder()
+                            .addHeader("Authorization", "Bearer $newToken")
+                            .build()
+                        response = chain.proceed(newRequest)
+                    }
+                    is Result.Error -> {
+                        Log.e(TAG, "Failed refreshing token: ${result.error}")
+                    }
+                    is Result.Loading -> {
+
+                    }
+                }
+            }
 
         } else {
             response = chain.proceed(original)
         }
 
         return response
+    }
+
+    private suspend fun refreshAccessToken(refreshToken: String): Result<TokenResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = apiService.refreshToken(RefreshTokenRequest(refreshToken))
+                Result.Success(result)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error: ${e.message}")
+                Result.Error(e.message ?: "Unknown error")
+            }
+        }
     }
 
     companion object {
