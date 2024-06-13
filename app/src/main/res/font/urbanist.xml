@@ -3,18 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Regular -->
+    <!-- Medium -->
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/urbanist_medium"
-        tools:targetApi="o" />
-
-    <!-- SemiBold -->
-    <font
-        android:fontStyle="normal"
-        android:fontWeight="600"
-        android:font="@font/urbanist_semibold"
         tools:targetApi="o" />
 
     <!-- Bold -->

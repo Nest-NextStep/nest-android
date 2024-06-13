@@ -4,16 +4,20 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.nest.data.repository.AuthRepository
+import com.bangkit.nest.data.repository.MajorRepository
 import com.bangkit.nest.data.repository.UserPrefRepository
 import com.bangkit.nest.di.Injection
 import com.bangkit.nest.ui.auth.login.LoginViewModel
 import com.bangkit.nest.ui.auth.register.RegisterViewModel
 import com.bangkit.nest.ui.main.MainViewModel
+import com.bangkit.nest.ui.main.catalog.CatalogViewModel
+import com.bangkit.nest.ui.main.catalog.detail.CatalogDetailViewModel
 import com.bangkit.nest.ui.main.profile.ProfileViewModel
 
 class ViewModelFactory(
     private val userPrefRepository: UserPrefRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val majorRepository: MajorRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -29,6 +33,14 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(userPrefRepository) as T
+            }
+
+            modelClass.isAssignableFrom(CatalogViewModel::class.java) -> {
+                CatalogViewModel(majorRepository) as T
+            }
+
+            modelClass.isAssignableFrom(CatalogDetailViewModel::class.java) -> {
+                CatalogDetailViewModel(majorRepository) as T
             }
 
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
@@ -47,7 +59,8 @@ class ViewModelFactory(
             instance ?: synchronized(this) {
                 instance ?: ViewModelFactory(
                     Injection.provideUserPrefRepository(context),
-                    Injection.provideAuthRepository(context)
+                    Injection.provideAuthRepository(context),
+                    Injection.provideMajorRepository(context)
                 )
             }.also { instance = it }
     }

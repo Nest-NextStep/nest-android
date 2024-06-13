@@ -2,6 +2,7 @@ package com.bangkit.nest.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -12,6 +13,7 @@ import com.bangkit.nest.R
 import com.bangkit.nest.databinding.ActivityMainBinding
 import com.bangkit.nest.ui.auth.AuthActivity
 import com.bangkit.nest.utils.ViewModelFactory
+//import com.bangkit.nest.utils.ViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -45,9 +47,14 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         navView.setupWithNavController(navController)
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
     }
 
-    private fun setStatusBarTextColor(isDark: Boolean) {
+    fun setStatusBarTextColor(isDark: Boolean) {
         val window = window
         val decorView = window.decorView
 

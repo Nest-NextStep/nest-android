@@ -2,49 +2,37 @@ package com.bangkit.nest.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-// TODO
-//data class LoginResponse(
-//
-//    @field:SerializedName("statusCode")
-//    val statusCode: Int? = null,
-//
-//    @field:SerializedName("message")
-//    val message: String? = null,
-//
-//    @field:SerializedName("username")
-//    val username: String? = null
-//)
-
-
-// Nanti dihapus
 data class LoginResponse(
 
-    @field:SerializedName("loginResult")
-    val loginResult: LoginResult? = null,
+    @field:SerializedName("uid")
+    val uid: String,
 
-    @field:SerializedName("error")
-    val error: Boolean? = null,
+    @field:SerializedName("username")
+    val username: String,
 
-    @field:SerializedName("message")
-    val message: String? = null
+    @field:SerializedName("accessToken")
+    val accessToken: String,
+
+    @field:SerializedName("refreshToken")
+    val refreshToken: String,
+
+    @field:SerializedName("recommendedMajor")
+    val recommendedMajor: List<MajorItem>? = null
 )
 
-data class LoginResult(
+data class TokenResponse(
 
-    @field:SerializedName("name")
-    val name: String? = null,
+    @field:SerializedName("accessToken")
+    val accessToken: String,
 
-    @field:SerializedName("userId")
-    val userId: String? = null,
-
-    @field:SerializedName("token")
-    val token: String? = null
+    @field:SerializedName("refreshToken")
+    val refreshToken: String
 )
 
 data class RegisterResponse(
 
-    @field:SerializedName("error")
-    val error: Boolean? = null,
+    @field:SerializedName("uid")
+    val uid: String? = null,
 
     @field:SerializedName("message")
     val message: String? = null

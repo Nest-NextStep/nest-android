@@ -15,7 +15,24 @@
         android:id="@+id/navigation_catalog"
         android:name="com.bangkit.nest.ui.main.catalog.CatalogFragment"
         android:label="@string/title_catalog"
-        tools:layout="@layout/fragment_catalog" />
+        tools:layout="@layout/fragment_catalog" >
+        <action
+            android:id="@+id/action_catalog_to_catalogDetail"
+            app:destination="@id/navigation_catalog_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_catalog_detail"
+        android:name="com.bangkit.nest.ui.main.catalog.detail.CatalogDetailFragment"
+        android:label="@string/title_catalog"
+        tools:layout="@layout/fragment_catalog_detail" >
+        <argument
+            android:name="itemId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_catalogDetail_to_catalog"
+            app:destination="@id/navigation_catalog" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_assess"
@@ -26,8 +43,17 @@
     <fragment
         android:id="@+id/navigation_task"
         android:name="com.bangkit.nest.ui.main.task.TaskFragment"
-        android:label="@string/title_task"
-        tools:layout="@layout/fragment_task" />
+        android:label="Task"
+        tools:layout="@layout/fragment_task" >
+        <action
+            android:id="@+id/action_taskFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.bangkit.nest.ui.main.task.AddTaskFragment"
+        android:label="Add_Task" />
 
     <fragment
         android:id="@+id/navigation_profile"

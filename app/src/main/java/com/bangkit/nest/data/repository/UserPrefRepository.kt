@@ -20,6 +20,26 @@ class UserPrefRepository private constructor(
         userPreference.logout()
     }
 
+    suspend fun saveToken(token: String) {
+        userPreference.saveToken(token)
+    }
+
+    suspend fun getToken(): String {
+        return userPreference.getToken()
+    }
+
+    suspend fun getRefreshToken(): String {
+        return userPreference.getRefreshToken()
+    }
+
+    suspend fun saveMajors(majors: List<String>) {
+        userPreference.saveMajors(majors)
+    }
+
+    suspend fun getMajors(): List<String> {
+        return userPreference.getMajors()
+    }
+
     companion object {
         @Volatile
         private var instance: UserPrefRepository? = null
