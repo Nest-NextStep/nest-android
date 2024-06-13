@@ -48,6 +48,4 @@ class CatalogViewModel(
 
     fun findMajor(majorName: String) =
         majorRepository.findMajor(majorName)
-
-    fun saveMajorId(id: Int) = majorRepository.saveMajorId(id)
 }

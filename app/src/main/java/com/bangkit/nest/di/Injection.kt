@@ -9,8 +9,6 @@ import com.bangkit.nest.data.repository.AuthRepository
 import com.bangkit.nest.data.repository.MajorRepository
 import com.bangkit.nest.data.repository.UserPrefRepository
 
-
-
 object Injection {
 
     fun provideUserPrefRepository(context: Context): UserPrefRepository {

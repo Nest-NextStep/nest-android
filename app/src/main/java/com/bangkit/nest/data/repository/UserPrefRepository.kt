@@ -32,14 +32,6 @@ class UserPrefRepository private constructor(
         return userPreference.getRefreshToken()
     }
 
-    suspend fun saveMajorId(id: Int) {
-        userPreference.saveMajorId(id)
-    }
-
-    suspend fun getMajorId(): Int {
-        return userPreference.getMajorId()
-    }
-
     suspend fun saveMajors(majors: List<String>) {
         userPreference.saveMajors(majors)
     }

@@ -94,7 +94,7 @@ dependencies {
     ksp(libs.room.compiler)
 
     //autotextview
-    implementation("me.grantland:autofittextview:0.2.1")
+    implementation(libs.grantland.autofittextview )
 
     //compose
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))

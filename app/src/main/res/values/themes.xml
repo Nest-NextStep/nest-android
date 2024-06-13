@@ -60,6 +60,10 @@
         <item name="backgroundTint">@color/white</item>
         <item name="android:textColor">@color/black</item>
     </style>
+    <style name="RoundedFAB" parent="ShapeAppearanceOverlay.Material3.FloatingActionButton">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 
     <!-- Text style -->
     <style name="CustomTextView" parent="Widget.MaterialComponents.TextView">
@@ -129,7 +133,6 @@
         <item name="colorContainer">@color/gray_200</item>
         <item name="colorOnContainer">@color/white</item>
     </style>
-
 
     <style name="Theme.Nest" parent="Base.Theme.Nest" />
 </resources>

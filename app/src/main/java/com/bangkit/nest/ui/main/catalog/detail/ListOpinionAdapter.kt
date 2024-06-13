@@ -1,22 +1,14 @@
 package com.bangkit.nest.ui.main.catalog.detail
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.MajorOpinionItem
 import com.bangkit.nest.databinding.ItemOpinionBinding
-import com.bumptech.glide.Glide
-
 
 class ListOpinionAdapter() : ListAdapter<MajorOpinionItem, ListOpinionAdapter.MyViewHolder>(DIFF_CALLBACK) {
 

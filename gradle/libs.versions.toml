@@ -22,15 +22,13 @@ loggingInterceptor = "4.11.0"
 legacySupportV4 = "1.0.0"
 fragmentKtx = "1.7.1"
 roomCommon = "2.6.1"
-animationCoreAndroid = "1.6.7"
-animationCoreDesktop = "1.6.7"
-foundationLayoutAndroid = "1.6.7"
 uiTooling = "1.6.7"
 roomCompiler = "2.6.1"
 roomRuntime = "2.6.1"
 activity = "1.9.0"
 serialization = "1.5.1"
 serializationPlugin = "1.8.10"
+autofittextview = "0.2.1"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -56,12 +54,10 @@ androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", ve
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
-androidx-animation-core-android = { group = "androidx.compose.animation", name = "animation-core-android", version.ref = "animationCoreAndroid" }
-androidx-animation-core-desktop = { group = "androidx.compose.animation", name = "animation-core-desktop", version.ref = "animationCoreDesktop" }
-androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+grantland-autofittextview = { group = "me.grantland", name = "autofittextview", version.ref = "autofittextview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
