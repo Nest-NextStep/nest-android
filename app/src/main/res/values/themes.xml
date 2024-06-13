@@ -9,7 +9,7 @@
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/gray</item>
-        <item name="colorSecondaryVariant">@color/gray_variant</item>
+        <item name="colorSecondaryVariant">@color/gray_400</item>
         <item name="colorOnSecondary">@color/white</item>
 
         <!-- Customize your theme here. -->
@@ -84,6 +84,9 @@
     <style name="TextAppearance.Body" parent="">
         <item name="android:textSize">15sp</item>
     </style>
+    <style name="TextAppearance.DialogBody" parent="">
+        <item name="android:textSize">16sp</item>
+    </style>
 
     <!-- Alert dialog style -->
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
@@ -105,7 +108,7 @@
     </style>
     <!-- Alert dialog body text style -->
     <style name="MaterialAlertDialog.App.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
-        <item name="android:textAppearance">@style/TextAppearance.Body</item>
+        <item name="android:textAppearance">@style/TextAppearance.DialogBody</item>
     </style>
     <!-- Alert dialog positive button style -->
     <style name="Widget.App.PositiveButton" parent="Widget.Material3.Button">
@@ -120,10 +123,10 @@
     <style name="Widget.App.NegativeButton" parent="Widget.Material3.Button.TonalButton">
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.NegativeButton</item>
-        <item name="android:layout_marginEnd">@dimen/s_horizontal_margin</item>
+        <item name="android:layout_marginEnd">@dimen/activity_horizontal_margin</item>
     </style>
     <style name="ThemeOverlay.App.NegativeButton" parent="ThemeOverlay.Material3.Button.TonalButton">
-        <item name="colorContainer">@color/lighter_gray</item>
+        <item name="colorContainer">@color/gray_200</item>
         <item name="colorOnContainer">@color/white</item>
     </style>
 

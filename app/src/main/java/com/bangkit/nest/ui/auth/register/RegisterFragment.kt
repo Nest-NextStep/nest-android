@@ -56,17 +56,13 @@ class RegisterFragment : Fragment() {
 
         binding?.root?.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                hideKeyboard()
-                binding?.usernameEditText?.clearFocus()
-                binding?.emailEditText?.clearFocus()
-                binding?.passwordEditText?.clearFocus()
-                binding?.confirmPasswordEditText?.clearFocus()
+                clearInput()
             }
             false
         }
 
         binding?.registerButton?.setOnClickListener {
-            hideKeyboard()
+            clearInput()
 
             val username = binding?.usernameEditText?.text.toString()
             val email = binding?.emailEditText?.text.toString()
@@ -81,6 +77,8 @@ class RegisterFragment : Fragment() {
             }
             if (password.isEmpty()) {
                 binding?.passwordEditTextLayout?.error = getString(R.string.empty_field)
+                isValidInput = false
+            } else if (binding?.passwordEditTextLayout?.error != null) {
                 isValidInput = false
             }
             if (email.isEmpty()) {
@@ -128,6 +126,14 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    private fun clearInput() {
+        hideKeyboard()
+        binding?.usernameEditText?.clearFocus()
+        binding?.emailEditText?.clearFocus()
+        binding?.passwordEditText?.clearFocus()
+        binding?.confirmPasswordEditText?.clearFocus()
+    }
+
     private fun fieldValidation(editTextLayout: TextInputLayout?, editText: TextInputEditText?) {
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -135,8 +141,10 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(s: Editable) {
                 if (editText == binding?.emailEditText) {
                     validateEmail()
+                } else if (editText == binding?.passwordEditText) {
+                    validatePasswordLength()
                 } else if (editText == binding?.confirmPasswordEditText) {
-                    validatePassword()
+                    validatePasswordConfirmation()
                 } else {
                     if (s.isNotEmpty()) {
                         editTextLayout?.error = null
@@ -166,7 +174,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun validatePassword(): Boolean {
+    private fun validatePasswordConfirmation(): Boolean {
         val password = binding?.passwordEditText?.text.toString()
         val confirmPassword = binding?.confirmPasswordEditText?.text.toString()
         val confirmPasswordEditTextLayout = binding?.confirmPasswordEditTextLayout
@@ -177,9 +185,23 @@ class RegisterFragment : Fragment() {
             return false
         } else if (confirmPassword.isEmpty()) {
             confirmPasswordEditTextLayout?.error = getString(R.string.empty_field)
-            return true
+            return false
         } else {
             confirmPasswordEditTextLayout?.error = null
+            return true
+        }
+    }
+
+    private fun validatePasswordLength() : Boolean {
+        val password = binding?.passwordEditText?.text.toString()
+        val passwordEditTextLayout = binding?.passwordEditTextLayout
+
+        // Validate password length
+        if (password.length < 6) {
+            passwordEditTextLayout?.error = getString(R.string.short_password)
+            return false
+        } else {
+            passwordEditTextLayout?.error = null
             return true
         }
     }

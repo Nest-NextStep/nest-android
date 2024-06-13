@@ -28,6 +28,10 @@ class UserPrefRepository private constructor(
         return userPreference.getToken()
     }
 
+    suspend fun getRefreshToken(): String {
+        return userPreference.getRefreshToken()
+    }
+
     suspend fun saveMajorId(id: Int) {
         userPreference.saveMajorId(id)
     }

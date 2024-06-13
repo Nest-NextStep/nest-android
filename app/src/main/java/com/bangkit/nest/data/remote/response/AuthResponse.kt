@@ -13,14 +13,26 @@ data class LoginResponse(
     @field:SerializedName("accessToken")
     val accessToken: String,
 
+    @field:SerializedName("refreshToken")
+    val refreshToken: String,
+
     @field:SerializedName("recommendedMajor")
     val recommendedMajor: List<MajorItem>? = null
 )
 
+data class TokenResponse(
+
+    @field:SerializedName("accessToken")
+    val accessToken: String,
+
+    @field:SerializedName("refreshToken")
+    val refreshToken: String
+)
+
 data class RegisterResponse(
 
-    @field:SerializedName("error")
-    val error: Boolean? = null,
+    @field:SerializedName("uid")
+    val uid: String? = null,
 
     @field:SerializedName("message")
     val message: String? = null

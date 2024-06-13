@@ -223,7 +223,7 @@ class AddTaskFragment : Fragment() {
                                 .padding(10.dp)
                                 .border(
                                     width = 1.dp,
-                                    color = if (isFocusedTitle) colorResource(R.color.purple_faded) else colorResource(R.color.gray_variant),
+                                    color = if (isFocusedTitle) colorResource(R.color.purple_faded) else colorResource(R.color.gray_400),
                                     shape = RoundedCornerShape(8.dp)
                                 )
                                 .background(selectedPriority.color, RoundedCornerShape(8.dp))
@@ -246,7 +246,7 @@ class AddTaskFragment : Fragment() {
                                 placeholder = {
                                     Text(
                                         text = "e.g. Study",
-                                        color = colorResource(R.color.gray_variant)
+                                        color = colorResource(R.color.gray_400)
                                     )
                                 },
                                 shape = RoundedCornerShape(8.dp),
@@ -368,7 +368,7 @@ class AddTaskFragment : Fragment() {
                                 modifier = Modifier
                                     .border(
                                         width = 1.dp,
-                                        color = if (isFocusedFocusTime) colorResource(R.color.purple_faded) else colorResource(R.color.gray_variant),
+                                        color = if (isFocusedFocusTime) colorResource(R.color.purple_faded) else colorResource(R.color.gray_400),
                                         shape = RoundedCornerShape(8.dp)
                                     )
                                     .padding(start = 8.dp),
@@ -378,7 +378,7 @@ class AddTaskFragment : Fragment() {
                                     painter = painterResource(id = R.drawable.menu_task_secondary),
                                     contentDescription = null,
                                     modifier = Modifier.scale(0.5f),
-                                    tint = colorResource(R.color.gray_variant)
+                                    tint = colorResource(R.color.gray_400)
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 TextField(
@@ -406,7 +406,7 @@ class AddTaskFragment : Fragment() {
                                 )
                                 Text(
                                     text = "min",
-                                    color = colorResource(R.color.gray_variant),
+                                    color = colorResource(R.color.gray_400),
                                     modifier = Modifier.padding(end = 25.dp)
                                 )
                             }
@@ -428,7 +428,7 @@ class AddTaskFragment : Fragment() {
                                     .border(
                                         width = 1.dp,
                                         shape = RoundedCornerShape(8.dp),
-                                        color = if (isFocusedBreakTime) colorResource(R.color.purple_faded) else colorResource(R.color.gray_variant),
+                                        color = if (isFocusedBreakTime) colorResource(R.color.purple_faded) else colorResource(R.color.gray_400),
                                     )
                                     .padding(start = 8.dp),
                                 verticalAlignment = Alignment.CenterVertically
@@ -437,7 +437,7 @@ class AddTaskFragment : Fragment() {
                                     painter = painterResource(id = R.drawable.menu_task_secondary),
                                     contentDescription = null,
                                     modifier = Modifier.scale(0.5f),
-                                    tint = colorResource(R.color.gray_variant)
+                                    tint = colorResource(R.color.gray_400)
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 TextField(
@@ -465,7 +465,7 @@ class AddTaskFragment : Fragment() {
                                 )
                                 Text(
                                     text = "min",
-                                    color = colorResource(R.color.gray_variant),
+                                    color = colorResource(R.color.gray_400),
                                     modifier = Modifier.padding(end = 25.dp)
                                 )
                             }
@@ -506,7 +506,7 @@ class AddTaskFragment : Fragment() {
                             checked = repeatSwitch,
                             onCheckedChange = { repeatSwitch = it },
                             colors = SwitchDefaults.colors(
-                                uncheckedThumbColor = colorResource(R.color.gray_variant), // Change color when unchecked
+                                uncheckedThumbColor = colorResource(R.color.gray_400), // Change color when unchecked
                                 checkedThumbColor = colorResource(R.color.purple), // Change color when checked
                                 uncheckedTrackColor = colorResource(R.color.purple_300), // Change track color when unchecked
                                 checkedTrackColor = colorResource(R.color.purple_faded) // Change track color when checked

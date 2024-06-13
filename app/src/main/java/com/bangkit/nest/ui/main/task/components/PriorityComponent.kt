@@ -86,7 +86,7 @@ fun PriorityItemComponent(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var priorityBackground = colorResource(R.color.lighter_gray)
+        var priorityBackground = colorResource(R.color.gray_200)
         var textColor = colorResource(R.color.white)
 
         if (isSelected) {
