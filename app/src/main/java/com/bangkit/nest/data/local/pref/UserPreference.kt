@@ -5,6 +5,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bangkit.nest.data.local.entity.UserModel
@@ -23,6 +25,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = user.email
             preferences[USERNAME_KEY] = user.username
+            preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
         }
     }
@@ -32,8 +35,20 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             UserModel(
                 preferences[EMAIL_KEY] ?: "",
                 preferences[USERNAME_KEY] ?: "",
+                preferences[TOKEN_KEY] ?: "",
                 preferences[IS_LOGIN_KEY] ?: false
             )
+        }
+    }
+
+    suspend fun getToken(): String {
+        val preferences = dataStore.data.first()
+        return preferences[TOKEN_KEY] ?: return ""
+    }
+
+    suspend fun saveToken(token: String) {
+        dataStore.edit { preferences ->
+            preferences[TOKEN_KEY] = token
         }
     }
 
@@ -56,14 +71,27 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         return Json.decodeFromString(namesString)
     }
 
+    suspend fun getMajorId(): Int {
+        val preferences = dataStore.data.first()
+        return preferences[MAJOR_ID_KEY] ?: return -1
+    }
+
+    suspend fun saveMajorId(id: Int) {
+        dataStore.edit { preferences ->
+            preferences[MAJOR_ID_KEY] = id
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserPreference? = null
 
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val USERNAME_KEY = stringPreferencesKey("username")
+        private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
         private val MAJORS_KEY = stringPreferencesKey("recommendedMajors")
+        private val MAJOR_ID_KEY = intPreferencesKey("majorId")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

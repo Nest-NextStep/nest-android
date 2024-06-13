@@ -47,8 +47,16 @@ class CatalogFragment : Fragment() {
             binding?.scrollView?.scrollTo(0, 0)
         }
         setupSearch()
+        setupAdapter()
         observeViewModel()
         viewModel.getAllMajor()
+    }
+
+    private fun setupAdapter() {
+        binding?.apply {
+            allMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recommendedMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
     private fun observeViewModel() {
@@ -153,7 +161,6 @@ class CatalogFragment : Fragment() {
             allMajorTextView.isVisible = false
             allMajorRecyclerView.isVisible = false
         }
-
     }
 
     private fun setupSuccess(recommendedMajors: List<MajorItem>, anotherMajors: List<MajorItem>) {
@@ -161,29 +168,24 @@ class CatalogFragment : Fragment() {
             progressBar.isVisible = false
 
             recommendedMajorTextView.isVisible = true
-            recommendedMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recommendedMajorRecyclerView.isVisible = true
+            setListMajorData(recommendedMajorRecyclerView, recommendedMajors, "recommended")
+
             if (recommendedMajors.isNotEmpty()) {
-                recommendedMajorRecyclerView.isVisible = true
-                setListMajorData(recommendedMajorRecyclerView, recommendedMajors, "recommended")
+                noRecommendedMajorTextView.isVisible = false
             } else {
-                recommendedMajorRecyclerView.isVisible = false
                 noRecommendedMajorTextView.isVisible = true
-                // Adjust constraints for allMajorTextView
-                val layoutParams = allMajorTextView.layoutParams as ConstraintLayout.LayoutParams
-                layoutParams.topToBottom = R.id.noRecommendedMajorTextView
-                allMajorTextView.layoutParams = layoutParams
             }
 
             allMajorTextView.isVisible = true
-            allMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             if (anotherMajors.isNotEmpty()) {
                 allMajorRecyclerView.isVisible = true
+                noAnotherMajorTextView.isVisible = false
                 setListMajorData(allMajorRecyclerView, anotherMajors, "another")
             } else {
                 allMajorRecyclerView.isVisible = false
                 noAnotherMajorTextView.isVisible = true
             }
-
         }
     }
 
@@ -203,9 +205,13 @@ class CatalogFragment : Fragment() {
     }
 
     private fun setListMajorData(recyclerView: RecyclerView, majors: List<MajorItem>, viewType: String) {
-        val adapter = ListMajorAdapter(viewType)
+        val adapter = ListMajorAdapter(viewType, this)
         adapter.submitList(majors)
         recyclerView.adapter = adapter
+    }
+
+    fun saveMajorId(id: Int) {
+        viewModel.saveMajorId(id)
     }
 
     override fun onDestroyView() {

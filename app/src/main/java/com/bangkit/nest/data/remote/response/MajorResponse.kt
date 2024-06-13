@@ -20,22 +20,58 @@ data class MajorItem(
 	val majorName: String? = null,
 
 	@field:SerializedName("major_id")
-	val majorId: Int? = null
+	val majorId: Int? = null,
+
+	@field:SerializedName("major_cover")
+	val majorCover: String? = null,
 )
 
 data class DetailMajorResponse(
 
 	@field:SerializedName("major")
-	val major: List<MajorItem?>? = null,
-
-	@field:SerializedName("majorOpinion")
-	val majorOpinion: List<MajorOpinionItem?>? = null,
+	val major: MajorItem? = null,
 
 	@field:SerializedName("majorUniversity")
-	val majorUniversity: List<MajorUniversityItem?>? = null,
+	val majorUniversity: List<MajorUniversityItem>,
 
 	@field:SerializedName("majorJob")
-	val majorJob: List<MajorJobItem?>? = null
+	val majorJob: List<MajorJobItem>,
+
+	@field:SerializedName("majorOpinion")
+	val majorOpinion: List<MajorOpinionItem>
+)
+
+data class MajorUniversityItem(
+
+	@field:SerializedName("university_id")
+	val universityId: Int,
+
+	@field:SerializedName("university_image")
+	val universityImage: String? = null,
+
+	@field:SerializedName("university_location")
+	val universityLocation: String? = null,
+
+	@field:SerializedName("university_name")
+	val universityName: String,
+
+	@field:SerializedName("university_acreditation")
+	val universityAcreditation: String? = null,
+
+	@field:SerializedName("university_link")
+	val universityLink: String? = null
+)
+
+data class MajorOpinionItem(
+
+	@field:SerializedName("opinions_content")
+	val opinionsContent: String? = null,
+
+	@field:SerializedName("opinion_id")
+	val opinionId: Int? = null,
+
+	@field:SerializedName("opinion_name")
+	val opinionName: String? = null
 )
 
 data class MajorJobItem(
@@ -46,36 +82,13 @@ data class MajorJobItem(
 	@field:SerializedName("jobs_salary")
 	val jobsSalary: String? = null,
 
+	@field:SerializedName("jobs_id")
+	val jobsId: Int? = null,
+
 	@field:SerializedName("jobs_description")
 	val jobsDescription: String? = null
 )
 
-data class MajorOpinionItem(
-
-	@field:SerializedName("opinions_content")
-	val opinionsContent: String? = null,
-
-	@field:SerializedName("opinion_name")
-	val opinionName: String? = null
-)
-
-data class MajorUniversityItem(
-
-	@field:SerializedName("university_id")
-	val universityId: Int? = null,
-
-	@field:SerializedName("university_location")
-	val universityLocation: String? = null,
-
-	@field:SerializedName("university_name")
-	val universityName: String? = null,
-
-	@field:SerializedName("university_acreditation")
-	val universityAccreditation: String? = null,
-
-	@field:SerializedName("university_link")
-	val universityLink: String? = null
-)
 
 data class FindMajorResponse(
 	@field:SerializedName("status")

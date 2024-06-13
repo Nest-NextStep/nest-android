@@ -11,6 +11,7 @@ import com.bangkit.nest.ui.auth.login.LoginViewModel
 import com.bangkit.nest.ui.auth.register.RegisterViewModel
 import com.bangkit.nest.ui.main.MainViewModel
 import com.bangkit.nest.ui.main.catalog.CatalogViewModel
+import com.bangkit.nest.ui.main.catalog.detail.CatalogDetailViewModel
 import com.bangkit.nest.ui.main.profile.ProfileViewModel
 
 class ViewModelFactory(
@@ -36,6 +37,10 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(CatalogViewModel::class.java) -> {
                 CatalogViewModel(majorRepository) as T
+            }
+
+            modelClass.isAssignableFrom(CatalogDetailViewModel::class.java) -> {
+                CatalogDetailViewModel(majorRepository) as T
             }
 
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {

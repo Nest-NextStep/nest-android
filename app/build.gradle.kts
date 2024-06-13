@@ -28,15 +28,14 @@ android {
                 "proguard-rules.pro"
             )
 
-//            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+            buildConfigField("String", "API_URL", "\"https://trim-mote-425811-i0.et.r.appspot.com/\"")
+
         }
 
         debug {
-//            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
-
+            buildConfigField("String", "API_URL", "\"https://trim-mote-425811-i0.et.r.appspot.com/\"")
         }
+
     }
 
     compileOptions {
@@ -95,6 +94,9 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.room.compiler)
 
+    //autotextview
+    implementation("me.grantland:autofittextview:0.2.1")
+
     //compose
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.ui:ui")
@@ -102,6 +104,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
+    debugImplementation(libs.androidx.ui.tooling)
 
     //time picker
     implementation("com.github.commandiron:WheelPickerCompose:1.1.11")

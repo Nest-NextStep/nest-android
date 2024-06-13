@@ -2,6 +2,7 @@ package com.bangkit.nest.data.remote.retrofit
 
 import com.bangkit.nest.data.remote.request.LoginRequest
 import com.bangkit.nest.data.remote.request.RegisterRequest
+
 import com.bangkit.nest.data.remote.response.AllMajorResponse
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
 import com.bangkit.nest.data.remote.response.FindMajorResponse
@@ -30,7 +31,7 @@ interface ApiService {
 
     @GET("major/detail/{id}")
     suspend fun getMajorDetail (
-        @Path("id") id: Long
+        @Path("id") id: Int
     ): DetailMajorResponse
 
     @GET("major/search")

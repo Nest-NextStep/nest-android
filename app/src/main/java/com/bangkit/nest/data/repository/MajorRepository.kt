@@ -19,35 +19,42 @@ class MajorRepository private constructor(
     fun getAllMajor(): LiveData<Result<AllMajorResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val userModel = runBlocking { userPrefRepository.getSession().first() }
+            val userModel = userPrefRepository.getSession().first()
             val username = userModel.username
             val response = apiService.getMajorByUsername(username)
 
-            // TODO:save recommended major
-//            val existingMajors = runBlocking { userPrefRepository.getMajors() }
-//            if (existingMajors.isEmpty()) {
-//                val majors: List<String> = response.majorRecommended.map { it.majorName!! }
-//                val majorList = listOf("manajemen")
-//                runBlocking {
-//                    userPrefRepository.saveMajors(majorList)
-//                }
-//            }
-            val majorList = listOf("teknik informatika", "manajemen")
-            runBlocking {
-                userPrefRepository.saveMajors(majorList)
-            }
+            // Categorize the search result
+            val majorRecommended = response.majorRecommended ?: emptyList()
+            val majorsAll = response.majorsAll.toMutableList()
 
-            emit(Result.Success(response))
+            val majorsToRemove = majorsAll.filter { major ->
+                majorRecommended.any {
+                    it.majorId == major.majorId
+                }
+            }.toMutableList()
+
+            majorsAll.removeAll(majorsToRemove)
+
+            val categorizedResponse = AllMajorResponse(
+                majorsAll = majorsAll,
+                majorRecommended = majorRecommended
+            )
+
+            emit(Result.Success(categorizedResponse))
         } catch (e: Exception) {
             Log.d(TAG, "Failed to get all major: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun getDetailMajor(majorId: Long): LiveData<Result<DetailMajorResponse>> = liveData {
+    fun getDetailMajor(): LiveData<Result<DetailMajorResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getMajorDetail(majorId)
+            val id = userPrefRepository.getMajorId()
+            val response = apiService.getMajorDetail(id)
+            if (response.major == null) {
+                emit(Result.Error("This major does not exist"))
+            }
 
             emit(Result.Success(response))
         } catch (e: Exception) {
@@ -62,7 +69,7 @@ class MajorRepository private constructor(
             val response = apiService.findMajor(majorName)
 
             // Get recommended majors
-            val recommendedMajors = runBlocking { userPrefRepository.getMajors() }
+            val recommendedMajors = userPrefRepository.getMajors()
 
             // Categorize the search result
             val majorRecommended = mutableListOf<MajorItem>()
@@ -84,6 +91,12 @@ class MajorRepository private constructor(
         } catch (e: Exception) {
             Log.d(TAG, "Failed to get detail major: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun saveMajorId(id: Int) {
+        runBlocking {
+            userPrefRepository.saveMajorId(id);
         }
     }
 

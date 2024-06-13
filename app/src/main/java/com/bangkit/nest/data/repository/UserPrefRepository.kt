@@ -20,6 +20,22 @@ class UserPrefRepository private constructor(
         userPreference.logout()
     }
 
+    suspend fun saveToken(token: String) {
+        userPreference.saveToken(token)
+    }
+
+    suspend fun getToken(): String {
+        return userPreference.getToken()
+    }
+
+    suspend fun saveMajorId(id: Int) {
+        userPreference.saveMajorId(id)
+    }
+
+    suspend fun getMajorId(): Int {
+        return userPreference.getMajorId()
+    }
+
     suspend fun saveMajors(majors: List<String>) {
         userPreference.saveMajors(majors)
     }

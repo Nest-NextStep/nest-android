@@ -105,7 +105,7 @@ fun DurationItemComponent(
     val bgColor = if (isSelected)
         colorResource(R.color.purple_faded)
     else
-        colorResource(R.color.purple_30)
+        colorResource(R.color.purple_300)
 
     Box(
         modifier = modifier

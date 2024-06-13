@@ -508,7 +508,7 @@ class AddTaskFragment : Fragment() {
                             colors = SwitchDefaults.colors(
                                 uncheckedThumbColor = colorResource(R.color.gray_variant), // Change color when unchecked
                                 checkedThumbColor = colorResource(R.color.purple), // Change color when checked
-                                uncheckedTrackColor = colorResource(R.color.purple_30), // Change track color when unchecked
+                                uncheckedTrackColor = colorResource(R.color.purple_300), // Change track color when unchecked
                                 checkedTrackColor = colorResource(R.color.purple_faded) // Change track color when checked
                             ),
                             modifier = Modifier.padding(start = 8.dp)

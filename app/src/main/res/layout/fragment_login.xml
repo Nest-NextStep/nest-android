@@ -22,7 +22,7 @@
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/usernameEmailEditTextLayout"
+        android:id="@+id/emailEditTextLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,9 +34,8 @@
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
         android:hint="@string/username_or_email"
         >
-
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/usernameEmailEditText"
+            android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -55,7 +54,7 @@
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameEmailEditTextLayout"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
         android:hint="@string/password"
         >
 
@@ -147,7 +146,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.10123119" />
+        app:layout_constraintGuide_percent="0.1" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineBottom"

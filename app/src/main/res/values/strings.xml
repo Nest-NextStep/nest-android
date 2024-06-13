@@ -45,6 +45,13 @@
     <string name="major_name">Major Name</string>
     <string name="major_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</string>
     <string name="no_data">No data found</string>
+    <string name="university_list">University List</string>
+    <string name="potential_jobs">Potential Jobs</string>
+    <string name="opinions_from_students">Opinions from Students</string>
+    <string name="university_name">University Name</string>
+    <string name="university_location">University Location</string>
+    <string name="university_accreditation">"Acreditation: "</string>
+    <string name="check_university">University page</string>
     <string name="take_assessment_test">Take Assessment Test</string>
     <string name="your_test_results">Your Test Results</string>
     <string name="assessment_test_description1">Welcome to the Major Assessment Test!</string>
