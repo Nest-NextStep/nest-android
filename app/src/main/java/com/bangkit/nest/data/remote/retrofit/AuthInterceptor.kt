@@ -4,13 +4,8 @@ import android.util.Log
 import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.request.RefreshTokenRequest
 import com.bangkit.nest.data.remote.response.TokenResponse
-import com.bangkit.nest.data.repository.AuthRepository
-import com.bangkit.nest.data.repository.MajorRepository
 import com.bangkit.nest.data.repository.UserPrefRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
@@ -80,7 +75,7 @@ class AuthInterceptor private constructor(
                 val result = apiService.refreshToken(RefreshTokenRequest(refreshToken))
                 Result.Success(result)
             } catch (e: Exception) {
-                Log.d(TAG, "Error: ${e.message}")
+                Log.e(TAG, "Error: ${e.message}")
                 Result.Error(e.message ?: "Unknown error")
             }
         }

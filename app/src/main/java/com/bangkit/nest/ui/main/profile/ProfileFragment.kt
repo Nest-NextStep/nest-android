@@ -27,7 +27,6 @@ class ProfileFragment : Fragment() {
         ViewModelFactory.getInstance(requireContext())
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,7 +42,6 @@ class ProfileFragment : Fragment() {
 
 
         binding?.editProfileButton?.setOnClickListener {
-            viewModel.changeToken()
             Toast.makeText(requireContext(), "Button clicked", Toast.LENGTH_SHORT).show()
         }
 

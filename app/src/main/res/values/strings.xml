@@ -22,7 +22,7 @@
     <string name="register">Register</string>
     <string name="success">Success</string>
     <string name="failed">Failed</string>
-    <string name="failed_login_body">Please check your input again!</string>
+    <string name="failed_login_body">Invalid credential. Please check your input again!</string>
     <string name="short_password">Password must be at least 6 characters</string>
     <string name="continue_">Continue</string>
     <string name="ok">OK</string>

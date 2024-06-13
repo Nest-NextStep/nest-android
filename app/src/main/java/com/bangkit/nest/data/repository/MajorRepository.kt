@@ -43,7 +43,7 @@ class MajorRepository private constructor(
 
             emit(Result.Success(categorizedResponse))
         } catch (e: Exception) {
-            Log.d(TAG, "Failed to get all major: ${e.message.toString()} ")
+            Log.e(TAG, "Failed to get all major: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -59,14 +59,10 @@ class MajorRepository private constructor(
 
             emit(Result.Success(response))
         } catch (e: Exception) {
-            Log.d(TAG, "Failed to get detail major: ${e.message.toString()} ")
+            Log.e(TAG, "Failed to get detail major: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
         }
     }
-
-//    fun refreshToken(): LiveData<Result<TokenResponse>> {
-//
-//    }
 
     fun findMajor(majorName: String): LiveData<Result<AllMajorResponse>> = liveData {
         emit(Result.Loading)
@@ -86,11 +82,6 @@ class MajorRepository private constructor(
                     majorsAll.add(major)
                 }
             }
-
-            Log.d(TAG, recommendedMajors.toString())
-            Log.d(TAG, majorRecommended.toString())
-
-
             val categorizedResponse = AllMajorResponse(
                 majorsAll = majorsAll,
                 majorRecommended = majorRecommended
@@ -98,7 +89,7 @@ class MajorRepository private constructor(
 
             emit(Result.Success(categorizedResponse))
         } catch (e: Exception) {
-            Log.d(TAG, "Failed to get detail major: ${e.message.toString()} ")
+            Log.e(TAG, "Failed to get detail major: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
         }
     }
