@@ -8,7 +8,8 @@ import com.bangkit.nest.data.remote.response.DetailMajorResponse
 import com.bangkit.nest.data.remote.response.FindMajorResponse
 import com.bangkit.nest.data.remote.response.LoginResponse
 import com.bangkit.nest.data.remote.response.RegisterResponse
-import com.bangkit.nest.data.remote.response.TaskResponse
+import com.bangkit.nest.data.remote.response.QuestionsResponse
+import com.bangkit.nest.data.remote.response.ResultsResponseItem
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -43,4 +44,15 @@ interface ApiService {
     suspend fun getUserTasks(
         @Path("username") username: String
     ): Response<ResponseBody>
+
+    @GET("assessment/{category}")
+    suspend fun getQuestions(
+        @Path("category") category: String
+    ): QuestionsResponse
+
+    @GET("/assessment/data/{username}")
+    suspend fun getUserMajorResults(
+        @Path("username") username: String
+    ): List<ResultsResponseItem>
+
 }

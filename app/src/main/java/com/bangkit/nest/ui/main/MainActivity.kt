@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-    private fun setStatusBarTextColor(isDark: Boolean) {
+    fun setStatusBarTextColor(isDark: Boolean) {
         val window = window
         val decorView = window.decorView
 

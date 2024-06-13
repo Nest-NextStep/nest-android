@@ -5,17 +5,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.nest.databinding.ItemQuestionBinding
+import com.bangkit.nest.data.remote.response.OptionDataItem
+import com.bangkit.nest.data.remote.response.QuestionsDataItem
 
 class QuestionAdapter(
-    private val questions: List<Question>
+    private val questions: List<Pair<QuestionsDataItem, List<OptionDataItem>>>
 ) : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
     inner class QuestionViewHolder(private val binding: ItemQuestionBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(question: Question) {
+        fun bind(questionWithOptions: Pair<QuestionsDataItem, List<OptionDataItem>>) {
+            val (question, options) = questionWithOptions
             binding.questionTextView.text = question.questionText
             binding.optionsRecyclerView.layoutManager = LinearLayoutManager(binding.root.context)
-            binding.optionsRecyclerView.adapter = OptionAdapter(question.options) {
+            binding.optionsRecyclerView.adapter = OptionAdapter(options) { selectedOption ->
                 // Handle option click
+                // You can store the selected option to handle form submission later
             }
         }
     }

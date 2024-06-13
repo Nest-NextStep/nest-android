@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.nest.R
+import com.bangkit.nest.data.Result
 import com.bangkit.nest.databinding.FragmentAssessBinding
+import com.bangkit.nest.utils.ViewModelFactory
 
 class AssessFragment : Fragment() {
 
@@ -23,7 +27,7 @@ class AssessFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        assessViewModel = ViewModelProvider(this)[AssessViewModel::class.java]
+        assessViewModel = ViewModelProvider(this, ViewModelFactory.getInstance(requireContext()))[AssessViewModel::class.java]
         _binding = FragmentAssessBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -33,7 +37,30 @@ class AssessFragment : Fragment() {
 
         // Set up RecyclerView
         binding.recyclerViewTestResults.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewTestResults.adapter = TestResultsAdapter(getDummyData())
+
+        // Fetch and observe data
+        assessViewModel.getUserMajorResults().observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.recyclerViewTestResults.visibility = View.GONE
+                }
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.errorTextView.isVisible = false
+                    binding.recyclerViewTestResults.visibility = View.VISIBLE
+
+                    val data = result.data.resultResponse ?: emptyList()
+                    binding.recyclerViewTestResults.adapter = TestResultsAdapter(data)
+                }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.recyclerViewTestResults.visibility = View.GONE
+                    binding.errorTextView.text = result.error
+                    binding.errorTextView.visibility = View.VISIBLE
+                }
+            }
+        })
 
         // Handle button click
         binding.buttonTakeAssessment.setOnClickListener {
@@ -47,12 +74,5 @@ class AssessFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun getDummyData(): List<TestResult> {
-        return listOf(
-            TestResult("Assessment 1", "Your recommended Major"),
-            TestResult("Assessment 2", "Another recommended Major")
-        )
     }
 }

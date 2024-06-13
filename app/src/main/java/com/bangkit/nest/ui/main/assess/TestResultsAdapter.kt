@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.nest.R
+import com.bangkit.nest.data.remote.response.ResultsResponseItem
 
-data class TestResult(val title: String, val recommendedMajor: String)
-
-class TestResultsAdapter(private val testResults: List<TestResult>) :
+class TestResultsAdapter(private val testResults: List<ResultsResponseItem?>) :
     RecyclerView.Adapter<TestResultsAdapter.TestResultsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestResultsViewHolder {
@@ -20,8 +19,9 @@ class TestResultsAdapter(private val testResults: List<TestResult>) :
 
     override fun onBindViewHolder(holder: TestResultsViewHolder, position: Int) {
         val testResult = testResults[position]
-        holder.titleTextView.text = testResult.title
-        holder.recommendedMajorTextView.text = testResult.recommendedMajor
+        holder.titleTextView.text = "Recommended Major ${position + 1}"
+        holder.recommendedMajorTextView.text = testResult?.majorName
+        holder.dateTextView.text = testResult?.userMajorDate
     }
 
     override fun getItemCount(): Int {
@@ -31,5 +31,6 @@ class TestResultsAdapter(private val testResults: List<TestResult>) :
     class TestResultsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.text_assessment_title)
         val recommendedMajorTextView: TextView = itemView.findViewById(R.id.text_recommended_major)
+        val dateTextView: TextView = itemView.findViewById(R.id.text_assessment_date)
     }
 }

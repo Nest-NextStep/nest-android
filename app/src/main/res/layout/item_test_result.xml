@@ -9,9 +9,10 @@
 
     <ImageView
         android:id="@+id/icon_test_result"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="79dp"
+        android:layout_height="89dp"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/title_assess"
         android:src="@drawable/ic_test_result" />
 
     <LinearLayout
@@ -38,5 +39,26 @@
             android:background="@drawable/rounded_pill"
             android:padding="8dp"
             android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/icon_assess_date"
+                android:layout_width="26dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_assess_date" />
+
+            <TextView
+                android:id="@+id/text_assessment_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textColor="@color/gray" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
