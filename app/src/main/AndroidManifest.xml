@@ -15,9 +15,6 @@
         android:theme="@style/Theme.Nest"
         tools:targetApi="31">
         <activity
-            android:name=".ui.main.assess.question.QuestionActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.auth.AuthActivity"
             android:exported="false" />
         <activity
