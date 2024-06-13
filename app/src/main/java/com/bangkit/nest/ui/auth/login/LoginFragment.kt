@@ -56,33 +56,35 @@ class LoginFragment : Fragment() {
 
         binding?.root?.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                hideKeyboard()
-                binding?.emailEditText?.clearFocus()
-                binding?.passwordEditText?.clearFocus()
+                clearInput()
             }
             false
         }
 
         binding?.loginButton?.setOnClickListener {
-            hideKeyboard()
+            clearInput()
 
-            val usernameEmail = binding?.emailEditText?.text.toString()
+            val email = binding?.emailEditText?.text.toString()
             val password = binding?.passwordEditText?.text.toString()
             var isValidInput = true
 
             // Field validation
-            if (usernameEmail.isEmpty()) {
+            if (email.isEmpty()) {
                 binding?.emailEditTextLayout?.error = getString(R.string.empty_field)
+                isValidInput = false
+            } else if (binding?.emailEditTextLayout?.error != null) {
                 isValidInput = false
             }
             if (password.isEmpty()) {
                 binding?.passwordEditTextLayout?.error = getString(R.string.empty_field)
                 isValidInput = false
+            } else if (binding?.passwordEditTextLayout?.error != null) {
+                isValidInput = false
             }
 
             // Login
             if (isValidInput) {
-                viewModel.login(usernameEmail, password).observe(viewLifecycleOwner) { result ->
+                viewModel.login(email, password).observe(viewLifecycleOwner) { result ->
                     if (result != null) {
                         when (result) {
                             is Result.Loading -> {
@@ -99,7 +101,7 @@ class LoginFragment : Fragment() {
                             }
                             is Result.Error -> {
                                 binding?.progressBar?.visibility = View.GONE
-                                showError(result.error)
+                                showError()
                             }
                         }
                     }
@@ -117,10 +119,10 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun showError(errorMessage: String) {
+    private fun showError() {
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.failed))
-            .setMessage(errorMessage)
+            .setMessage(getString(R.string.failed_login_body))
             .setPositiveButton(getString(R.string.ok), null)
             .show()
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
@@ -131,14 +133,57 @@ class LoginFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                if (s.isNotEmpty()) {
-                    editTextLayout?.error = null
+                if (editText == binding?.emailEditText) {
+                    validateEmail()
+                } else if (editText == binding?.passwordEditText) {
+                    validatePasswordLength()
                 } else {
-                    editTextLayout?.error = getString(R.string.empty_field)
+                    if (s.isNotEmpty()) {
+                        editTextLayout?.error = null
+                    } else {
+                        editTextLayout?.error = getString(R.string.empty_field)
+                    }
                 }
             }
         }
         editText?.addTextChangedListener(textWatcher)
+    }
+
+    private fun validateEmail(): Boolean {
+        val email = binding?.emailEditText?.text.toString()
+        val emailEditTextLayout = binding?.emailEditTextLayout
+
+        // Validate email address
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailEditTextLayout?.error = getString(R.string.invalid_email)
+            return false
+        } else if (email.isEmpty()) {
+            emailEditTextLayout?.error = getString(R.string.empty_field)
+            return true
+        } else {
+            emailEditTextLayout?.error = null
+            return true
+        }
+    }
+
+    private fun validatePasswordLength() : Boolean {
+        val password = binding?.passwordEditText?.text.toString()
+        val passwordEditTextLayout = binding?.passwordEditTextLayout
+
+        // Validate password length
+        if (password.length < 6) {
+            passwordEditTextLayout?.error = getString(R.string.short_password)
+            return false
+        } else {
+            passwordEditTextLayout?.error = null
+            return true
+        }
+    }
+
+    private fun clearInput() {
+        hideKeyboard()
+        binding?.emailEditText?.clearFocus()
+        binding?.passwordEditText?.clearFocus()
     }
 
     private fun hideKeyboard() {

@@ -1,14 +1,16 @@
 package com.bangkit.nest.data.remote.request
 
-// TODO
 data class LoginRequest(
     val email: String,
     val password: String
 )
 
-// TODO
 data class RegisterRequest(
-    val name: String,
+    val displayName: String,
     val email: String,
     val password: String
+)
+
+data class RefreshTokenRequest(
+    val refreshToken: String
 )

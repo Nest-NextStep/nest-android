@@ -1,8 +1,8 @@
 package com.bangkit.nest.data.remote.retrofit
 
 import com.bangkit.nest.data.remote.request.LoginRequest
+import com.bangkit.nest.data.remote.request.RefreshTokenRequest
 import com.bangkit.nest.data.remote.request.RegisterRequest
-
 import com.bangkit.nest.data.remote.response.AllMajorResponse
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
 import com.bangkit.nest.data.remote.response.FindMajorResponse
@@ -12,6 +12,7 @@ import com.bangkit.nest.data.remote.response.QuestionsResponse
 import com.bangkit.nest.data.remote.response.ResultsResponseItem
 import okhttp3.ResponseBody
 import retrofit2.Response
+import com.bangkit.nest.data.remote.response.TokenResponse
 import retrofit2.http.*
 
 interface ApiService {
@@ -25,6 +26,11 @@ interface ApiService {
         @Body request: RegisterRequest
     ): RegisterResponse
 
+    @POST("refresh-token")
+    suspend fun refreshToken (
+        @Body request: RefreshTokenRequest
+    ): TokenResponse
+
     @GET("major/{username}")
     suspend fun getMajorByUsername (
         @Path("username") username: String
@@ -34,6 +40,7 @@ interface ApiService {
     suspend fun getMajorDetail (
         @Path("id") id: Int
     ): DetailMajorResponse
+
 
     @GET("major/search")
     suspend fun findMajor (

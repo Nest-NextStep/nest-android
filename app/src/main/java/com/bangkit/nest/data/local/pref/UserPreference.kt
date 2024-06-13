@@ -26,6 +26,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             preferences[EMAIL_KEY] = user.email
             preferences[USERNAME_KEY] = user.username
             preferences[TOKEN_KEY] = user.token
+            preferences[REFRESH_TOKEN_KEY] = user.refreshToken
             preferences[IS_LOGIN_KEY] = true
         }
     }
@@ -36,9 +37,15 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
                 preferences[EMAIL_KEY] ?: "",
                 preferences[USERNAME_KEY] ?: "",
                 preferences[TOKEN_KEY] ?: "",
+                preferences[REFRESH_TOKEN_KEY] ?: "",
                 preferences[IS_LOGIN_KEY] ?: false
             )
         }
+    }
+
+    suspend fun getRefreshToken(): String {
+        val preferences = dataStore.data.first()
+        return preferences[REFRESH_TOKEN_KEY]!!
     }
 
     suspend fun getToken(): String {
@@ -89,6 +96,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val USERNAME_KEY = stringPreferencesKey("username")
         private val TOKEN_KEY = stringPreferencesKey("token")
+        private val REFRESH_TOKEN_KEY = stringPreferencesKey("refreshToken")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
         private val MAJORS_KEY = stringPreferencesKey("recommendedMajors")
         private val MAJOR_ID_KEY = intPreferencesKey("majorId")
