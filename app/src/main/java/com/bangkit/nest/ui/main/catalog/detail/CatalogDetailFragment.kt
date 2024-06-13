@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.nest.R
 import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
 import com.bangkit.nest.databinding.FragmentCatalogDetailBinding
@@ -39,11 +41,12 @@ class CatalogDetailFragment : Fragment() {
         binding?.scrollView?.post {
             binding?.scrollView?.scrollTo(0, 0)
         }
-        setUpAdapter()
-
-        // Retrieve arguments
+        // Retrieve major id
         val itemId = arguments?.getInt("itemId", 0) ?: 0
         getDetailMajor(itemId)
+
+        setupAdapter()
+        setupBackButton()
     }
 
     private fun getDetailMajor(id: Int) {
@@ -62,7 +65,12 @@ class CatalogDetailFragment : Fragment() {
         }
     }
 
-    private fun setUpAdapter() {
+    private fun setupBackButton() {
+        binding?.backButton?.setOnClickListener {
+            findNavController().navigate(R.id.action_catalogDetail_to_catalog)
+        }
+    }
+    private fun setupAdapter() {
         binding?.apply {
             universityRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             jobsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
