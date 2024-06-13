@@ -40,7 +40,7 @@ fun TimePickerComponent(
             startTime = time,
             textColor = Color.Black,
             textStyle = bodyTextStyleMedium,
-            selectorProperties = WheelPickerDefaults.selectorProperties(color = colorResource(R.color.white), border = BorderStroke(1.dp, colorResource(R.color.purple_faded))),
+            selectorProperties = WheelPickerDefaults.selectorProperties(color = colorResource(R.color.white), border = BorderStroke(1.dp, colorResource(R.color.purple_400))),
             onSnappedTime = onSelect
         )
     }
@@ -54,7 +54,7 @@ fun TimePickerComponent(
             startTime = time,
             textColor = Color.Black,
             textStyle = bodyTextStyleMedium,
-            selectorProperties = WheelPickerDefaults.selectorProperties(color = colorResource(R.color.white), border = BorderStroke(1.dp, colorResource(R.color.purple_faded))),
+            selectorProperties = WheelPickerDefaults.selectorProperties(color = colorResource(R.color.white), border = BorderStroke(1.dp, colorResource(R.color.purple_400))),
             onSnappedTime = onSelect
         )
     }

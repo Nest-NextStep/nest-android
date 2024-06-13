@@ -88,13 +88,14 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.serialization.json)
 
-
     //room
     implementation(libs.androidx.room.runtime)
     ksp(libs.room.compiler)
 
     //autotextview
-    implementation(libs.grantland.autofittextview )
+    implementation(libs.grantland.autofittextview)
+    //layout
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
 
     //compose
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))

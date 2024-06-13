@@ -7,6 +7,7 @@ import com.bangkit.nest.data.remote.response.AllMajorResponse
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
 import com.bangkit.nest.data.remote.response.FindMajorResponse
 import com.bangkit.nest.data.remote.response.LoginResponse
+import com.bangkit.nest.data.remote.response.ProfileResponse
 import com.bangkit.nest.data.remote.response.RegisterResponse
 import com.bangkit.nest.data.remote.response.TokenResponse
 import retrofit2.http.*
@@ -21,6 +22,11 @@ interface ApiService {
     suspend fun registerUser (
         @Body request: RegisterRequest
     ): RegisterResponse
+
+    @GET("profile/{username}")
+    suspend fun getProfileData (
+        @Path("username") username: String
+    ): ProfileResponse
 
     @POST("refresh-token")
     suspend fun refreshToken (

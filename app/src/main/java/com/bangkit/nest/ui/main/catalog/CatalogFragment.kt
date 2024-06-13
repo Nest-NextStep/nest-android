@@ -48,7 +48,6 @@ class CatalogFragment : Fragment() {
         setupSearch()
         setupAdapter()
         observeViewModel()
-        viewModel.getAllMajor()
     }
 
     private fun setupAdapter() {
@@ -173,8 +172,8 @@ class CatalogFragment : Fragment() {
             noRecommendedMajorTextView.isVisible = isEmptyRecommended
 
             allMajorTextView.isVisible = true
+            allMajorRecyclerView.isVisible = true
             val isEmptyAnother = anotherMajors.isEmpty()
-            allMajorRecyclerView.isVisible = !isEmptyAnother
             noAnotherMajorTextView.isVisible = isEmptyAnother
             setListMajorData(allMajorRecyclerView, anotherMajors, "another")
         }
@@ -213,6 +212,11 @@ class CatalogFragment : Fragment() {
         val adapter = ListMajorAdapter(viewType, this)
         adapter.submitList(majors)
         recyclerView.adapter = adapter
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.reloadAllMajorIfNeeded() // Reload profile data every time the fragment is resumed
     }
 
     override fun onDestroyView() {

@@ -36,6 +36,7 @@
 
         <TextView
             android:id="@+id/errorTextView"
+            android:textAppearance="@style/TextAppearance.Heading5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +44,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_gravity="center"
-            android:textAppearance="@style/TextAppearance.Heading3"
             android:textColor="@color/red"
             android:visibility="invisible"
             />
@@ -165,7 +165,7 @@
             app:layout_constraintTop_toBottomOf="@id/allMajorTextView"
             android:textColor="@color/gray_200"
             tools:visibility="visible"
-            android:paddingBottom="50dp"
+            android:paddingBottom="32dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
