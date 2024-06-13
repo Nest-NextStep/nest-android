@@ -21,7 +21,32 @@
         android:id="@+id/navigation_assess"
         android:name="com.bangkit.nest.ui.main.assess.AssessFragment"
         android:label="@string/title_assess"
-        tools:layout="@layout/fragment_assess" />
+        tools:layout="@layout/fragment_assess">
+        <action
+            android:id="@+id/action_assessFragment_to_beginFragment"
+            app:destination="@id/beginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/beginFragment"
+        android:name="com.bangkit.nest.ui.main.assess.question.BeginFragment"
+        android:label="Begin">
+        <action
+            android:id="@+id/action_beginFragment_to_questionFragment"
+            app:destination="@id/questionFragment" />
+        <action
+            android:id="@+id/action_beginFragment_to_navigation_assess"
+            app:destination="@id/navigation_assess" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.bangkit.nest.ui.main.assess.question.QuestionFragment"
+        android:label="Question">
+        <action
+            android:id="@+id/action_questionFragment_to_navigation_assess"
+            app:destination="@id/navigation_assess" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_task"

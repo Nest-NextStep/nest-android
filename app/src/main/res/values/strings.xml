@@ -3,6 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_catalog">Catalog</string>
     <string name="title_assess">Assess</string>
+    <string name="title_assessment">Assessment</string>
+    <string name="title_assessment_test">Assessment Test</string>
     <string name="title_task">Task</string>
     <string name="title_new_task">Create New Task</string>
     <string name="title_profile">Profile</string>
@@ -43,4 +45,16 @@
     <string name="major_name">Major Name</string>
     <string name="major_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</string>
     <string name="no_data">No data found</string>
+    <string name="take_assessment_test">Take Assessment Test</string>
+    <string name="your_test_results">Your Test Results</string>
+    <string name="assessment_test_description1">Welcome to the Major Assessment Test!</string>
+    <string name="assessment_test_description2">This test consists of 7 sections, each with several questions. Please answer all questions honestly based on your current situation to get the best and mose accurate result.</string>
+    <string name="assessment_test_description3">The test takes about 30-45 minutes, so ensure you\'re in a comfortable environment where you can focus. At the end, you\'ll receive a result suggesting the major that best fits your profile.</string>
+    <string name="assessment_test_description4">Ready to discover your recommended major?</string>
+    <string name="assessment_test_description5">Let\'s get started!</string>
+    <string name="cancel">Cancel</string>
+    <string name="begin">Begin</string>
+    <string name="end_assessment_test">End Assessment Test</string>
+    <string name="end_test_message">If you choose to end your test now, your progress won\'t be restored.</string>
+    <string name="end_test">End Test</string>
 </resources>

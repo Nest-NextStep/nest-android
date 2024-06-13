@@ -19,12 +19,13 @@
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
         <item name="android:fontFamily">@font/urbanist</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent
+        </item>
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <item name="android:textViewStyle">@style/CustomTextView</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <item name="materialSearchBarStyle">@style/CustomSearchBar</item>
-<!--        <item name="materialSearchViewStyle">@style/CustomSearchView</item>-->
+        <!--        <item name="materialSearchViewStyle">@style/CustomSearchView</item>-->
     </style>
 
     <!-- Small component style -->
@@ -40,6 +41,7 @@
     <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
     </style>
+
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="colorSurfaceContainer">@color/white</item>
         <!-- Active indicator color -->
@@ -60,30 +62,42 @@
     <style name="CustomTextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:textAppearance">@style/TextAppearance.Body</item>
     </style>
+
     <style name="TextAppearance.Heading1" parent="">
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="TextAppearance.Heading2" parent="">
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="TextAppearance.Heading3" parent="">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="TextAppearance.Body" parent="">
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TextAppearance.SectionTitle" parent="">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- Alert dialog style -->
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Body.Text</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text
+        </item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Body.Text
+        </item>
         <item name="buttonBarPositiveButtonStyle">@style/Widget.App.PositiveButton</item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.App.NegativeButton</item>
     </style>
+
     <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.Material3">
         <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
         <item name="backgroundInsetStart">@dimen/activity_horizontal_margin</item>
@@ -103,6 +117,7 @@
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.PositiveButton</item>
     </style>
+
     <style name="ThemeOverlay.App.PositiveButton" parent="ThemeOverlay.Material3.Button">
         <item name="colorContainer">?attr/colorPrimary</item>
         <item name="colorOnContainer">?attr/colorOnPrimary</item>
@@ -113,6 +128,7 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.NegativeButton</item>
         <item name="android:layout_marginEnd">@dimen/s_horizontal_margin</item>
     </style>
+
     <style name="ThemeOverlay.App.NegativeButton" parent="ThemeOverlay.Material3.Button.TonalButton">
         <item name="colorContainer">@color/gray_200</item>
         <item name="colorOnContainer">@color/white</item>
@@ -125,6 +141,7 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="android:textAppearance">@style/TextAppearance.SearchBar</item>
     </style>
+
     <style name="TextAppearance.SearchBar" parent="TextAppearance.Material3.SearchBar">
         <item name="android:textColorHint">@color/gray_300</item>
         <item name="android:textSize">16sp</item>
@@ -136,4 +153,13 @@
     </style>
 
     <style name="Theme.Nest" parent="Base.Theme.Nest" />
+
+    <style name="Theme.Nest.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Nest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Nest.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

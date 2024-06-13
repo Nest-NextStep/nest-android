@@ -28,14 +28,16 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-//            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+//            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
+            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
         }
 
         debug {
-            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
-//            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+//            buildConfigField("String", "API_URL", "\"https://story-api.dicoding.dev/v1/\"")
+            buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
+
         }
+
     }
 
     compileOptions {
@@ -75,6 +77,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.runtime.livedata)
 
     //testing
     testImplementation(libs.junit)
@@ -103,6 +106,9 @@ dependencies {
 
     //time picker
     implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
+
+    //coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
 
     debugImplementation(libs.androidx.ui.tooling)
 }

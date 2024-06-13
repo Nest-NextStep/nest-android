@@ -521,7 +521,7 @@ class AddTaskFragment : Fragment() {
                             val task = Task(
                                 id = 1,
                                 title = titleText.text,
-                                date = LocalDate.now(),
+                                date = Calendar.getInstance().time,
                                 startTime = taskStartTime,
                                 endTime = taskEndTime,
                                 duration = addTaskViewModel.duration.value ?: 60,

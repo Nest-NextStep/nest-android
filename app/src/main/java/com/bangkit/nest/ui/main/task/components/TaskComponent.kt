@@ -18,14 +18,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,13 +35,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.Task
 import com.bangkit.nest.ui.bodyTextStyle
-import java.time.LocalDate
+import com.bangkit.nest.ui.subBodyTextStyle
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
@@ -50,15 +58,23 @@ fun TaskComponent(
     onEdit: (Int) -> Unit,
     onComplete: (Int) -> Unit,
     onPomodoro: (Int) -> Unit,
-    onDelete: (Int) -> Unit = {},
     animDelay: Int = 100
 ) {
-
     val alphaAnimation = remember { Animatable(initialValue = 0f) }
 
     LaunchedEffect(animDelay) {
         alphaAnimation.animateTo(targetValue = 1f, animationSpec = tween(1000, animDelay))
     }
+
+    val priorityColor = when (task.priority) {
+        "Low" -> colorResource(R.color.green)
+        "Medium" -> colorResource(R.color.yellow)
+        "High" -> colorResource(R.color.soft_red)
+        else -> Color.Gray
+    }
+
+    val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
+    val timeFormatter = DateTimeFormatter.ofPattern("hh:mm a")
 
     Box(
         modifier = Modifier
@@ -66,8 +82,9 @@ fun TaskComponent(
                 alpha = alphaAnimation.value
             }
             .fillMaxWidth()
+            .height(85.dp)
             .background(
-                Color.Blue,
+                priorityColor,
                 RoundedCornerShape(
                     topStart = 8.dp,
                     bottomStart = 8.dp,
@@ -75,7 +92,17 @@ fun TaskComponent(
                     bottomEnd = 20.dp
                 )
             )
-            .padding(start = 10.dp)
+            .border(
+                width = 1.dp,
+                color = colorResource(R.color.gray_variant),
+                shape = RoundedCornerShape(
+                    topStart = 8.dp,
+                    bottomStart = 8.dp,
+                    topEnd = 8.dp,
+                    bottomEnd = 8.dp
+                )
+            )
+            .padding(start = 16.dp)
             .clickable {
                 onEdit(task.id)
             }
@@ -83,18 +110,20 @@ fun TaskComponent(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(85.dp)
                 .background(
-                    MaterialTheme.colorScheme.secondary,
+                    Color.White,
                     RoundedCornerShape(
                         topEnd = 8.dp,
                         bottomEnd = 8.dp
                     )
                 )
-                .padding(start = 8.dp, top = 10.dp, end = 8.dp, bottom = 16.dp)
+                .padding(start = 8.dp, top = 10.dp, end = 8.dp, bottom = 10.dp)
         ) {
-
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -112,25 +141,24 @@ fun TaskComponent(
                             modifier = Modifier.size(20.dp)
                         )
                     } else {
-                        Box(modifier = Modifier
-                            .size(20.dp)
-                            .border(
-                                width = 2.dp,
-                                color = MaterialTheme.colorScheme.onSecondary,
-                                shape = CircleShape
-                            ),
+                        Box(
+                            modifier = Modifier
+                                .size(20.dp)
+                                .border(
+                                    width = 2.dp,
+                                    color = colorResource(R.color.purple),
+                                    shape = CircleShape
+                                ),
                             contentAlignment = Alignment.Center,
-                            content = {})
+                            content = {}
+                        )
                     }
-
-
                 }
                 Row(
                     modifier = Modifier.weight(0.8f),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.Center
                 ) {
-
                     Column(verticalArrangement = Arrangement.Center) {
                         Text(
                             modifier = Modifier
@@ -138,65 +166,68 @@ fun TaskComponent(
                                 .basicMarquee(delayMillis = 1000),
                             text = task.title,
                             style = bodyTextStyle,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimary
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Black
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(4.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_timer),
+                                painter = painterResource(id = R.drawable.ic_calendar_today),
                                 contentDescription = null,
                                 modifier = Modifier.size(15.dp),
-                                tint = MaterialTheme.colorScheme.onSecondary
+                                tint = colorResource(R.color.gray_variant)
                             )
                             Text(
-                                text = "task.getFormattedTime()",
-                                style = bodyTextStyle,
-                                color = MaterialTheme.colorScheme.onSecondary
+                                text = dateFormatter.format(task.date),
+                                style = subBodyTextStyle, // Changed to subBodyTextStyle
+                                color = colorResource(R.color.gray_variant)
+                            )
+                            Divider(
+                                modifier = Modifier
+                                    .height(16.dp)
+                                    .padding(horizontal = 4.dp)
+                                    .width(1.dp),
+                                color = colorResource(R.color.gray_variant)
+                            )
+                            Text(
+                                text = "${task.startTime.format(timeFormatter)} - ${task.endTime.format(timeFormatter)}",
+                                style = subBodyTextStyle,
+                                color = colorResource(R.color.gray_variant)
                             )
                             if (task.isRepeated) {
+                                Divider(
+                                    modifier = Modifier
+                                        .height(16.dp)
+                                        .padding(horizontal = 4.dp)
+                                        .width(1.dp),
+                                    color = colorResource(R.color.gray_variant)
+                                )
                                 Icon(
                                     imageVector = Icons.Default.Refresh,
                                     contentDescription = null,
                                     modifier = Modifier.size(15.dp),
-                                    tint = MaterialTheme.colorScheme.onSecondary
+                                    tint = colorResource(R.color.gray_variant)
                                 )
                             }
                         }
                     }
-
                 }
-                if (!task.isCompleted && task.date.isEqual(LocalDate.now())) {
+                if (!task.isCompleted) {
                     IconButton(
                         onClick = { onPomodoro(task.id) },
                         modifier = Modifier.weight(0.1f)
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_timer),
-                            tint = MaterialTheme.colorScheme.onSecondary,
-                            contentDescription = null
-                        )
-                    }
-                }
-                if (task.date < LocalDate.now()) {
-                    IconButton(
-                        onClick = { onDelete(task.id) },
-                        modifier = Modifier.weight(0.1f)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            tint = MaterialTheme.colorScheme.onSecondary,
+                            tint = colorResource(R.color.black),
                             contentDescription = null
                         )
                     }
                 }
             }
         }
-
     }
 }
-
-//

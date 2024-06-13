@@ -7,6 +7,9 @@ import com.bangkit.nest.data.remote.response.DetailMajorResponse
 import com.bangkit.nest.data.remote.response.FindMajorResponse
 import com.bangkit.nest.data.remote.response.LoginResponse
 import com.bangkit.nest.data.remote.response.RegisterResponse
+import com.bangkit.nest.data.remote.response.TaskResponse
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
@@ -30,9 +33,13 @@ interface ApiService {
         @Path("id") id: Long
     ): DetailMajorResponse
 
-
     @GET("major/search")
     suspend fun findMajor (
         @Query("major_name") majorName: String
     ) : FindMajorResponse
+
+    @GET("task/user/{username}")
+    suspend fun getUserTasks(
+        @Path("username") username: String
+    ): Response<ResponseBody>
 }

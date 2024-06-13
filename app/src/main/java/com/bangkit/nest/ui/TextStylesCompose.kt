@@ -61,4 +61,9 @@ val bodyTextStyleMedium = TextStyle(
 
 )
 
+val subBodyTextStyle = TextStyle(
+    fontSize = 12.sp,
+    fontFamily = urbanistFontFamily
+)
+
 

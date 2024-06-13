@@ -3,6 +3,7 @@ package com.bangkit.nest.data.remote.response
 import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.Date
 
 data class TaskResponse(
     val tasks: List<Task>,
@@ -17,7 +18,7 @@ data class Task(
     val title: String,
 
     @SerializedName("task_date")
-    val date: LocalDate,
+    val date: Date,
 
     @SerializedName("task_startTime")
     val startTime: LocalTime,
