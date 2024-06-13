@@ -107,7 +107,6 @@ class CatalogFragment : Fragment() {
             }
         })
 
-
         binding?.searchEditText?.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE || event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER) {
                 hideKeyboard()
@@ -183,9 +182,9 @@ class CatalogFragment : Fragment() {
 
     private fun updateBottomPadding(isEmpty: Boolean) {
         val paddingInPixels = if (isEmpty) {
-            80.dpToPx(requireContext()) // Adjust this value based on your UI requirements
+            70.dpToPx(requireContext())
         } else {
-            32.dpToPx(requireContext()) // Adjust this value based on your UI requirements
+            32.dpToPx(requireContext())
         }
         binding?.recommendedMajorRecyclerView?.setPadding(
             0,

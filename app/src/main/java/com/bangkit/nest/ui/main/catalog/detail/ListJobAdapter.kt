@@ -11,7 +11,6 @@ import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.MajorJobItem
 import com.bangkit.nest.databinding.ItemJobBinding
 
-
 class ListJobAdapter() : ListAdapter<MajorJobItem, ListJobAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

@@ -1,7 +1,6 @@
 package com.bangkit.nest.ui.main.catalog.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -123,7 +122,6 @@ class CatalogDetailFragment : Fragment() {
                 .load(response.major?.majorCover)
                 .into(majorImageView)
 
-            Log.d("CatalogDetailFragment", response.toString())
             textViewMajorName.isVisible = true
             textViewMajorName.text = response.major?.majorName ?: ""
 

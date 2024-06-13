@@ -6,12 +6,10 @@ import androidx.lifecycle.liveData
 import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.response.AllMajorResponse
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
-import com.bangkit.nest.data.remote.response.FindMajorResponse
 import com.bangkit.nest.data.remote.response.MajorItem
-import com.bangkit.nest.data.remote.response.TokenResponse
 import com.bangkit.nest.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import retrofit2.HttpException
 
 class MajorRepository private constructor(
     private val apiService: ApiService,
@@ -42,6 +40,9 @@ class MajorRepository private constructor(
             )
 
             emit(Result.Success(categorizedResponse))
+        } catch (e: HttpException) {
+            Log.e(TAG, "Failed to get all major: ${e.message.toString()} ")
+            emit(Result.Error(e.message.toString()))
         } catch (e: Exception) {
             Log.e(TAG, "Failed to get all major: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
@@ -57,6 +58,9 @@ class MajorRepository private constructor(
             }
 
             emit(Result.Success(response))
+        } catch (e: HttpException) {
+            Log.e(TAG, "Failed to get detail major: ${e.message.toString()} ")
+            emit(Result.Error(e.message.toString()))
         } catch (e: Exception) {
             Log.e(TAG, "Failed to get detail major: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
@@ -87,8 +91,11 @@ class MajorRepository private constructor(
             )
 
             emit(Result.Success(categorizedResponse))
+        } catch (e: HttpException) {
+            Log.e(TAG, "Failed to search major: ${e.message.toString()} ")
+            emit(Result.Error(e.message.toString()))
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to get detail major: ${e.message.toString()} ")
+            Log.e(TAG, "Failed to search major: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
         }
     }

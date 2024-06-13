@@ -2,7 +2,6 @@ package com.bangkit.nest.ui.main.catalog
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
