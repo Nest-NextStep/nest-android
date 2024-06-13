@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.MajorItem
+import com.bangkit.nest.data.repository.MajorRepository
 import com.bangkit.nest.databinding.ItemAnotherMajorBinding
 import com.bangkit.nest.databinding.ItemRecommendedMajorBinding
 
