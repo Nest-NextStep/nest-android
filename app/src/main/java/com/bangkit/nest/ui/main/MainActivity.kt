@@ -11,7 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.bangkit.nest.R
 import com.bangkit.nest.databinding.ActivityMainBinding
 import com.bangkit.nest.ui.auth.AuthActivity
-//import com.bangkit.nest.utils.ViewModelFactory
+import com.bangkit.nest.utils.ViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

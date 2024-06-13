@@ -37,7 +37,6 @@ android {
             buildConfigField("String", "API_URL", "\"https://edb58d4e-5f7e-4c10-925d-5aa1968debee.mock.pstmn.io\"")
 
         }
-
     }
 
     compileOptions {
