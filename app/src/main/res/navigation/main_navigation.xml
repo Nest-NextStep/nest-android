@@ -26,6 +26,9 @@
         android:name="com.bangkit.nest.ui.main.catalog.detail.CatalogDetailFragment"
         android:label="@string/title_catalog"
         tools:layout="@layout/fragment_catalog_detail" >
+        <argument
+            android:name="itemId"
+            app:argType="integer" />
         <action
             android:id="@+id/action_catalogDetail_to_catalog"
             app:destination="@id/navigation_catalog" />

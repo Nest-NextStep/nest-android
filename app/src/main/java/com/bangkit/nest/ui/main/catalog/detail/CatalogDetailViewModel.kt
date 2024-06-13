@@ -11,7 +11,7 @@ class CatalogDetailViewModel(
     private val majorRepository: MajorRepository
 ) : ViewModel() {
 
-    fun getDetailMajor() =
-        majorRepository.getDetailMajor()
+    fun getDetailMajor(id: Int) =
+        majorRepository.getDetailMajor(id)
 
 }

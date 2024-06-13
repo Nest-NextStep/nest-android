@@ -216,10 +216,6 @@ class CatalogFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
-    fun saveMajorId(id: Int) {
-        viewModel.saveMajorId(id)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

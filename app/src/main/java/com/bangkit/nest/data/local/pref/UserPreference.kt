@@ -78,17 +78,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         return Json.decodeFromString(namesString)
     }
 
-    suspend fun getMajorId(): Int {
-        val preferences = dataStore.data.first()
-        return preferences[MAJOR_ID_KEY] ?: return -1
-    }
-
-    suspend fun saveMajorId(id: Int) {
-        dataStore.edit { preferences ->
-            preferences[MAJOR_ID_KEY] = id
-        }
-    }
-
     companion object {
         @Volatile
         private var INSTANCE: UserPreference? = null
@@ -99,7 +88,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("refreshToken")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
         private val MAJORS_KEY = stringPreferencesKey("recommendedMajors")
-        private val MAJOR_ID_KEY = intPreferencesKey("majorId")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

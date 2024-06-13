@@ -1,6 +1,7 @@
 package com.bangkit.nest.ui.main.catalog
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,9 +11,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.MajorItem
-import com.bangkit.nest.data.repository.MajorRepository
 import com.bangkit.nest.databinding.ItemAnotherMajorBinding
 import com.bangkit.nest.databinding.ItemRecommendedMajorBinding
+
 
 class ListMajorAdapter(
     private val type: String,
@@ -38,7 +39,6 @@ class ListMajorAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Log.d("item", "$holder $position")
         val item = getItem(position)
         when (holder) {
             is RecommendedMajorViewHolder -> holder.bind(item)
@@ -61,8 +61,12 @@ class ListMajorAdapter(
             binding.textViewMajorDescription.text = item.majorDescription
 
             itemView.setOnClickListener {
-                item.majorId?.let { fragment.saveMajorId(it) }
-                fragment.findNavController().navigate(R.id.action_catalog_to_catalogDetail)
+                val bundle = Bundle()
+                item.majorId?.let {
+                    bundle.putInt("itemId", it)
+                }
+
+                fragment.findNavController().navigate(R.id.action_catalog_to_catalogDetail, bundle)
             }
         }
     }
@@ -74,9 +78,12 @@ class ListMajorAdapter(
             binding.textViewMajorDescription.text = item.majorDescription
 
             itemView.setOnClickListener {
-                Log.d("ListMajorAdapter", "clicked")
-                item.majorId?.let { fragment.saveMajorId(it) }
-                fragment.findNavController().navigate(R.id.action_catalog_to_catalogDetail)
+                val bundle = Bundle()
+                item.majorId?.let {
+                    bundle.putInt("itemId", it)
+                }
+
+                fragment.findNavController().navigate(R.id.action_catalog_to_catalogDetail, bundle)
             }
         }
     }

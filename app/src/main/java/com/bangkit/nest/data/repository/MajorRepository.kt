@@ -48,10 +48,9 @@ class MajorRepository private constructor(
         }
     }
 
-    fun getDetailMajor(): LiveData<Result<DetailMajorResponse>> = liveData {
+    fun getDetailMajor(id: Int): LiveData<Result<DetailMajorResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val id = userPrefRepository.getMajorId()
             val response = apiService.getMajorDetail(id)
             if (response.major == null) {
                 emit(Result.Error("This major does not exist"))
@@ -91,12 +90,6 @@ class MajorRepository private constructor(
         } catch (e: Exception) {
             Log.e(TAG, "Failed to get detail major: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
-        }
-    }
-
-    fun saveMajorId(id: Int) {
-        runBlocking {
-            userPrefRepository.saveMajorId(id);
         }
     }
 
