@@ -1,13 +1,10 @@
 package com.bangkit.nest.ui.main.profile
 
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -19,17 +16,8 @@ import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.response.MajorItem
 import com.bangkit.nest.data.remote.response.ProfileData
 import com.bangkit.nest.databinding.FragmentProfileBinding
-import com.bangkit.nest.ui.main.catalog.detail.ListUniversityAdapter
 import com.bangkit.nest.utils.ViewModelFactory
 import com.bangkit.nest.utils.convertDate
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.request.RequestOptions
-import com.google.android.flexbox.AlignItems
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexWrap
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ProfileFragment : Fragment() {

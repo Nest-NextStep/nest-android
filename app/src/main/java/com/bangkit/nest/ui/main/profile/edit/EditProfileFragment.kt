@@ -2,22 +2,15 @@ package com.bangkit.nest.ui.main.profile.edit
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
-import android.widget.ListPopupWindow
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -27,7 +20,6 @@ import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.request.ProfileRequest
 import com.bangkit.nest.databinding.FragmentEditProfileBinding
 import com.bangkit.nest.ui.main.MainActivity
-import com.bangkit.nest.ui.main.profile.ProfileViewModel
 import com.bangkit.nest.utils.ViewModelFactory
 import com.bangkit.nest.utils.convertDate
 import com.bangkit.nest.utils.dpToPixels
@@ -36,8 +28,6 @@ import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

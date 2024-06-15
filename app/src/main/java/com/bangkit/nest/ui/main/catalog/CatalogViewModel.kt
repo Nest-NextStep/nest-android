@@ -1,13 +1,11 @@
 package com.bangkit.nest.ui.main.catalog
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.nest.data.repository.MajorRepository
 import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.response.MajorItem
-import com.bangkit.nest.data.remote.response.ProfileData
 
 class CatalogViewModel(
     private val majorRepository: MajorRepository

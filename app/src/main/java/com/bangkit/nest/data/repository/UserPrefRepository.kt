@@ -1,10 +1,8 @@
 package com.bangkit.nest.data.repository
 
-import androidx.datastore.preferences.core.edit
 import com.bangkit.nest.data.local.entity.UserModel
 import com.bangkit.nest.data.local.pref.UserPreference
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 
 class UserPrefRepository private constructor(
     private val userPreference: UserPreference
