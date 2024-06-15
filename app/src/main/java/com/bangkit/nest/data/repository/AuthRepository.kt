@@ -27,7 +27,15 @@ class AuthRepository private constructor(
             // save session
             userPrefRepository.saveSession(UserModel(email, response.username, response.accessToken, response.refreshToken, true))
             val majors: List<String> = response.recommendedMajor?.map { it.majorName.orEmpty() } ?: emptyList()
-            userPrefRepository.saveMajors(majors)
+            if (majors.isNotEmpty()) {
+                userPrefRepository.saveMajors(majors)
+                userPrefRepository.saveIsProfileCompleted(true)
+            } else {
+                val responseProfile = apiService.getProfileData(response.username)
+                if (responseProfile.profileData.userGender != null) {
+                    userPrefRepository.saveIsProfileCompleted(true)
+                }
+            }
 
             emit(Result.Success(response))
         } catch (e: HttpException) {

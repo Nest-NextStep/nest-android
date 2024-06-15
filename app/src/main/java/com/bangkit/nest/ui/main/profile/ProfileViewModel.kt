@@ -1,5 +1,6 @@
 package com.bangkit.nest.ui.main.profile
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,43 +28,15 @@ class ProfileViewModel(
 
     private var isDataLoaded = false
 
-    init {
-        getProfileData()
+    fun reloadProfileData() {
+        isDataLoaded = false
     }
 
-    fun reloadProfileDataIfNeeded() {
-        profileRepository.getProfileData().observeForever { result ->
-            when (result) {
-                is Result.Success -> {
-                    val newProfileData = result.data.profileData
-                    val newMajorData = result.data.majorData
-
-                    if (isNewData(newProfileData, newMajorData)) {
-                        _profileData.value = newProfileData
-                        _majorData.value = newMajorData
-                        isDataLoaded = true
-                    }
-                }
-                is Result.Error -> {
-                    _state.value = Result.Error(result.error)
-                }
-                is Result.Loading -> {
-
-                }
-            }
-        }
-    }
-
-    private fun isNewData(newProfileData: ProfileData?, newMajorData: List<MajorItem>): Boolean {
-        return newProfileData != _profileData.value || newMajorData != _majorData.value
-    }
-
-    private fun getProfileData() {
+    fun getProfileData() {
         if (isDataLoaded) {
             _state.value = Result.Success(Unit)
             return
         }
-
         profileRepository.getProfileData().observeForever { result ->
             when (result) {
                 is Result.Loading -> {

@@ -1,8 +1,10 @@
 package com.bangkit.nest.data.repository
 
+import androidx.datastore.preferences.core.edit
 import com.bangkit.nest.data.local.entity.UserModel
 import com.bangkit.nest.data.local.pref.UserPreference
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 
 class UserPrefRepository private constructor(
     private val userPreference: UserPreference
@@ -26,6 +28,14 @@ class UserPrefRepository private constructor(
 
     suspend fun getToken(): String {
         return userPreference.getToken()
+    }
+
+    suspend fun getIsProfileCompleted(): Boolean {
+        return userPreference.getIsProfileCompleted()
+    }
+
+    suspend fun saveIsProfileCompleted(isCompleted: Boolean) {
+        userPreference.saveIsProfileCompleted(isCompleted)
     }
 
     suspend fun getRefreshToken(): String {

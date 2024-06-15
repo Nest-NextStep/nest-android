@@ -44,6 +44,16 @@ data class ProfileData(
 	val age: Int? = null,
 
 	@field:SerializedName("username")
-	val username: String? = null
+	val username: String? = null,
+
+	var userEmail: String? = null
 )
 
+data class EditProfileResponse(
+
+	@field:SerializedName("message")
+	val message: String? = null,
+
+	@field:SerializedName("status")
+	val status: String? = null
+)

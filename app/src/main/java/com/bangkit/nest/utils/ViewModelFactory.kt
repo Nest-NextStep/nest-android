@@ -14,6 +14,7 @@ import com.bangkit.nest.ui.main.MainViewModel
 import com.bangkit.nest.ui.main.catalog.CatalogViewModel
 import com.bangkit.nest.ui.main.catalog.detail.CatalogDetailViewModel
 import com.bangkit.nest.ui.main.profile.ProfileViewModel
+import com.bangkit.nest.ui.main.profile.edit.EditProfileViewModel
 
 class ViewModelFactory(
     private val userPrefRepository: UserPrefRepository,
@@ -35,6 +36,10 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(userPrefRepository, profileRepository) as T
+            }
+
+            modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
+                EditProfileViewModel(profileRepository) as T
             }
 
             modelClass.isAssignableFrom(CatalogViewModel::class.java) -> {

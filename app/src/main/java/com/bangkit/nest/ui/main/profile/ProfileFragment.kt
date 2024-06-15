@@ -1,6 +1,7 @@
 package com.bangkit.nest.ui.main.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.nest.R
 import com.bangkit.nest.data.Result
@@ -19,6 +21,7 @@ import com.bangkit.nest.data.remote.response.ProfileData
 import com.bangkit.nest.databinding.FragmentProfileBinding
 import com.bangkit.nest.ui.main.catalog.detail.ListUniversityAdapter
 import com.bangkit.nest.utils.ViewModelFactory
+import com.bangkit.nest.utils.convertDate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
@@ -38,6 +41,8 @@ class ProfileFragment : Fragment() {
         ViewModelFactory.getInstance(requireContext())
     }
 
+    private val bundle = Bundle()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,15 +59,15 @@ class ProfileFragment : Fragment() {
         setupLogout()
         setupAdapter()
         setupEditProfile()
-
     }
 
     private fun setupEditProfile() {
         binding?.editProfileButton?.setOnClickListener {
-            Toast.makeText(requireContext(), "Button clicked", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_profile_to_editProfile, bundle)
         }
     }
     private fun observeViewModel() {
+        viewModel.getProfileData()
         viewModel.state.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
@@ -93,18 +98,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-//        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        layoutManager.gravity = Gravity.CENTER_HORIZONTAL
-//        binding?.majorsRecyclerView?.layoutManager.layoutManager = layoutManager
-
-//        val layoutManager = FlexboxLayoutManager(context).apply {
-//            justifyContent = JustifyContent.CENTER
-//            alignItems = AlignItems.CENTER
-//            flexDirection = FlexDirection.ROW
-//            flexWrap = FlexWrap.WRAP
-//        }
-//        binding?.majorsRecyclerView?.layoutManager = layoutManager
-
         binding?.majorsRecyclerView?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
@@ -118,6 +111,25 @@ class ProfileFragment : Fragment() {
             profileImage.isVisible = false
             majorsTextView.isVisible = false
             majorsRecyclerView.isVisible = false
+            noMajorsTextView.isVisible = false
+
+            userDataCard.isVisible = false
+            fullNameTitleTextView.isVisible = false
+            fullNameTextView.isVisible = false
+            emailTitleTextView.isVisible = false
+            emailTextView.isVisible = false
+            birthDateTitleTextView.isVisible = false
+            birthDateTextView.isVisible = false
+            schoolTitleTextView.isVisible = false
+            schoolTextView.isVisible = false
+            religionTitleTextView.isVisible = false
+            religionTextView.isVisible = false
+            engNatTitleTextView.isVisible = false
+            engNatTextView.isVisible = false
+
+            noUserDataCard.isVisible = false
+            notCompletedTextView.isVisible = false
+            completeTextView.isVisible = false
         }
     }
 
@@ -132,6 +144,18 @@ class ProfileFragment : Fragment() {
             val usernameText = "Hello, ${profileData?.username}!"
             usernameTextView.text = usernameText
 
+            majorsTextView.isVisible = true
+            if (majorData.isNotEmpty()) {
+                noMajorsTextView.isVisible = false
+                majorsRecyclerView.isVisible = true
+                val adapter = ListRecommendedMajorAdapter()
+                adapter.submitList(majorData)
+                majorsRecyclerView.adapter = adapter
+            } else {
+                majorsRecyclerView.isVisible = false
+                noMajorsTextView.isVisible = true
+            }
+
             if (profileData?.userGender != null) {
                 if (profileData.userGender.equals("laki-laki", ignoreCase = true)) {
                     profileImage.setImageResource(R.drawable.ic_male_profile)
@@ -140,16 +164,68 @@ class ProfileFragment : Fragment() {
                 } else {
                         profileImage.setImageResource(R.drawable.ic_profile)
                 }
+                bundle.putString("gender", profileData.userGender)
+                bundle.putString("education", profileData.userEducation)
+
+                userDataCard.isVisible = true
+                fullNameTitleTextView.isVisible = true
+                fullNameTextView.isVisible = true
+                fullNameTextView.text = profileData.userFullname
+                bundle.putString("fullName", profileData.userFullname)
+
+                emailTitleTextView.isVisible = true
+                emailTextView.isVisible = true
+                emailTextView.text = profileData.userEmail
+
+                birthDateTitleTextView.isVisible = true
+                birthDateTextView.isVisible = true
+                val birthDate = profileData.userBirthDate?.let { convertDate(it, false) }
+                birthDateTextView.text = birthDate
+                bundle.putString("birthDate", birthDate)
+
+                schoolTitleTextView.isVisible = true
+                schoolTextView.isVisible = true
+                schoolTextView.text = profileData.userSchool
+                bundle.putString("school", profileData.userSchool)
+
+                religionTitleTextView.isVisible = true
+                religionTextView.isVisible = true
+                religionTextView.text = profileData.userReligion
+                bundle.putString("religion", profileData.userReligion)
+
+                engNatTitleTextView.isVisible = true
+                engNatTextView.isVisible = true
+                engNatTextView.text = if (profileData.userEngNat.equals(getString(R.string.ya), ignoreCase = true)) {
+                    getString(R.string.yes)
+                } else {
+                    getString(R.string.no)
+                }
+                bundle.putString("engNat", profileData.userEngNat)
+
+                noUserDataCard.isVisible = false
+                notCompletedTextView.isVisible = false
+                completeTextView.isVisible = false
             } else {
                 profileImage.setImageResource(R.drawable.ic_profile)
+
+                noUserDataCard.isVisible = true
+                notCompletedTextView.isVisible = true
+                completeTextView.isVisible = true
+
+                userDataCard.isVisible = false
+                fullNameTitleTextView.isVisible = false
+                fullNameTextView.isVisible = false
+
+                emailTitleTextView.isVisible = false
+                emailTextView.isVisible = false
+
+                birthDateTitleTextView.isVisible = false
+                birthDateTextView.isVisible = false
+
+                schoolTitleTextView.isVisible = false
+                schoolTextView.isVisible = false
             }
             profileImage.isVisible = true
-
-            majorsTextView.isVisible = true
-            majorsRecyclerView.isVisible = true
-            val adapter = ListRecommendedMajorAdapter()
-            adapter.submitList(majorData)
-            majorsRecyclerView.adapter = adapter
         }
     }
 
@@ -162,6 +238,25 @@ class ProfileFragment : Fragment() {
             profileImage.isVisible = false
             majorsTextView.isVisible = false
             majorsRecyclerView.isVisible = false
+            noMajorsTextView.isVisible = false
+
+            userDataCard.isVisible = false
+            fullNameTitleTextView.isVisible = false
+            fullNameTextView.isVisible = false
+            emailTitleTextView.isVisible = false
+            emailTextView.isVisible = false
+            birthDateTitleTextView.isVisible = false
+            birthDateTextView.isVisible = false
+            schoolTitleTextView.isVisible = false
+            schoolTextView.isVisible = false
+            religionTitleTextView.isVisible = false
+            religionTextView.isVisible = false
+            engNatTitleTextView.isVisible = false
+            engNatTextView.isVisible = false
+
+            noUserDataCard.isVisible = false
+            notCompletedTextView.isVisible = false
+            completeTextView.isVisible = false
 
             errorTextView.isVisible = true
             errorTextView.text = errorMessage
@@ -170,7 +265,7 @@ class ProfileFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.reloadProfileDataIfNeeded() // Reload profile data every time the fragment is resumed
+        viewModel.reloadProfileData()
     }
 
     override fun onDestroyView() {

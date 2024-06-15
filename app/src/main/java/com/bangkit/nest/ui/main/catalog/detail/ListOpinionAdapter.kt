@@ -24,7 +24,7 @@ class ListOpinionAdapter() : ListAdapter<MajorOpinionItem, ListOpinionAdapter.My
         if (position == 0) {
             val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
             layoutParams.marginStart =
-                holder.itemView.context.resources.getDimension(R.dimen.xl_margin)
+                holder.itemView.context.resources.getDimension(R.dimen.l_margin)
                     .toInt()
             holder.itemView.layoutParams = layoutParams
         }
@@ -32,7 +32,7 @@ class ListOpinionAdapter() : ListAdapter<MajorOpinionItem, ListOpinionAdapter.My
         if (position == itemCount - 1) {
             val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
             layoutParams.marginEnd =
-                holder.itemView.context.resources.getDimension(R.dimen.xl_margin)
+                holder.itemView.context.resources.getDimension(R.dimen.l_margin)
                     .toInt()
             holder.itemView.layoutParams = layoutParams
         }

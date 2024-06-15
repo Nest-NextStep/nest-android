@@ -58,6 +58,7 @@ class CatalogFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        viewModel.getAllMajor()
         viewModel.state.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
@@ -216,7 +217,7 @@ class CatalogFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.reloadAllMajorIfNeeded() // Reload profile data every time the fragment is resumed
+        viewModel.reloadAllMajor()
     }
 
     override fun onDestroyView() {

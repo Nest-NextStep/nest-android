@@ -1,5 +1,6 @@
 package com.bangkit.nest.ui.main.catalog
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,36 +24,8 @@ class CatalogViewModel(
 
     private var isDataLoaded = false
 
-    init {
-        getAllMajor()
-    }
-
-    fun reloadAllMajorIfNeeded() {
-        majorRepository.getAllMajor().observeForever { result ->
-            when (result) {
-                is Result.Success -> {
-                    val newRecommendedMajor = result.data.majorRecommended
-                    val newAllMajor = result.data.majorsAll
-
-                    if (isNewData(newRecommendedMajor, newAllMajor)) {
-                        _majorRecommended.value = result.data.majorRecommended
-                        _majorsAll.value = result.data.majorsAll
-                        _state.value = Result.Success(Unit)
-                        isDataLoaded = true
-                    }
-                }
-                is Result.Error -> {
-                    _state.value = Result.Error(result.error)
-                }
-                is Result.Loading -> {
-
-                }
-            }
-        }
-    }
-
-    private fun isNewData(newRecommendedMajor: List<MajorItem>, newAllMajor: List<MajorItem>): Boolean {
-        return newRecommendedMajor != _majorRecommended.value || newAllMajor != _majorsAll.value
+    fun reloadAllMajor() {
+        isDataLoaded = false
     }
 
     fun getAllMajor() {
