@@ -58,7 +58,6 @@ class CatalogFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.getAllMajor()
         viewModel.state.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
@@ -215,8 +214,8 @@ class CatalogFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onResume() {
+        super.onResume()
         viewModel.reloadAllMajor()
     }
 
