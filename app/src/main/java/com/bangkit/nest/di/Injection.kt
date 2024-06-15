@@ -7,6 +7,7 @@ import com.bangkit.nest.data.remote.retrofit.ApiConfig
 import com.bangkit.nest.data.remote.retrofit.AuthInterceptor
 import com.bangkit.nest.data.repository.AuthRepository
 import com.bangkit.nest.data.repository.MajorRepository
+import com.bangkit.nest.data.repository.ProfileRepository
 import com.bangkit.nest.data.repository.UserPrefRepository
 
 object Injection {
@@ -27,6 +28,14 @@ object Injection {
     fun provideMajorRepository(context: Context): MajorRepository {
         val apiService = ApiConfig(provideAuthInterceptor(context)).getApiService()
         return MajorRepository.getInstance(
+            apiService,
+            provideUserPrefRepository(context)
+        )
+    }
+
+    fun provideProfileRepository(context: Context): ProfileRepository {
+        val apiService = ApiConfig(provideAuthInterceptor(context)).getApiService()
+        return ProfileRepository.getInstance(
             apiService,
             provideUserPrefRepository(context)
         )

@@ -22,6 +22,10 @@ class CatalogViewModel(
 
     private var isDataLoaded = false
 
+    fun reloadAllMajor() {
+        isDataLoaded = false
+    }
+
     fun getAllMajor() {
         if (isDataLoaded) {
             _state.value = Result.Success(Unit)

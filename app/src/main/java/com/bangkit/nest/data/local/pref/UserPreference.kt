@@ -40,9 +40,20 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
+    suspend fun getIsProfileCompleted(): Boolean {
+        val preferences = dataStore.data.first()
+        return preferences[IS_PROFILE_COMPLETED_KEY] ?: return false
+    }
+
+    suspend fun saveIsProfileCompleted(isCompleted: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[IS_PROFILE_COMPLETED_KEY] = isCompleted
+        }
+    }
+
     suspend fun getRefreshToken(): String {
         val preferences = dataStore.data.first()
-        return preferences[REFRESH_TOKEN_KEY]!!
+        return preferences[REFRESH_TOKEN_KEY] ?: return  ""
     }
 
     suspend fun getToken(): String {
@@ -85,6 +96,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("refreshToken")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
         private val MAJORS_KEY = stringPreferencesKey("recommendedMajors")
+        private val IS_PROFILE_COMPLETED_KEY = booleanPreferencesKey("isProfileCompleted")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

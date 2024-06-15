@@ -1,4 +1,4 @@
-package com.bangkit.nest.ui.main.catalog.detail
+package com.bangkit.nest.ui.main.profile
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.nest.R
-import com.bangkit.nest.data.remote.response.MajorJobItem
-import com.bangkit.nest.databinding.ItemJobBinding
+import com.bangkit.nest.data.remote.response.MajorItem
+import com.bangkit.nest.databinding.ItemRecommendedMajorProfileBinding
 
-class ListJobAdapter() : ListAdapter<MajorJobItem, ListJobAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class ListRecommendedMajorAdapter() : ListAdapter<MajorItem, ListRecommendedMajorAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemJobBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemRecommendedMajorProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
@@ -39,29 +39,24 @@ class ListJobAdapter() : ListAdapter<MajorJobItem, ListJobAdapter.MyViewHolder>(
         }
     }
 
-    class MyViewHolder(private val binding: ItemJobBinding) : RecyclerView.ViewHolder(
+    class MyViewHolder(private val binding: ItemRecommendedMajorProfileBinding) : RecyclerView.ViewHolder(
         binding.root
     ) {
-
-        fun bind(job: MajorJobItem) {
-            binding.textViewJobName.text = job.jobsName
-            binding.textViewJobDescription.text = job.jobsDescription
-
-            val salary = "Salary: ${job.jobsSalary}"
-            binding.textViewJobSalary.text = salary
+        fun bind(major: MajorItem) {
+            binding.majorNameTextView.text = major.majorName
         }
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<MajorJobItem> =
-            object : DiffUtil.ItemCallback<MajorJobItem>() {
-                override fun areItemsTheSame(oldItem: MajorJobItem, newItem: MajorJobItem): Boolean {
-                    return oldItem.jobsId == newItem.jobsId
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<MajorItem> =
+            object : DiffUtil.ItemCallback<MajorItem>() {
+                override fun areItemsTheSame(oldItem: MajorItem, newItem: MajorItem): Boolean {
+                    return oldItem.majorId == newItem.majorId
                 }
 
                 @SuppressLint("DiffUtilEquals")
-                override fun areContentsTheSame(oldItem: MajorJobItem, newItem: MajorJobItem): Boolean {
-                    return oldItem.jobsName == newItem.jobsName
+                override fun areContentsTheSame(oldItem: MajorItem, newItem: MajorItem): Boolean {
+                    return oldItem.majorName == newItem.majorName
                 }
             }
     }

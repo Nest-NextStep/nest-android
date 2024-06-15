@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.bangkit.nest.R
 import com.bangkit.nest.data.Result
@@ -100,14 +101,20 @@ class RegisterFragment : Fragment() {
                     if (result != null) {
                         when (result) {
                             is Result.Loading -> {
-                                binding?.progressBar?.visibility = View.VISIBLE
+                                binding?.progressBar?.isVisible = true
+                                binding?.registerButton?.text = ""
+                                binding?.registerButton?.isEnabled = false
                             }
                             is Result.Success -> {
-                                binding?.progressBar?.visibility = View.GONE
+                                binding?.progressBar?.isVisible = false
+                                binding?.registerButton?.text = getString(R.string.register)
+                                binding?.registerButton?.isEnabled = true
                                 showAlertDialog(isError = false)
                             }
                             is Result.Error -> {
-                                binding?.progressBar?.visibility = View.GONE
+                                binding?.progressBar?.isVisible = false
+                                binding?.registerButton?.text = getString(R.string.register)
+                                binding?.registerButton?.isEnabled = true
                                 showAlertDialog(isError = true, result.error)
                             }
                         }

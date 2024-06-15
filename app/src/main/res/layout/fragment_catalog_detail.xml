@@ -13,7 +13,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginTop="32dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="16dp"
         android:backgroundTint="?attr/colorPrimary"
         android:contentDescription="@string/back"
         app:srcCompat="@drawable/ic_back_arrow"
@@ -37,25 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
-
-    <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--            android:layout_gravity="top|start"-->
-    <!--            android:id="@+id/backButton"-->
-    <!--            android:layout_width="36dp"-->
-    <!--            android:layout_height="36dp"-->
-    <!--            android:layout_margin="32dp"-->
-    <!--            android:backgroundTint="?attr/colorPrimary"-->
-    <!--            android:contentDescription="@string/back"-->
-    <!--            app:srcCompat="@drawable/ic_back_arrow"-->
-    <!--            app:tint="@color/white"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            app:fabCustomSize="36dp"-->
-    <!--            app:shapeAppearanceOverlay="@style/RoundedFAB"-->
-    <!--            app:layout_anchor="@id/constraintLayout"-->
-    <!--        app:layout_anchorGravity="top|start"-->
-    <!--        />-->
-
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_gravity="center_vertical"
@@ -82,8 +63,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_gravity="center"
-                android:textAppearance="@style/TextAppearance.Heading3"
                 android:textColor="@color/red"
+                android:textAppearance="@style/TextAppearance.Heading5"
                 android:visibility="invisible"
                 />
 
@@ -113,7 +94,7 @@
                 android:id="@+id/textViewMajorDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="10dp"
                 tools:text="@string/major_description"
                 app:layout_constraintTop_toBottomOf="@+id/textViewMajorName"
@@ -121,7 +102,7 @@
             <TextView
                 android:id="@+id/universityListTextView"
                 android:visibility="invisible"
-                android:layout_marginHorizontal="32dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="32dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -141,7 +122,7 @@
                 android:id="@+id/universityRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
+                android:layout_marginHorizontal="24dp"
                 app:layout_constraintTop_toBottomOf="@id/universityListTextView"
                 android:scrollbars="vertical"
                 tools:listitem="@layout/item_university"
@@ -152,7 +133,7 @@
             <TextView
                 android:id="@+id/potentialJobsTextView"
                 android:visibility="invisible"
-                android:layout_marginHorizontal="32dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="32dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -184,7 +165,7 @@
             <TextView
                 android:id="@+id/opinionsTextView"
                 android:visibility="invisible"
-                android:layout_marginHorizontal="32dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="32dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

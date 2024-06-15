@@ -28,6 +28,14 @@ class UserPrefRepository private constructor(
         return userPreference.getToken()
     }
 
+    suspend fun getIsProfileCompleted(): Boolean {
+        return userPreference.getIsProfileCompleted()
+    }
+
+    suspend fun saveIsProfileCompleted(isCompleted: Boolean) {
+        userPreference.saveIsProfileCompleted(isCompleted)
+    }
+
     suspend fun getRefreshToken(): String {
         return userPreference.getRefreshToken()
     }

@@ -17,6 +17,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.bangkit.nest.R
 import com.bangkit.nest.databinding.FragmentLoginBinding
@@ -88,10 +89,14 @@ class LoginFragment : Fragment() {
                     if (result != null) {
                         when (result) {
                             is Result.Loading -> {
-                                binding?.progressBar?.visibility = View.VISIBLE
+                                binding?.progressBar?.isVisible = true
+                                binding?.loginButton?.text = ""
+                                binding?.loginButton?.isEnabled = false
                             }
                             is Result.Success -> {
-                                binding?.progressBar?.visibility = View.GONE
+                                binding?.progressBar?.isVisible = false
+                                binding?.loginButton?.text = getString(R.string.login)
+                                binding?.loginButton?.isEnabled = true
 
                                 // move to MainActivity
                                 val intent = Intent(requireContext(), MainActivity::class.java)
@@ -100,7 +105,9 @@ class LoginFragment : Fragment() {
                                 activity?.finish()
                             }
                             is Result.Error -> {
-                                binding?.progressBar?.visibility = View.GONE
+                                binding?.progressBar?.isVisible = false
+                                binding?.loginButton?.text = getString(R.string.login)
+                                binding?.loginButton?.isEnabled = true
                                 showError()
                             }
                         }

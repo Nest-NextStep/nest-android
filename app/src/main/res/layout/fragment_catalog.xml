@@ -13,8 +13,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="64dp"
         >
 
@@ -36,6 +35,7 @@
 
         <TextView
             android:id="@+id/errorTextView"
+            android:textAppearance="@style/TextAppearance.Heading5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_gravity="center"
-            android:textAppearance="@style/TextAppearance.Heading3"
             android:textColor="@color/red"
             android:visibility="invisible"
             />
@@ -148,7 +147,7 @@
             tools:listitem="@layout/item_another_major"
             tools:visibility="visible"
             tools:itemCount="5"
-            android:paddingBottom="90dp"
+            android:paddingBottom="80dp"
             />
 
         <TextView
@@ -165,7 +164,7 @@
             app:layout_constraintTop_toBottomOf="@id/allMajorTextView"
             android:textColor="@color/gray_200"
             tools:visibility="visible"
-            android:paddingBottom="50dp"
+            android:paddingBottom="32dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
