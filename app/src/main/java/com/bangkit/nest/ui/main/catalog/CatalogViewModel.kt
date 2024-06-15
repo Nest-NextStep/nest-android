@@ -22,8 +22,35 @@ class CatalogViewModel(
 
     private var isDataLoaded = false
 
+    init {
+        getAllMajor()
+    }
+
     fun reloadAllMajor() {
-        isDataLoaded = false
+        majorRepository.getAllMajor().observeForever { result ->
+            when (result) {
+                is Result.Loading -> {
+
+                }
+                is Result.Success -> {
+                    if (!isDataSame(result.data.majorRecommended, result.data.majorsAll)) {
+                        _majorRecommended.value = result.data.majorRecommended
+                        _majorsAll.value = result.data.majorsAll
+                        _state.value = Result.Success(Unit)
+                    }
+                    isDataLoaded = true
+                }
+                is Result.Error -> {
+                    _state.value = Result.Error(result.error)
+                }
+            }
+        }
+    }
+
+    private fun isDataSame(newMajorRecommended: List<MajorItem>, newMajorAll: List<MajorItem>): Boolean {
+        val currentRecommendedSet = _majorRecommended.value?.toSet()
+        val currentAllSet = _majorsAll.value?.toSet()
+        return newMajorRecommended.toSet() == currentRecommendedSet && newMajorAll.toSet() == currentAllSet
     }
 
     fun getAllMajor() {
