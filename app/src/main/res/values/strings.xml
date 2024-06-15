@@ -98,10 +98,10 @@
     <string name="submit">Submit</string>
 
     <string name="field_required">Please fill all the required field!</string>
-    <string name="error_occurred">An error occurred. Please try again!</string>
-
-
-    <!--    <string name="mandatory_profile_question">Pertanyaan ini dibutuhkan untuk </string>-->
-
+    <string name="error_occurred">An error occurred. Please try again later!</string>
+    <string name="unsaved_changes">Unsaved Changes</string>
+    <string name="unsaved_changes_confirmation">Are you sure you want to leave this page? Changes you made will not be saved.</string>
+    <string name="discard">Discard</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

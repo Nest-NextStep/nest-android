@@ -4,8 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.bangkit.nest.data.Result
+import com.bangkit.nest.data.remote.request.ChangePasswordRequest
 import com.bangkit.nest.data.remote.request.ProfileRequest
-import com.bangkit.nest.data.remote.response.EditProfileResponse
+import com.bangkit.nest.data.remote.response.ProfileSuccessResponse
 import com.bangkit.nest.data.remote.response.ProfileResponse
 import com.bangkit.nest.data.remote.retrofit.ApiService
 import com.bangkit.nest.utils.calculateAge
@@ -29,14 +30,14 @@ class ProfileRepository private constructor(
             emit(Result.Success(response))
         } catch (e: HttpException) {
             Log.e(TAG, "Failed to fetch user data: ${e.message()}")
-            emit(Result.Error(e.message()))
+            emit(Result.Error(e.message.toString()))
         } catch (e: Exception) {
             Log.e(TAG, "Failed to fetch user data: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun editProfile(request: ProfileRequest): LiveData<Result<EditProfileResponse>> = liveData {
+    fun editProfile(request: ProfileRequest): LiveData<Result<ProfileSuccessResponse>> = liveData {
         emit(Result.Loading)
         try {
             val userModel = userPrefRepository.getSession().first()
@@ -54,9 +55,24 @@ class ProfileRepository private constructor(
             emit(Result.Success(response))
         } catch (e: HttpException) {
             Log.e(TAG, "Failed to update user data: ${e.message()}")
-            emit(Result.Error(e.message()))
+            emit(Result.Error(e.message.toString()))
         } catch (e: Exception) {
             Log.e(TAG, "Failed to update user data: ${e.message.toString()} ")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun changePassword(request: ChangePasswordRequest): LiveData<Result<ProfileSuccessResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.changePassword(request)
+
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            Log.e(TAG, "Failed to change user password: ${e.message()}")
+            emit(Result.Error(e.message.toString()))
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to change user password: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
         }
     }

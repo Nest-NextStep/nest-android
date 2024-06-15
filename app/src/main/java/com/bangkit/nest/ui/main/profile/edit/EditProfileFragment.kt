@@ -186,7 +186,7 @@ class EditProfileFragment : Fragment() {
                 .setTitle(getString(R.string.success))
                 .setMessage(getString(R.string.update_profile_success))
                 .setPositiveButton(getString(R.string.continue_)) { _, _ ->
-                    binding?.backButton?.performClick()
+                    backToProfilePage()
                 }
                 .show()
         } else {
@@ -209,8 +209,20 @@ class EditProfileFragment : Fragment() {
 
     private fun setupBackButton() {
         binding?.backButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_editProfile_to_profile)
+            val dialog = MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.unsaved_changes))
+                .setMessage(getString(R.string.unsaved_changes_confirmation))
+                .setPositiveButton(getString(R.string.discard)) { _, _ ->
+                    backToProfilePage()
+                }
+                .setNegativeButton(getString(R.string.cancel), null)
+                .show()
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
         }
+    }
+
+    private fun backToProfilePage() {
+        findNavController().navigate(R.id.action_editProfile_to_profile)
     }
 
     private fun setupFieldFill() {
