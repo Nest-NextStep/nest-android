@@ -28,12 +28,26 @@ class ListRecommendedMajorAdapter() : ListAdapter<MajorItem, ListRecommendedMajo
                 holder.itemView.context.resources.getDimension(R.dimen.l_margin)
                     .toInt()
             holder.itemView.layoutParams = layoutParams
-        }
-
-        if (position == itemCount - 1) {
+        } else if (position == itemCount - 1) {
             val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
             layoutParams.marginEnd =
                 holder.itemView.context.resources.getDimension(R.dimen.l_margin)
+                    .toInt()
+            holder.itemView.layoutParams = layoutParams
+            if (itemCount == 2) {
+                layoutParams.marginStart =
+                    holder.itemView.context.resources.getDimension(R.dimen.s_margin)
+                        .toInt()
+                holder.itemView.layoutParams = layoutParams
+            }
+        } else {
+            val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
+            layoutParams.marginStart =
+                holder.itemView.context.resources.getDimension(R.dimen.s_margin)
+                    .toInt()
+            holder.itemView.layoutParams = layoutParams
+            layoutParams.marginEnd =
+                holder.itemView.context.resources.getDimension(R.dimen.s_margin)
                     .toInt()
             holder.itemView.layoutParams = layoutParams
         }
