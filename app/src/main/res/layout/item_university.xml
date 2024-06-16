@@ -1,79 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recommendedMajorCard"
+    style="?attr/materialCardViewOutlinedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="12dp"
-    style="?attr/materialCardViewOutlinedStyle"
-    app:strokeColor="?attr/colorSecondary"
     app:cardBackgroundColor="@color/white"
-    >
+    app:strokeColor="?attr/colorSecondary">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
-        >
+        android:padding="16dp">
 
         <!-- Media -->
         <ImageView
             android:id="@+id/imageViewUniversityLogo"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            tools:srcCompat="@drawable/ic_education"
-            tools:tint="?attr/colorSecondary"
-            android:scaleType="fitCenter"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/major_icon"
-            />
+            android:scaleType="fitCenter"
+            tools:srcCompat="@drawable/ic_education"
+            tools:tint="?attr/colorSecondary" />
 
         <!-- Text -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginStart="20dp"
-            >
+            android:orientation="vertical">
+
             <me.grantland.widget.AutofitTextView
                 android:id="@+id/textViewUniversityName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/university_name"
+                android:maxLines="2"
                 android:textAppearance="@style/TextAppearance.Heading5"
                 android:textColor="@color/black"
-                android:maxLines="2"
                 app:minTextSize="15sp"
                 app:precision="0.5"
-                />
+                tools:text="@string/university_name" />
+
             <TextView
                 android:id="@+id/textUniversityLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/university_location"
-                android:textColor="?attr/colorSecondaryVariant"
                 android:gravity="center_vertical"
-                />
+                android:textColor="?attr/colorSecondaryVariant"
+                tools:text="@string/university_location" />
+
             <TextView
                 android:id="@+id/textViewUniversityAccreditation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                tools:text="@string/university_accreditation"
-                android:textColor="@color/black"
                 android:gravity="center_vertical"
-                />
+                android:textColor="@color/black"
+                tools:text="@string/university_accreditation" />
 
             <Button
                 android:id="@+id/buttonUniversity"
                 style="@style/Widget.App.Button.Elevated"
-                android:text="@string/check_university"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:layout_marginTop="10dp"
+                android:text="@string/check_university" />
 
         </LinearLayout>
 

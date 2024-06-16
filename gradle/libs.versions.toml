@@ -31,6 +31,7 @@ roomRuntime = "2.6.1"
 activity = "1.9.0"
 serialization = "1.5.1"
 serializationPlugin = "1.8.10"
+autofittextview = "0.2.1"
 runtimeLivedata = "1.6.7"
 securityIdentityCredential = "1.0.0-alpha03"
 
@@ -66,6 +67,7 @@ kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", versio
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 androidx-security-identity-credential = { group = "androidx.security", name = "security-identity-credential", version.ref = "securityIdentityCredential" }
+grantland-autofittextview = { group = "me.grantland", name = "autofittextview", version.ref = "autofittextview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

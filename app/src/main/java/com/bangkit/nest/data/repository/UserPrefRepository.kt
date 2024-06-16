@@ -28,16 +28,16 @@ class UserPrefRepository private constructor(
         return userPreference.getToken()
     }
 
+    suspend fun getIsProfileCompleted(): Boolean {
+        return userPreference.getIsProfileCompleted()
+    }
+
+    suspend fun saveIsProfileCompleted(isCompleted: Boolean) {
+        userPreference.saveIsProfileCompleted(isCompleted)
+    }
+
     suspend fun getRefreshToken(): String {
         return userPreference.getRefreshToken()
-    }
-
-    suspend fun saveMajorId(id: Int) {
-        userPreference.saveMajorId(id)
-    }
-
-    suspend fun getMajorId(): Int {
-        return userPreference.getMajorId()
     }
 
     suspend fun saveMajors(majors: List<String>) {

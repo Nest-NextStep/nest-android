@@ -26,6 +26,9 @@
         android:name="com.bangkit.nest.ui.main.catalog.detail.CatalogDetailFragment"
         android:label="@string/title_catalog"
         tools:layout="@layout/fragment_catalog_detail" >
+        <argument
+            android:name="itemId"
+            app:argType="integer" />
         <action
             android:id="@+id/action_catalogDetail_to_catalog"
             app:destination="@id/navigation_catalog" />
@@ -127,6 +130,40 @@
         android:id="@+id/navigation_profile"
         android:name="com.bangkit.nest.ui.main.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_to_editProfile"
+            app:destination="@id/navigation_edit_profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_edit_profile"
+        android:name="com.bangkit.nest.ui.main.profile.edit.EditProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <argument
+            android:name="fullName"
+            app:argType="string" />
+        <argument
+            android:name="gender"
+            app:argType="string" />
+        <argument
+            android:name="religion"
+            app:argType="string" />
+        <argument
+            android:name="engNat"
+            app:argType="string" />
+        <argument
+            android:name="education"
+            app:argType="string" />
+        <argument
+            android:name="school"
+            app:argType="string" />
+        <argument
+            android:name="birthDate"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_editProfile_to_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 
 </navigation>

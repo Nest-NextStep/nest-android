@@ -11,7 +11,6 @@ import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.MajorJobItem
 import com.bangkit.nest.databinding.ItemJobBinding
 
-
 class ListJobAdapter() : ListAdapter<MajorJobItem, ListJobAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -26,7 +25,7 @@ class ListJobAdapter() : ListAdapter<MajorJobItem, ListJobAdapter.MyViewHolder>(
         if (position == 0) {
             val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
             layoutParams.marginStart =
-                holder.itemView.context.resources.getDimension(R.dimen.xl_corner_radius)
+                holder.itemView.context.resources.getDimension(R.dimen.l_margin)
                     .toInt()
             holder.itemView.layoutParams = layoutParams
         }
@@ -34,7 +33,7 @@ class ListJobAdapter() : ListAdapter<MajorJobItem, ListJobAdapter.MyViewHolder>(
         if (position == itemCount - 1) {
             val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
             layoutParams.marginEnd =
-                holder.itemView.context.resources.getDimension(R.dimen.xl_corner_radius)
+                holder.itemView.context.resources.getDimension(R.dimen.l_margin)
                     .toInt()
             holder.itemView.layoutParams = layoutParams
         }
@@ -47,9 +46,7 @@ class ListJobAdapter() : ListAdapter<MajorJobItem, ListJobAdapter.MyViewHolder>(
         fun bind(job: MajorJobItem) {
             binding.textViewJobName.text = job.jobsName
             binding.textViewJobDescription.text = job.jobsDescription
-
-            val salary = "Salary: ${job.jobsSalary}"
-            binding.textViewJobSalary.text = salary
+            binding.textViewJobSalaryRange.text = job.jobsSalary
         }
     }
 

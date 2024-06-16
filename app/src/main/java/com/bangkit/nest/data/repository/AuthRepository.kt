@@ -27,7 +27,15 @@ class AuthRepository private constructor(
             // save session
             userPrefRepository.saveSession(UserModel(email, response.username, response.accessToken, response.refreshToken, true))
             val majors: List<String> = response.recommendedMajor?.map { it.majorName.orEmpty() } ?: emptyList()
-            userPrefRepository.saveMajors(majors)
+            if (majors.isNotEmpty()) {
+                userPrefRepository.saveMajors(majors)
+                userPrefRepository.saveIsProfileCompleted(true)
+            } else {
+                val responseProfile = apiService.getProfileData(response.username)
+                if (responseProfile.profileData.userGender != null) {
+                    userPrefRepository.saveIsProfileCompleted(true)
+                }
+            }
 
             emit(Result.Success(response))
         } catch (e: HttpException) {
@@ -35,10 +43,10 @@ class AuthRepository private constructor(
                 val errorJsonString = e.response()?.errorBody()?.string()
                 val errorJson = errorJsonString?.let { JSONObject(it) }
                 val errorMessage = errorJson?.optString("error").toString()
-                Log.e(TAG, "(HTTP Exception) Failed to login: $errorMessage")
+                Log.e(TAG, "Failed to login: $errorMessage")
                 emit(Result.Error(errorMessage))
             } catch (e: Exception) {
-                Log.e(TAG, "(HTTP Exception) Failed to parse error response: ${e.message.toString()}")
+                Log.e(TAG, "Failed to parse error response: ${e.message.toString()}")
                 emit(Result.Error("Failed to login: ${e.message.toString()}"))
             }
         } catch (e: Exception) {
@@ -59,10 +67,10 @@ class AuthRepository private constructor(
                 val errorJsonString = e.response()?.errorBody()?.string()
                 val errorJson = errorJsonString?.let { JSONObject(it) }
                 val errorMessage = errorJson?.optString("error").toString()
-                Log.e(TAG, "(HTTP Exception) Failed to register: $errorMessage")
+                Log.e(TAG, "Failed to register: $errorMessage")
                 emit(Result.Error(errorMessage))
             } catch (e: Exception) {
-                Log.e(TAG, "(HTTP Exception) Failed to parse error response: ${e.message.toString()}")
+                Log.e(TAG, "Failed to parse error response: ${e.message.toString()}")
                 emit(Result.Error("Failed to register: ${e.message.toString()}"))
             }
         } catch (e: Exception) {
