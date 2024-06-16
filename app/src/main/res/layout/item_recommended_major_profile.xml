@@ -6,6 +6,7 @@
     style="@style/recommendedCardProfile"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="12dp"
     android:layout_marginTop="12dp"
     android:layout_marginBottom="12dp"
     app:cardBackgroundColor="@color/white">
