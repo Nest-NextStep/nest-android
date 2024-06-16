@@ -26,8 +26,7 @@ class ViewModelFactory(
     private val userPrefRepository: UserPrefRepository,
     private val authRepository: AuthRepository,
     private val majorRepository: MajorRepository,
-    private val profileRepository: ProfileRepository
-    private val majorRepository: MajorRepository,
+    private val profileRepository: ProfileRepository,
     private val assessRepository: AssessRepository,
     private val taskRepository: TaskRepository
 ) : ViewModelProvider.NewInstanceFactory() {
@@ -93,10 +92,10 @@ class ViewModelFactory(
                     Injection.provideUserPrefRepository(context),
                     Injection.provideAuthRepository(context),
                     Injection.provideMajorRepository(context),
+                    Injection.provideProfileRepository(context),
                     Injection.provideAssessRepository(context),
                     Injection.provideTaskRepository(context)
-                    Injection.provideMajorRepository(context),
-                    Injection.provideProfileRepository(context)
+
                 )
             }.also { instance = it }
     }
