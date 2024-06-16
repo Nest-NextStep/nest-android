@@ -1,27 +1,21 @@
 package com.bangkit.nest.ui.main.catalog.detail
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.nest.R
 import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
-import com.bangkit.nest.data.remote.response.MajorItem
-import com.bangkit.nest.databinding.FragmentCatalogBinding
 import com.bangkit.nest.databinding.FragmentCatalogDetailBinding
 import com.bangkit.nest.ui.main.MainActivity
-import com.bangkit.nest.ui.main.catalog.CatalogViewModel
-import com.bangkit.nest.ui.main.catalog.ListMajorAdapter
 import com.bangkit.nest.utils.ViewModelFactory
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.request.RequestOptions
 
 class CatalogDetailFragment : Fragment() {
 
@@ -46,12 +40,16 @@ class CatalogDetailFragment : Fragment() {
         binding?.scrollView?.post {
             binding?.scrollView?.scrollTo(0, 0)
         }
-        getDetailMajor()
-        setUpAdapter()
+        // Retrieve major id
+        val itemId = arguments?.getInt("itemId", 0) ?: 0
+        getDetailMajor(itemId)
+
+        setupAdapter()
+        setupBackButton()
     }
 
-    private fun getDetailMajor() {
-        viewModel.getDetailMajor().observe(viewLifecycleOwner) {result ->
+    private fun getDetailMajor(id: Int) {
+        viewModel.getDetailMajor(id).observe(viewLifecycleOwner) {result ->
             when (result) {
                 is Result.Loading -> {
                     setupLoading()
@@ -66,7 +64,12 @@ class CatalogDetailFragment : Fragment() {
         }
     }
 
-    private fun setUpAdapter() {
+    private fun setupBackButton() {
+        binding?.backButton?.setOnClickListener {
+            findNavController().navigate(R.id.action_catalogDetail_to_catalog)
+        }
+    }
+    private fun setupAdapter() {
         binding?.apply {
             universityRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             jobsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -119,7 +122,6 @@ class CatalogDetailFragment : Fragment() {
                 .load(response.major?.majorCover)
                 .into(majorImageView)
 
-            Log.d("CatalogDetailFragment", response.toString())
             textViewMajorName.isVisible = true
             textViewMajorName.text = response.major?.majorName ?: ""
 

@@ -9,6 +9,13 @@
     <string name="title_login_page">Welcome back! Glad to see you, again!</string>
     <string name="title_register_page">Hello! Register to get started</string>
     <string name="name">Name</string>
+    <string name="full_name">Full Name</string>
+    <string name="full_name_placeholder">John Doe</string>
+    <string name="current_school_placeholder">Nama sekolah</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="select_birth_date">Select Birth Date</string>
+    <string name="birth_date_placeholder">dd-mm-yyyy</string>
+    <string name="current_school">Current School</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -30,13 +37,14 @@
     <string name="no">No</string>
     <string name="logout">Logout</string>
     <string name="register_success">Your account is successfully created. Please login to continue</string>
+    <string name="update_profile_success">Your profile is successfully updated. You can now take the assessment test.</string>
     <string name="password_mismatch">Password doesn\'t match</string>
     <string name="invalid_email">Invalid email address</string>
     <string name="empty_field">Field can\'t be empty</string>
     <string name="logout_confirmation">Are you sure you want to log out?</string>
     <string name="profile_picture">Profile picture</string>
     <string name="hello">Hello</string>
-    <string name="edit_profile">Edit profile</string>
+    <string name="edit_profile">Edit Profile</string>
     <string name="searchbar_hint">Search major</string>
     <string name="recommended_major">Your recommended majors</string>
     <string name="all_major">Check out another majors</string>
@@ -49,6 +57,51 @@
     <string name="opinions_from_students">Opinions from Students</string>
     <string name="university_name">University Name</string>
     <string name="university_location">University Location</string>
-    <string name="university_accreditation">"Acreditation: "</string>
+    <string name="university_accreditation">"Accreditation: "</string>
     <string name="check_university">University page</string>
+    <string name="back">Back</string>
+    <string name="incomplete_profile">Profile Incomplete</string>
+    <string name="complete_profile">Please make sure to complete it before taking the assessment test!</string>
+    <string name="no_test">No test taken</string>
+
+    <string name="last_education">Pendidikan saat ini</string>
+    <string name="label_education_1">Kurang dari sekolah menengah (SMP, SD)</string>
+    <string name="label_education_2">Sekolah menengah (SMA)</string>
+    <string name="label_education_3">Sarjana</string>
+    <string name="label_education_4">Pascasarjana</string>
+    <string name="school_name">Nama Sekolah</string>
+
+    <string name="eng_nat">Bahasa Inggris adalah bahasa ibu Anda?</string>
+    <string name="english_native">English Native</string>
+    <string name="ya">Ya</string>
+    <string name="tidak">Tidak</string>
+
+    <string name="agama">Agama</string>
+    <string name="religion">Religion</string>
+    <string name="label_religion_1">Agnostik</string>
+    <string name="label_religion_2">Ateis</string>
+    <string name="label_religion_3">Buddha</string>
+    <string name="label_religion_4">Kristen (Katolik)</string>
+    <string name="label_religion_5">Kristen (Mormon)</string>
+    <string name="label_religion_6">Kristen (Protestan)</string>
+    <string name="label_religion_7">Kristen (Lainnya)</string>
+    <string name="label_religion_8">Hindu</string>
+    <string name="label_religion_9">Yahudi</string>
+    <string name="label_religion_10">Muslim</string>
+    <string name="label_religion_11">Sikh</string>
+    <string name="label_religion_12">Lainnya</string>
+
+    <string name="gender">Gender</string>
+    <string name="female">Perempuan</string>
+    <string name="male">Laki-laki</string>
+    <string name="others">Lainnya</string>
+    <string name="submit">Submit</string>
+
+    <string name="field_required">Please fill all the required field!</string>
+    <string name="error_occurred">An error occurred. Please try again!</string>
+
+
+    <!--    <string name="mandatory_profile_question">Pertanyaan ini dibutuhkan untuk </string>-->
+
+
 </resources>
