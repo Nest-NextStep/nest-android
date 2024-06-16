@@ -1,5 +1,7 @@
 package com.bangkit.nest.ui.main.task.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -30,6 +32,7 @@ import com.commandiron.wheel_picker_compose.WheelTimePicker
 import com.commandiron.wheel_picker_compose.core.WheelPickerDefaults
 import java.time.LocalTime
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CustomDurationDialogComponent(
     duration: Int = 120,
@@ -75,7 +78,7 @@ fun CustomDurationDialogComponent(
                     textColor = Color.Black,
                     textStyle = bodyTextStyleMedium,
                     selectorProperties = WheelPickerDefaults.selectorProperties(color = colorResource(
-                        R.color.white), border = BorderStroke(1.dp, colorResource(R.color.purple_faded))
+                        R.color.white), border = BorderStroke(1.dp, colorResource(R.color.purple_400))
                     ),
                     onSnappedTime = { customDuration = it }
                 )
@@ -102,6 +105,7 @@ fun CustomDurationDialogComponent(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun PreviewCustomDurationDialogComponent() {

@@ -1,12 +1,14 @@
 package com.bangkit.nest.ui.main.assess
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bangkit.nest.data.Result
+import com.bangkit.nest.data.remote.response.ResultsResponse
+import com.bangkit.nest.data.repository.AssessRepository
 
-class AssessViewModel : ViewModel() {
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is assess Fragment"
+class AssessViewModel(private val assessRepository: AssessRepository) : ViewModel() {
+
+    fun getUserMajorResults(): LiveData<Result<ResultsResponse>> {
+        return assessRepository.getUserMajorResults()
     }
-    val text: LiveData<String> = _text
 }

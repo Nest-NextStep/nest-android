@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -47,8 +46,8 @@ fun DurationComponent(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(colorResource(R.color.purple_faded), RoundedCornerShape(8.dp))
-            .border(2.dp, colorResource(R.color.purple_faded), RoundedCornerShape(8.dp)),
+            .background(colorResource(R.color.purple_400), RoundedCornerShape(8.dp))
+            .border(2.dp, colorResource(R.color.purple_400), RoundedCornerShape(8.dp)),
         contentAlignment = Alignment.Center,
     ) {
         Row(
@@ -103,7 +102,7 @@ fun DurationItemComponent(
     onClick: () -> Unit
 ) {
     val bgColor = if (isSelected)
-        colorResource(R.color.purple_faded)
+        colorResource(R.color.purple_400)
     else
         colorResource(R.color.purple_300)
 

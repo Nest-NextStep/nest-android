@@ -1,51 +1,24 @@
 package com.bangkit.nest.ui.main.task
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -54,37 +27,35 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import com.bangkit.nest.ui.urbanistFontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bangkit.nest.R
-import com.bangkit.nest.data.remote.response.Task
+import com.bangkit.nest.data.remote.request.TaskRequest
 import com.bangkit.nest.ui.Typography
 import com.bangkit.nest.ui.h3TextStyle
 import com.bangkit.nest.ui.main.MainActivity
-import com.bangkit.nest.ui.main.task.components.CustomDurationDialogComponent
-import com.bangkit.nest.ui.task.AddTaskViewModel
-import com.bangkit.nest.ui.main.task.components.DurationComponent
-import com.bangkit.nest.ui.main.task.components.Priority
-import com.bangkit.nest.ui.main.task.components.PriorityComponent
+import com.bangkit.nest.ui.main.task.components.*
 import com.bangkit.nest.ui.subTitleFormStyle
-import com.bangkit.nest.ui.task.components.TimePickerComponent
-import java.time.LocalDate
+import com.bangkit.nest.ui.main.task.components.TimePickerComponent
+import com.bangkit.nest.data.Result
+import com.bangkit.nest.utils.ViewModelFactory
+import java.text.SimpleDateFormat
 import java.time.LocalTime
-import java.util.Calendar
+import java.util.*
 
 class AddTaskFragment : Fragment() {
 
-    private val addTaskViewModel: AddTaskViewModel by viewModels()
+    private val taskViewModel: TaskViewModel by viewModels {
+        ViewModelFactory.getInstance(requireContext())
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -95,8 +66,8 @@ class AddTaskFragment : Fragment() {
             setContent {
                 MaterialTheme(
                     typography = Typography
-                ){
-                    AddTaskScreen()
+                ) {
+                    AddTaskScreen(taskViewModel)
                 }
             }
         }
@@ -107,31 +78,30 @@ class AddTaskFragment : Fragment() {
         (requireActivity() as MainActivity).setBottomNavigationVisibility(false)
     }
 
-
-    @SuppressLint("UnrememberedMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
+    @SuppressLint("UnrememberedMutableState")
     @OptIn(ExperimentalMaterial3Api::class)
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
-    fun AddTaskScreen() {
+    fun AddTaskScreen(viewModel: TaskViewModel) {
+        val context = LocalContext.current
+        val createTaskResult by viewModel.createTaskResult.observeAsState()
         val calendar = Calendar.getInstance()
-        var dateText by remember { mutableStateOf("Select Date") }
         var taskStartTime by remember { mutableStateOf(LocalTime.now()) }
         var taskEndTime by remember { mutableStateOf(taskStartTime.plusHours(1)) }
         var titleText by remember { mutableStateOf(TextFieldValue("")) }
         var focusTimeText by remember { mutableStateOf(TextFieldValue("30")) }
         var breakTimeText by remember { mutableStateOf(TextFieldValue("10")) }
-        var repeatSwitch by remember { mutableStateOf(false) }
+        var repeatSwitch by remember { mutableIntStateOf(0) }
         var taskDuration by remember { mutableLongStateOf(60) }
-
         var isTimeUpdated by remember { mutableStateOf(false) }
-        var selectedPriority by mutableStateOf(Priority("Low", colorResource(R.color.green)))
+        var selectedPriority by remember { mutableStateOf(Priority("low", Color(0xFFBEE797))) }
         var isFocusedTitle by remember { mutableStateOf(false) }
         var isFocusedFocusTime by remember { mutableStateOf(false) }
         var isFocusedBreakTime by remember { mutableStateOf(false) }
         var showCustomDurationDialog by remember { mutableStateOf(false) }
+        var selectedDate by remember { mutableStateOf(calendar.time) }
 
         val focusRequester = FocusRequester()
-
 
         Scaffold(
             topBar = {
@@ -139,14 +109,15 @@ class AddTaskFragment : Fragment() {
                     title = {
                         Text(
                             text = "Create New Task",
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 64.dp),
                             style = h3TextStyle
                         )
                     },
                     navigationIcon = {
                         IconButton(
-                            onClick = { /* Handle back navigation */ },
+                            onClick = { findNavController().popBackStack() },
                             modifier = Modifier
                                 .background(colorResource(R.color.purple), CircleShape)
                                 .width(36.dp)
@@ -156,19 +127,23 @@ class AddTaskFragment : Fragment() {
                                 painter = painterResource(id = R.drawable.ic_back_arrow),
                                 contentDescription = null,
                                 tint = Color.White,
-                                modifier = Modifier.width(20.dp).height(20.dp)
+                                modifier = Modifier
+                                    .width(20.dp)
+                                    .height(20.dp)
                             )
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.White
                     ),
-                    modifier = Modifier.padding(16.dp).background(Color.White),
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .background(Color.White),
                     actions = {},
                 )
             },
             modifier = Modifier.background(Color.White)
-        ) {
+        ) { it ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -183,47 +158,40 @@ class AddTaskFragment : Fragment() {
                         .background(colorResource(R.color.white)),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // Date Picker
-                    Text(
-                        text = "Date",
-                        style = subTitleFormStyle
-                    )
-
-                    Text(
-                        text = "Select Date",
-                        style = subTitleFormStyle,
+                    // Calendar Component
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(4.dp))
-                            .clickable {
-                                DatePickerDialog(
-                                    requireContext(),
-                                    { _, year, month, dayOfMonth ->
-                                        calendar.set(year, month, dayOfMonth)
-                                        addTaskViewModel.setDate(calendar.timeInMillis)
-                                        dateText = "${dayOfMonth}/${month + 1}/${year}"
-                                    },
-                                    calendar.get(Calendar.YEAR),
-                                    calendar.get(Calendar.MONTH),
-                                    calendar.get(Calendar.DAY_OF_MONTH)
-                                ).show()
-                            }
+                            .height(200.dp)
                             .padding(8.dp)
-                    )
+                    ) {
+                        CalendarComponent(
+                            initialDate = selectedDate,
+                            onDateSelected = {
+                                selectedDate = it
+                            }
+                        )
+                    }
 
                     // Title
                     Column(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+
+                        Text(
+                            text = "Title",
+                            style = subTitleFormStyle,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(10.dp)
                                 .border(
                                     width = 1.dp,
-                                    color = if (isFocusedTitle) colorResource(R.color.purple_faded) else colorResource(R.color.gray_400),
+                                    color = if (isFocusedTitle) colorResource(R.color.purple_500) else colorResource(R.color.gray_400),
                                     shape = RoundedCornerShape(8.dp)
                                 )
                                 .background(selectedPriority.color, RoundedCornerShape(8.dp))
@@ -241,7 +209,9 @@ class AddTaskFragment : Fragment() {
                                     unfocusedIndicatorColor = Color.Transparent,
                                 ),
                                 onValueChange = {
-                                    titleText = it
+                                    if (it.text.length <= 50) {
+                                        titleText = it
+                                    }
                                 },
                                 placeholder = {
                                     Text(
@@ -249,10 +219,15 @@ class AddTaskFragment : Fragment() {
                                         color = colorResource(R.color.gray_400)
                                     )
                                 },
-                                shape = RoundedCornerShape(8.dp),
+                                shape = RoundedCornerShape(
+                                    topStart = 0.dp,
+                                    topEnd = 8.dp,
+                                    bottomEnd = 8.dp,
+                                    bottomStart = 0.dp
+                                ),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(start = 8.dp)
+                                    .padding(start = 10.dp)
                                     .onFocusChanged {
                                         isFocusedTitle = it.isFocused
                                     }
@@ -281,7 +256,7 @@ class AddTaskFragment : Fragment() {
                             Spacer(modifier = Modifier.height(8.dp))
                             TimePickerComponent(
                                 time = taskStartTime,
-                                is24hourFormat = false
+                                is24hourFormat = true
                             ) { snappedTime ->
                                 taskStartTime = snappedTime
                             }
@@ -295,7 +270,7 @@ class AddTaskFragment : Fragment() {
                             Spacer(modifier = Modifier.height(8.dp))
                             TimePickerComponent(
                                 time = taskEndTime,
-                                is24hourFormat = false,
+                                is24hourFormat = true,
                                 isTimeUpdated = isTimeUpdated
                             ) { snappedTime ->
                                 taskEndTime = snappedTime
@@ -368,7 +343,7 @@ class AddTaskFragment : Fragment() {
                                 modifier = Modifier
                                     .border(
                                         width = 1.dp,
-                                        color = if (isFocusedFocusTime) colorResource(R.color.purple_faded) else colorResource(R.color.gray_400),
+                                        color = if (isFocusedFocusTime) colorResource(R.color.purple_500) else colorResource(R.color.gray_400),
                                         shape = RoundedCornerShape(8.dp)
                                     )
                                     .padding(start = 8.dp),
@@ -383,7 +358,9 @@ class AddTaskFragment : Fragment() {
                                 Spacer(modifier = Modifier.width(8.dp))
                                 TextField(
                                     value = focusTimeText,
-                                    onValueChange = { focusTimeText = it },
+                                    onValueChange = {
+                                        focusTimeText = it
+                                    },
                                     colors = TextFieldDefaults.colors(
                                         focusedContainerColor = Color.Transparent,
                                         unfocusedContainerColor = Color.Transparent,
@@ -428,7 +405,7 @@ class AddTaskFragment : Fragment() {
                                     .border(
                                         width = 1.dp,
                                         shape = RoundedCornerShape(8.dp),
-                                        color = if (isFocusedBreakTime) colorResource(R.color.purple_faded) else colorResource(R.color.gray_400),
+                                        color = if (isFocusedBreakTime) colorResource(R.color.purple_500) else colorResource(R.color.gray_400),
                                     )
                                     .padding(start = 8.dp),
                                 verticalAlignment = Alignment.CenterVertically
@@ -442,7 +419,9 @@ class AddTaskFragment : Fragment() {
                                 Spacer(modifier = Modifier.width(8.dp))
                                 TextField(
                                     value = breakTimeText,
-                                    onValueChange = { breakTimeText = it },
+                                    onValueChange = {
+                                        breakTimeText = it
+                                    },
                                     colors = TextFieldDefaults.colors(
                                         focusedContainerColor = Color.Transparent,
                                         unfocusedContainerColor = Color.Transparent,
@@ -498,18 +477,16 @@ class AddTaskFragment : Fragment() {
                     ) {
                         Text(
                             text = "Repeat",
-                            fontFamily = urbanistFontFamily,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
+                            style = subTitleFormStyle
                         )
                         Switch(
-                            checked = repeatSwitch,
-                            onCheckedChange = { repeatSwitch = it },
+                            checked = repeatSwitch == 1,
+                            onCheckedChange = { repeatSwitch = if (it) 1 else 0 },
                             colors = SwitchDefaults.colors(
-                                uncheckedThumbColor = colorResource(R.color.gray_400), // Change color when unchecked
-                                checkedThumbColor = colorResource(R.color.purple), // Change color when checked
-                                uncheckedTrackColor = colorResource(R.color.purple_300), // Change track color when unchecked
-                                checkedTrackColor = colorResource(R.color.purple_faded) // Change track color when checked
+                                uncheckedThumbColor = colorResource(R.color.gray_400),
+                                checkedThumbColor = colorResource(R.color.purple),
+                                uncheckedTrackColor = colorResource(R.color.purple_300),
+                                checkedTrackColor = colorResource(R.color.purple_400)
                             ),
                             modifier = Modifier.padding(start = 8.dp)
                         )
@@ -518,20 +495,22 @@ class AddTaskFragment : Fragment() {
                     // Add Task Button
                     Button(
                         onClick = {
-                            val task = Task(
-                                id = 1,
-                                title = titleText.text,
-                                date = LocalDate.now(),
-                                startTime = taskStartTime,
-                                endTime = taskEndTime,
-                                duration = addTaskViewModel.duration.value ?: 60,
-                                focusTime = focusTimeText.text.toIntOrNull() ?: 30,
-                                breakTime = breakTimeText.text.toIntOrNull() ?: 10,
-                                priority = selectedPriority.displayText,
-                                isRepeated = repeatSwitch,
-                                isCompleted = false
-                            )
-                            addTaskViewModel.addTask(task)
+                            if (validateInputs(titleText.text, focusTimeText.text, breakTimeText.text, taskStartTime, taskEndTime, context)) {
+                                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                                val taskRequest = TaskRequest(
+                                    taskName = titleText.text,
+                                    taskDate = dateFormat.format(selectedDate),
+                                    taskStartTime = "${taskStartTime.hour}:${taskStartTime.minute}:00",
+                                    taskEndTime = "${taskEndTime.hour}:${taskEndTime.minute}:00",
+                                    taskDuration = taskDuration.toInt(),
+                                    taskFocusTime = focusTimeText.text.toIntOrNull() ?: 30,
+                                    taskBreakTime = breakTimeText.text.toIntOrNull() ?: 10,
+                                    taskPriority = selectedPriority.displayText,
+                                    taskRepeat = repeatSwitch,
+                                    isCompleted = 0
+                                )
+                                viewModel.submitNewTask(taskRequest)
+                            }
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -545,6 +524,24 @@ class AddTaskFragment : Fragment() {
                             style = subTitleFormStyle
                         )
                     }
+                }
+            }
+        }
+
+        // Handle createTaskResult state
+        createTaskResult?.let { result ->
+            when (result) {
+                is Result.Success -> {
+                    Toast.makeText(context, "Task created successfully!", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                    viewModel.clearCreateTaskResult() // Clear the result to avoid showing the toast again
+                }
+                is Result.Error -> {
+                    Toast.makeText(context, "Failed to create task: ${result.error}", Toast.LENGTH_SHORT).show()
+                    viewModel.clearCreateTaskResult() // Clear the result to avoid showing the toast again
+                }
+                is Result.Loading -> {
+                    // Show loading indicator if needed
                 }
             }
         }
@@ -573,6 +570,47 @@ class AddTaskFragment : Fragment() {
             hours > 0 -> String.format("%d $hoursString", hours)
             else -> String.format("%dmin", minutes)
         }
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun validateInputs(
+        title: String,
+        focusTime: String,
+        breakTime: String,
+        startTime: LocalTime,
+        endTime: LocalTime,
+        context: android.content.Context
+    ): Boolean {
+        when {
+            title.isEmpty() -> {
+                Toast.makeText(context, "Title must be filled.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            title.length > 50 -> {
+                Toast.makeText(context, "Title must be less than 50 characters.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            focusTime.isEmpty() -> {
+                Toast.makeText(context, "Focus Time must be filled.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            focusTime.toIntOrNull() == null || focusTime.toInt() < 5 -> {
+                Toast.makeText(context, "Focus Time must be at least 5 minutes.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            breakTime.isEmpty() -> {
+                Toast.makeText(context, "Break Time must be filled.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            breakTime.toIntOrNull() == null || breakTime.toInt() < 5 -> {
+                Toast.makeText(context, "Break Time must be at least 5 minutes.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            startTime.until(endTime, java.time.temporal.ChronoUnit.MINUTES) < 5 -> {
+                Toast.makeText(context, "Duration must be at least 5 minutes.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            else -> return true
+        }
     }
 }

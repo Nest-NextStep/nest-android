@@ -28,11 +28,11 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "API_URL", "\"https://trim-mote-425811-i0.et.r.appspot.com/\"")
+            buildConfigField("String", "API_URL", "\"https://nest-capstoneproject.et.r.appspot.com/\"")
         }
 
         debug {
-            buildConfigField("String", "API_URL", "\"https://trim-mote-425811-i0.et.r.appspot.com/\"")
+            buildConfigField("String", "API_URL", "\"https://nest-capstoneproject.et.r.appspot.com/\"")
         }
 
     }
@@ -74,6 +74,8 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.security.identity.credential)
 
     //testing
     testImplementation(libs.junit)
@@ -94,7 +96,9 @@ dependencies {
     ksp(libs.room.compiler)
 
     //autotextview
-    implementation(libs.grantland.autofittextview )
+    implementation(libs.grantland.autofittextview)
+    //layout
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
 
     //compose
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
@@ -108,4 +112,14 @@ dependencies {
     //time picker
     implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
 
+    //coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+
+    debugImplementation(libs.androidx.ui.tooling)
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 }

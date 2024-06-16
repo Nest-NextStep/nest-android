@@ -48,13 +48,15 @@ class CatalogFragment : Fragment() {
         setupSearch()
         setupAdapter()
         observeViewModel()
-        viewModel.getAllMajor()
     }
 
     private fun setupAdapter() {
         binding?.apply {
             allMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             recommendedMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+            allMajorRecyclerView.isNestedScrollingEnabled = false
+            recommendedMajorRecyclerView.isNestedScrollingEnabled = false
         }
     }
 
@@ -173,8 +175,8 @@ class CatalogFragment : Fragment() {
             noRecommendedMajorTextView.isVisible = isEmptyRecommended
 
             allMajorTextView.isVisible = true
+            allMajorRecyclerView.isVisible = true
             val isEmptyAnother = anotherMajors.isEmpty()
-            allMajorRecyclerView.isVisible = !isEmptyAnother
             noAnotherMajorTextView.isVisible = isEmptyAnother
             setListMajorData(allMajorRecyclerView, anotherMajors, "another")
         }
@@ -213,6 +215,11 @@ class CatalogFragment : Fragment() {
         val adapter = ListMajorAdapter(viewType, this)
         adapter.submitList(majors)
         recyclerView.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.reloadAllMajor()
     }
 
     override fun onDestroyView() {

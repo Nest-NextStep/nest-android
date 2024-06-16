@@ -1,4 +1,4 @@
-package com.bangkit.nest.ui.task.components
+package com.bangkit.nest.ui.main.task.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -11,14 +11,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bangkit.nest.R
-import com.bangkit.nest.ui.bodyTextStyle
 import com.bangkit.nest.ui.bodyTextStyleMedium
 import com.commandiron.wheel_picker_compose.core.WheelPickerDefaults
 import java.time.LocalTime
@@ -40,7 +38,7 @@ fun TimePickerComponent(
             startTime = time,
             textColor = Color.Black,
             textStyle = bodyTextStyleMedium,
-            selectorProperties = WheelPickerDefaults.selectorProperties(color = colorResource(R.color.white), border = BorderStroke(1.dp, colorResource(R.color.purple_faded))),
+            selectorProperties = WheelPickerDefaults.selectorProperties(color = colorResource(R.color.white), border = BorderStroke(1.dp, colorResource(R.color.purple_400))),
             onSnappedTime = onSelect
         )
     }
@@ -54,7 +52,7 @@ fun TimePickerComponent(
             startTime = time,
             textColor = Color.Black,
             textStyle = bodyTextStyleMedium,
-            selectorProperties = WheelPickerDefaults.selectorProperties(color = colorResource(R.color.white), border = BorderStroke(1.dp, colorResource(R.color.purple_faded))),
+            selectorProperties = WheelPickerDefaults.selectorProperties(color = colorResource(R.color.white), border = BorderStroke(1.dp, colorResource(R.color.purple_400))),
             onSnappedTime = onSelect
         )
     }
