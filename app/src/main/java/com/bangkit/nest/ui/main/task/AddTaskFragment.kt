@@ -191,7 +191,7 @@ class AddTaskFragment : Fragment() {
                                 .padding(10.dp)
                                 .border(
                                     width = 1.dp,
-                                    color = if (isFocusedTitle) colorResource(R.color.purple_faded) else colorResource(R.color.gray_400),
+                                    color = if (isFocusedTitle) colorResource(R.color.purple_400) else colorResource(R.color.gray_400),
                                     shape = RoundedCornerShape(8.dp)
                                 )
                                 .background(selectedPriority.color, RoundedCornerShape(8.dp))
@@ -343,7 +343,7 @@ class AddTaskFragment : Fragment() {
                                 modifier = Modifier
                                     .border(
                                         width = 1.dp,
-                                        color = if (isFocusedFocusTime) colorResource(R.color.purple_faded) else colorResource(R.color.gray_400),
+                                        color = if (isFocusedFocusTime) colorResource(R.color.purple_400) else colorResource(R.color.gray_400),
                                         shape = RoundedCornerShape(8.dp)
                                     )
                                     .padding(start = 8.dp),
@@ -405,7 +405,7 @@ class AddTaskFragment : Fragment() {
                                     .border(
                                         width = 1.dp,
                                         shape = RoundedCornerShape(8.dp),
-                                        color = if (isFocusedBreakTime) colorResource(R.color.purple_faded) else colorResource(R.color.gray_400),
+                                        color = if (isFocusedBreakTime) colorResource(R.color.purple_400) else colorResource(R.color.gray_400),
                                     )
                                     .padding(start = 8.dp),
                                 verticalAlignment = Alignment.CenterVertically
@@ -486,7 +486,7 @@ class AddTaskFragment : Fragment() {
                                 uncheckedThumbColor = colorResource(R.color.gray_400),
                                 checkedThumbColor = colorResource(R.color.purple),
                                 uncheckedTrackColor = colorResource(R.color.purple_300),
-                                checkedTrackColor = colorResource(R.color.purple_faded)
+                                checkedTrackColor = colorResource(R.color.purple_400)
                             ),
                             modifier = Modifier.padding(start = 8.dp)
                         )

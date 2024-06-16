@@ -197,7 +197,7 @@
 
     <!-- Snackbar -->
     <style name="CustomSnackbar" parent="Widget.Design.Snackbar">
-        <item name="android:background">@color/purple_faded</item>
+        <item name="android:background">@color/purple_400</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

@@ -178,12 +178,12 @@ private fun CalendarDays(
                 modifier = Modifier
                     .aspectRatio(1f)
                     .background(
-                        if (isSelected) colorResource(R.color.purple_faded) else Color.Transparent,
+                        if (isSelected) colorResource(R.color.purple_400) else Color.Transparent,
                         shape = RoundedCornerShape(8.dp)
                     )
                     .border(
                         width = if (isToday) 1.dp else 0.dp,
-                        color = if (isToday) colorResource(R.color.purple_faded) else Color.Transparent,
+                        color = if (isToday) colorResource(R.color.purple_400) else Color.Transparent,
                         shape = RoundedCornerShape(8.dp)
                     )
                     .clickable {
