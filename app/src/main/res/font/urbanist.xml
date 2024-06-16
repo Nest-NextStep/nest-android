@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Medium -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="400"
+        app:font="@font/urbanist_medium"
+        />
+
+    <!-- Bold -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="700"
+        app:font="@font/urbanist_bold"
+        />
+</font-family>
