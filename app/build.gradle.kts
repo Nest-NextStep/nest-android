@@ -28,11 +28,11 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "API_URL", "\"https://trim-mote-425811-i0.et.r.appspot.com/\"")
+            buildConfigField("String", "API_URL", "\"https://nest-capstoneproject.et.r.appspot.com/\"")
         }
 
         debug {
-            buildConfigField("String", "API_URL", "\"https://trim-mote-425811-i0.et.r.appspot.com/\"")
+            buildConfigField("String", "API_URL", "\"https://nest-capstoneproject.et.r.appspot.com/\"")
         }
 
     }
@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.security.identity.credential)
 
     //testing
     testImplementation(libs.junit)
@@ -113,4 +114,10 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
 
     debugImplementation(libs.androidx.ui.tooling)
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 }

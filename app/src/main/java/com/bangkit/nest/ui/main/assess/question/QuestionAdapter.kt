@@ -9,17 +9,23 @@ import com.bangkit.nest.data.remote.response.OptionDataItem
 import com.bangkit.nest.data.remote.response.QuestionsDataItem
 
 class QuestionAdapter(
-    private val questions: List<Pair<QuestionsDataItem, List<OptionDataItem>>>
+    private val questions: List<Pair<QuestionsDataItem, List<OptionDataItem>>>,
+    private val selectedAnswers: Map<String, Int>,
+    private val onOptionSelected: (String, Int) -> Unit
 ) : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
     inner class QuestionViewHolder(private val binding: ItemQuestionBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(questionWithOptions: Pair<QuestionsDataItem, List<OptionDataItem>>) {
             val (question, options) = questionWithOptions
             binding.questionTextView.text = question.questionText
+            val selectedOptionCode = selectedAnswers[question.questionId]
             binding.optionsRecyclerView.layoutManager = LinearLayoutManager(binding.root.context)
-            binding.optionsRecyclerView.adapter = OptionAdapter(options) { selectedOption ->
-                // Handle option click
-                // You can store the selected option to handle form submission later
+            binding.optionsRecyclerView.adapter = OptionAdapter(options, selectedOptionCode) { selectedOption ->
+                question.questionId?.let { selectedOption.optionCode?.let { it1 ->
+                    onOptionSelected(it,
+                        it1
+                    )
+                } }
             }
         }
     }

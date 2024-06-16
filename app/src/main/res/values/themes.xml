@@ -164,6 +164,12 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.SmallComponent</item>
     </style>
 
+    <!-- Snackbar -->
+    <style name="CustomSnackbar" parent="Widget.Design.Snackbar">
+        <item name="android:background">@color/purple_faded</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="Theme.Nest" parent="Base.Theme.Nest" />
 
     <style name="Theme.Nest.NoActionBar">

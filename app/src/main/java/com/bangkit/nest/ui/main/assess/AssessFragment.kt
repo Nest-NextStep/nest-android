@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,32 +38,41 @@ class AssessFragment : Fragment() {
         binding.recyclerViewTestResults.layoutManager = LinearLayoutManager(context)
 
         // Fetch and observe data
-        assessViewModel.getUserMajorResults().observe(viewLifecycleOwner, Observer { result ->
+        assessViewModel.getUserMajorResults().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.recyclerViewTestResults.visibility = View.GONE
+                    binding.imgNoResults.visibility = View.GONE
                 }
+
                 is Result.Success -> {
                     binding.progressBar.visibility = View.GONE
                     binding.errorTextView.isVisible = false
-                    binding.recyclerViewTestResults.visibility = View.VISIBLE
 
                     val data = result.data.resultResponse ?: emptyList()
-                    binding.recyclerViewTestResults.adapter = TestResultsAdapter(data)
+                    if (data.isEmpty()) {
+                        binding.recyclerViewTestResults.visibility = View.GONE
+                        binding.imgNoResults.visibility = View.VISIBLE
+                    } else {
+                        binding.recyclerViewTestResults.visibility = View.VISIBLE
+                        binding.imgNoResults.visibility = View.GONE
+                        binding.recyclerViewTestResults.adapter = TestResultsAdapter(data)
+                    }
                 }
+
                 is Result.Error -> {
                     binding.progressBar.visibility = View.GONE
                     binding.recyclerViewTestResults.visibility = View.GONE
+                    binding.imgNoResults.visibility = View.GONE
                     binding.errorTextView.text = result.error
                     binding.errorTextView.visibility = View.VISIBLE
                 }
             }
-        })
+        }
 
-        // Handle button click
+        // Button click navigates to BeginFragment
         binding.buttonTakeAssessment.setOnClickListener {
-            // Navigate to BeginFragment
             findNavController().navigate(R.id.action_assessFragment_to_beginFragment)
         }
 

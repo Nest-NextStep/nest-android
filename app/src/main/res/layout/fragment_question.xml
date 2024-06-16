@@ -41,6 +41,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:text="Section 1"
+        android:fontFamily="@font/urbanist_semibold"
         android:textAppearance="@style/TextAppearance.SectionTitle"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/toolbar"

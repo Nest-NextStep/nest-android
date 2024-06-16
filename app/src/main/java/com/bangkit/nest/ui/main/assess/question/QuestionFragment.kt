@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -20,6 +21,7 @@ import com.bangkit.nest.databinding.FragmentQuestionBinding
 import com.bangkit.nest.ui.main.MainActivity
 import com.bangkit.nest.utils.ViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 
 class QuestionFragment : Fragment() {
 
@@ -34,6 +36,8 @@ class QuestionFragment : Fragment() {
     private var sections: MutableList<List<Pair<QuestionsDataItem, List<OptionDataItem>>>> = mutableListOf()
     private var currentSectionIndex = 0
 
+    private val selectedAnswers = mutableMapOf<String, Int>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,10 +49,8 @@ class QuestionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Fetch questions for each category
         fetchQuestions()
 
-        // Set up click listeners for navigation buttons
         binding.previousButton.setOnClickListener {
             if (currentSectionIndex > 0) {
                 currentSectionIndex--
@@ -56,12 +58,16 @@ class QuestionFragment : Fragment() {
             }
         }
         binding.nextButton.setOnClickListener {
-            if (currentSectionIndex < sections.size - 1) {
-                currentSectionIndex++
-                updateUI()
-                binding.nestedScrollView.scrollTo(0, 0)
+            if (areAllQuestionsAnswered()) {
+                if (currentSectionIndex < sections.size - 1) {
+                    currentSectionIndex++
+                    updateUI()
+                    binding.nestedScrollView.scrollTo(0, 0)
+                } else {
+                    submitResultsAndNavigate()
+                }
             } else {
-                // Handle submit action
+                Toast.makeText(context, "Please answer all questions before proceeding.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -94,7 +100,6 @@ class QuestionFragment : Fragment() {
                         updateUI()
                     }
                     is Result.Error -> {
-                        // Show error state
                         binding.errorTextView.text = result.error
                         binding.errorTextView.isVisible = true
                         binding.progressBar.isVisible = false
@@ -109,20 +114,23 @@ class QuestionFragment : Fragment() {
 
         binding.sectionTitleTextView.text = "Section ${currentSectionIndex + 1}"
         binding.questionsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.questionsRecyclerView.adapter = QuestionAdapter(section)
+        binding.questionsRecyclerView.adapter = QuestionAdapter(section, selectedAnswers) { questionId, optionCode ->
+            selectedAnswers[questionId] = optionCode
+        }
 
-        // Hide the previous button on the first section
         binding.previousButton.visibility = if (currentSectionIndex == 0) View.INVISIBLE else View.VISIBLE
-
-        // Change the next button text to "Submit" on the last section
         binding.nextButton.text = if (currentSectionIndex == sections.size - 1) "Submit" else "Next"
 
-        // Hide loading and show content
         binding.progressBar.isVisible = false
         binding.errorTextView.isVisible = false
         binding.sectionTitleTextView.isVisible = true
         binding.nestedScrollView.isVisible = true
         binding.buttonContainer.isVisible = true
+    }
+
+    private fun areAllQuestionsAnswered(): Boolean {
+        val currentSectionQuestions = sections[currentSectionIndex]
+        return currentSectionQuestions.all { (question, _) -> selectedAnswers.containsKey(question.questionId) }
     }
 
     private fun showEndTestDialog() {
@@ -138,7 +146,7 @@ class QuestionFragment : Fragment() {
     }
 
     private fun setupLoading() {
-        binding?.apply {
+        binding.apply {
             progressBar.isVisible = true
 
             sectionTitleTextView.isVisible = false
@@ -146,6 +154,28 @@ class QuestionFragment : Fragment() {
             buttonContainer.isVisible = false
             errorTextView.isVisible = false
         }
+    }
+
+    private fun submitResultsAndNavigate() {
+        viewModel.submitResults(selectedAnswers).observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+                is Result.Success -> {
+                    val gson = Gson()
+                    val resultJson = gson.toJson(result.data)
+                    val bundle = Bundle().apply {
+                        putString("result", resultJson)
+                    }
+                    findNavController().navigate(R.id.action_questionFragment_to_resultFragment, bundle)
+                }
+                is Result.Error -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
     override fun onResume() {

@@ -38,9 +38,9 @@ data class Priority(
 @Composable
 fun getPriorities(): List<Priority> {
     return listOf(
-        Priority("Low", colorResource(R.color.green)),
-        Priority("Medium", colorResource(R.color.yellow)),
-        Priority("High", colorResource(R.color.soft_red))
+        Priority("low", colorResource(R.color.green)),
+        Priority("medium", colorResource(R.color.yellow)),
+        Priority("high", colorResource(R.color.soft_red))
     )
 }
 

@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -38,17 +37,11 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.Task
 import com.bangkit.nest.ui.bodyTextStyle
 import com.bangkit.nest.ui.subBodyTextStyle
-import java.text.SimpleDateFormat
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.util.Calendar
-import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
@@ -67,14 +60,14 @@ fun TaskComponent(
     }
 
     val priorityColor = when (task.priority) {
-        "Low" -> colorResource(R.color.green)
-        "Medium" -> colorResource(R.color.yellow)
-        "High" -> colorResource(R.color.soft_red)
+        "low" -> colorResource(R.color.green)
+        "medium" -> colorResource(R.color.yellow)
+        "high" -> colorResource(R.color.soft_red)
         else -> Color.Gray
     }
 
-    val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
-    val timeFormatter = DateTimeFormatter.ofPattern("hh:mm a")
+    val startTime = task.startTime
+    val endTime = task.endTime
 
     Box(
         modifier = Modifier
@@ -94,7 +87,7 @@ fun TaskComponent(
             )
             .border(
                 width = 1.dp,
-                color = colorResource(R.color.gray_variant),
+                color = colorResource(R.color.gray_400),
                 shape = RoundedCornerShape(
                     topStart = 8.dp,
                     bottomStart = 8.dp,
@@ -118,7 +111,7 @@ fun TaskComponent(
                         bottomEnd = 8.dp
                     )
                 )
-                .padding(start = 8.dp, top = 10.dp, end = 8.dp, bottom = 10.dp)
+                .padding(start = 8.dp, top = 10.dp, end = 16.dp, bottom = 10.dp)
         ) {
             Row(
                 modifier = Modifier
@@ -133,11 +126,11 @@ fun TaskComponent(
                         .size(32.dp)
                         .weight(0.1f)
                 ) {
-                    if (task.isCompleted) {
+                    if (task.isCompleted == 1) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_check_circle),
                             contentDescription = null,
-                            tint = Color.Red,
+                            tint = colorResource(R.color.purple),
                             modifier = Modifier.size(20.dp)
                         )
                     } else {
@@ -160,62 +153,66 @@ fun TaskComponent(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Column(verticalArrangement = Arrangement.Center) {
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .basicMarquee(delayMillis = 1000),
-                            text = task.title,
-                            style = bodyTextStyle,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Color.Black
-                        )
+                        task.title?.let {
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .basicMarquee(delayMillis = 1000),
+                                text = it,
+                                style = bodyTextStyle,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color.Black
+                            )
+                        }
                         Spacer(modifier = Modifier.height(16.dp))
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(4.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_calendar_today),
+                                painter = painterResource(id = R.drawable.ic_assess_date),
                                 contentDescription = null,
                                 modifier = Modifier.size(15.dp),
-                                tint = colorResource(R.color.gray_variant)
+                                tint = colorResource(R.color.gray_400)
                             )
-                            Text(
-                                text = dateFormatter.format(task.date),
-                                style = subBodyTextStyle, // Changed to subBodyTextStyle
-                                color = colorResource(R.color.gray_variant)
-                            )
+                            task.date?.let {
+                                Text(
+                                    text = it,
+                                    style = subBodyTextStyle,
+                                    color = colorResource(R.color.gray_400)
+                                )
+                            }
                             Divider(
                                 modifier = Modifier
                                     .height(16.dp)
                                     .padding(horizontal = 4.dp)
                                     .width(1.dp),
-                                color = colorResource(R.color.gray_variant)
+                                color = colorResource(R.color.gray_400)
                             )
                             Text(
-                                text = "${task.startTime.format(timeFormatter)} - ${task.endTime.format(timeFormatter)}",
+                                text = "$startTime - $endTime",
                                 style = subBodyTextStyle,
-                                color = colorResource(R.color.gray_variant)
+                                color = colorResource(R.color.gray_400)
                             )
-                            if (task.isRepeated) {
+                            if (task.isRepeated == 1) {
                                 Divider(
                                     modifier = Modifier
                                         .height(16.dp)
                                         .padding(horizontal = 4.dp)
                                         .width(1.dp),
-                                    color = colorResource(R.color.gray_variant)
+                                    color = colorResource(R.color.gray_400)
                                 )
                                 Icon(
                                     imageVector = Icons.Default.Refresh,
                                     contentDescription = null,
                                     modifier = Modifier.size(15.dp),
-                                    tint = colorResource(R.color.gray_variant)
+                                    tint = colorResource(R.color.gray_400)
                                 )
                             }
                         }
                     }
                 }
-                if (!task.isCompleted) {
+                if (task.isCompleted == 0) {
                     IconButton(
                         onClick = { onPomodoro(task.id) },
                         modifier = Modifier.weight(0.1f)

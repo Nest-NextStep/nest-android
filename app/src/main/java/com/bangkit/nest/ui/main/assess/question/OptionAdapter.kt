@@ -8,10 +8,11 @@ import com.bangkit.nest.data.remote.response.OptionDataItem
 
 class OptionAdapter(
     private val options: List<OptionDataItem>,
+    private val selectedOptionCode: Int?,
     private val onOptionSelected: (OptionDataItem) -> Unit
 ) : RecyclerView.Adapter<OptionAdapter.OptionViewHolder>() {
 
-    private var selectedOption: OptionDataItem? = null
+    private var selectedOption: OptionDataItem? = options.find { it.optionCode == selectedOptionCode }
 
     inner class OptionViewHolder(private val binding: ItemOptionBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(option: OptionDataItem) {
@@ -22,7 +23,6 @@ class OptionAdapter(
                 onOptionSelected(option)
                 notifyDataSetChanged()
             }
-            binding.optionButton.isSelected = option == selectedOption
         }
     }
 
