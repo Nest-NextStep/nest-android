@@ -53,6 +53,7 @@ class ProfileRepository private constructor(
             val response = apiService.editProfile(username, request)
 
             emit(Result.Success(response))
+            userPrefRepository.saveIsProfileCompleted(true)
         } catch (e: HttpException) {
             Log.e(TAG, "Failed to update user data: ${e.message()}")
             emit(Result.Error(e.message.toString()))
