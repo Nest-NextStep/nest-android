@@ -54,6 +54,9 @@ class CatalogFragment : Fragment() {
         binding?.apply {
             allMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             recommendedMajorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+            allMajorRecyclerView.isNestedScrollingEnabled = false
+            recommendedMajorRecyclerView.isNestedScrollingEnabled = false
         }
     }
 

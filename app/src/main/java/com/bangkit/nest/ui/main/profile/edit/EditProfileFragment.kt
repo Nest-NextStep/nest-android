@@ -5,6 +5,10 @@ import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -17,7 +21,9 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.bangkit.nest.R
 import com.bangkit.nest.data.Result
+import com.bangkit.nest.data.remote.request.ChangePasswordRequest
 import com.bangkit.nest.data.remote.request.ProfileRequest
+import com.bangkit.nest.databinding.DialogChangePasswordBinding
 import com.bangkit.nest.databinding.FragmentEditProfileBinding
 import com.bangkit.nest.ui.main.MainActivity
 import com.bangkit.nest.utils.ViewModelFactory
@@ -61,6 +67,7 @@ class EditProfileFragment : Fragment() {
         setupInput()
         setupDropdownReligion()
         setupSubmitButton()
+        setupResetPassword()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -186,7 +193,7 @@ class EditProfileFragment : Fragment() {
                 .setTitle(getString(R.string.success))
                 .setMessage(getString(R.string.update_profile_success))
                 .setPositiveButton(getString(R.string.continue_)) { _, _ ->
-                    binding?.backButton?.performClick()
+                    backToProfilePage()
                 }
                 .show()
         } else {
@@ -194,6 +201,20 @@ class EditProfileFragment : Fragment() {
                 .setTitle(getString(R.string.failed))
                 .setMessage(errorMessage)
                 .setPositiveButton(getString(R.string.ok), null)
+                .show()
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
+        }
+    }
+
+    private fun setupBackButton() {
+        binding?.backButton?.setOnClickListener {
+            val dialog = MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.unsaved_changes))
+                .setMessage(getString(R.string.unsaved_changes_confirmation))
+                .setPositiveButton(getString(R.string.discard)) { _, _ ->
+                    backToProfilePage()
+                }
+                .setNegativeButton(getString(R.string.cancel), null)
                 .show()
             dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
         }
@@ -207,10 +228,117 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    private fun setupBackButton() {
-        binding?.backButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_editProfile_to_profile)
+    private fun setupResetPassword() {
+        binding?.resetPasswordButton?.setOnClickListener {
+            val dialogBinding = DialogChangePasswordBinding.inflate(layoutInflater)
+            val changePasswordView = dialogBinding.root
+
+            val passwordEditText = dialogBinding.newPasswordEditText
+            val passwordEditTextLayout = dialogBinding.newPasswordEditTextLayout
+            val confirmPasswordEditText = dialogBinding.confirmNewPasswordEditText
+            val confirmPasswordEditTextLayout = dialogBinding.confirmNewPasswordEditTextLayout
+
+            passwordEditText.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    val password = passwordEditText.text.toString()
+                    // Validate password length
+                    if (password.length < 6) {
+                        passwordEditTextLayout.error = getString(R.string.short_password)
+                    } else if (password.isEmpty()) {
+                        passwordEditTextLayout.error = getString(R.string.empty_field)
+                    } else {
+                        passwordEditTextLayout.error = null
+                    }
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
+            confirmPasswordEditText.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    val password = passwordEditText.text.toString()
+                    val confirmPassword = confirmPasswordEditText.text.toString()
+                    // Validate password match
+                    if (password != confirmPassword) {
+                        confirmPasswordEditTextLayout.error = getString(R.string.password_mismatch)
+                    } else if (confirmPassword.isEmpty()) {
+                        confirmPasswordEditTextLayout.error = getString(R.string.empty_field)
+                    } else {
+                        confirmPasswordEditTextLayout.error = null
+                    }
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
+
+            val dialog = MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.reset_password))
+                .setView(changePasswordView)
+                .setPositiveButton(getString(R.string.reset), null)
+                .setNegativeButton(getString(R.string.cancel), null)
+                .create()
+            dialog.setOnShowListener {
+                val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                positiveButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
+                positiveButton.setOnClickListener {
+                    if (passwordEditText.text.toString().isEmpty()) {
+                        passwordEditTextLayout.error = getString(R.string.empty_field)
+                    } else if (confirmPasswordEditText.text.toString().isEmpty()) {
+                        confirmPasswordEditTextLayout.error = getString(R.string.empty_field)
+                    } else if (passwordEditTextLayout.error == null && confirmPasswordEditTextLayout.error == null) {
+                        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputMethodManager.hideSoftInputFromWindow(passwordEditText.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+                        positiveButton.isEnabled = false
+
+                        val request = ChangePasswordRequest(confirmPasswordEditText.text.toString())
+                        viewModel.changePassword(request).observe(viewLifecycleOwner) { result ->
+                            when (result) {
+                                is Result.Loading -> {
+                                    dialogBinding.progressBar.isVisible = true
+                                    dialogBinding.newPasswordEditTextLayout.isVisible = false
+                                    dialogBinding.confirmNewPasswordEditTextLayout.isVisible = false
+                                    dialogBinding.informationTextView.isVisible = false
+                                }
+                                is Result.Success -> {
+                                    dialogBinding.progressBar.isVisible = false
+                                    dialogBinding.newPasswordEditTextLayout.isVisible = false
+                                    dialogBinding.confirmNewPasswordEditTextLayout.isVisible = false
+                                    dialog.setTitle(getString(R.string.success))
+                                    dialogBinding.informationTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.dark_green))
+                                    dialogBinding.informationTextView.text = getString(R.string.success_reset_password)
+                                    dialogBinding.informationTextView.isVisible = true
+
+                                    // Dismiss the dialog after 3 seconds
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        viewModel.logout()
+                                        dialog.dismiss()
+                                    }, 3000)
+                                }
+                                is Result.Error -> {
+                                    dialogBinding.progressBar.isVisible = false
+                                    dialogBinding.newPasswordEditTextLayout.isVisible = false
+                                    dialogBinding.confirmNewPasswordEditTextLayout.isVisible = false
+                                    dialog.setTitle(getString(R.string.failed))
+                                    dialogBinding.informationTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+                                    dialogBinding.informationTextView.text = getString(R.string.error_occurred)
+                                    dialogBinding.informationTextView.isVisible = true
+                                    // Dismiss the dialog after 4 seconds
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        dialog.dismiss()
+                                    }, 4000)
+                                }
+                            }
+                        }
+                    }
+                }
+                // Enable buttons initially
+                positiveButton.isEnabled = true
+            }
+            dialog.show()
         }
+    }
+
+    private fun backToProfilePage() {
+        findNavController().navigate(R.id.action_editProfile_to_profile)
     }
 
     private fun setupFieldFill() {

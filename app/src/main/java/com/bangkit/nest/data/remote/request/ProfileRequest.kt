@@ -30,3 +30,7 @@ data class ProfileRequest(
     @SerializedName("user_voted")
     var userVoted: String? = null,
 )
+
+data class ChangePasswordRequest(
+    val newPassword: String
+)

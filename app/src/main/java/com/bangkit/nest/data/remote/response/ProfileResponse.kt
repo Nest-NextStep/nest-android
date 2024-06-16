@@ -49,7 +49,7 @@ data class ProfileData(
 	var userEmail: String? = null
 )
 
-data class EditProfileResponse(
+data class ProfileSuccessResponse(
 
 	@field:SerializedName("message")
 	val message: String? = null,

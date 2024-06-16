@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.MajorUniversityItem
 import com.bangkit.nest.databinding.ItemUniversityBinding
 import com.bumptech.glide.Glide
@@ -31,6 +32,8 @@ class ListUniversityAdapter() : ListAdapter<MajorUniversityItem, ListUniversityA
         fun bind(university: MajorUniversityItem) {
             Glide.with(itemView.context)
                 .load(university.universityImage)
+                .placeholder(R.drawable.ic_education)
+                .error(R.drawable.ic_education)
                 .into(binding.imageViewUniversityLogo)
 
             binding.textViewUniversityName.text = university.universityName

@@ -1,12 +1,13 @@
 package com.bangkit.nest.data.remote.retrofit
 
+import com.bangkit.nest.data.remote.request.ChangePasswordRequest
 import com.bangkit.nest.data.remote.request.LoginRequest
 import com.bangkit.nest.data.remote.request.ProfileRequest
 import com.bangkit.nest.data.remote.request.RefreshTokenRequest
 import com.bangkit.nest.data.remote.request.RegisterRequest
 import com.bangkit.nest.data.remote.response.AllMajorResponse
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
-import com.bangkit.nest.data.remote.response.EditProfileResponse
+import com.bangkit.nest.data.remote.response.ProfileSuccessResponse
 import com.bangkit.nest.data.remote.response.FindMajorResponse
 import com.bangkit.nest.data.remote.response.LoginResponse
 import com.bangkit.nest.data.remote.response.ProfileResponse
@@ -25,6 +26,11 @@ interface ApiService {
         @Body request: RegisterRequest
     ): RegisterResponse
 
+    @POST("change-password")
+    suspend fun changePassword (
+        @Body request: ChangePasswordRequest
+    ): ProfileSuccessResponse
+
     @GET("profile/{username}")
     suspend fun getProfileData (
         @Path("username") username: String
@@ -34,7 +40,7 @@ interface ApiService {
     suspend fun editProfile (
         @Path("username") username: String,
         @Body request: ProfileRequest
-    ): EditProfileResponse
+    ): ProfileSuccessResponse
 
     @POST("refresh-token")
     suspend fun refreshToken (

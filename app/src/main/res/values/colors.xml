@@ -16,6 +16,7 @@
     <color name="red_error">#B3261E</color>
     <color name="yellow">#FFB36D</color>
     <color name="green">#BEE797</color>
+    <color name="dark_green">#198754</color>
     <color name="black">#1E232C</color>
     <color name="white">#FFFFFF</color>
 </resources>
