@@ -39,7 +39,7 @@ class ViewModelFactory(
             }
 
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
-                EditProfileViewModel(profileRepository) as T
+                EditProfileViewModel(userPrefRepository, profileRepository) as T
             }
 
             modelClass.isAssignableFrom(CatalogViewModel::class.java) -> {

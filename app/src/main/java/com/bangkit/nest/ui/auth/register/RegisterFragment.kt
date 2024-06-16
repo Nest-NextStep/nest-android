@@ -207,6 +207,9 @@ class RegisterFragment : Fragment() {
         if (password.length < 6) {
             passwordEditTextLayout?.error = getString(R.string.short_password)
             return false
+        } else if (password.isEmpty()) {
+            passwordEditTextLayout?.error = getString(R.string.empty_field)
+            return false
         } else {
             passwordEditTextLayout?.error = null
             return true

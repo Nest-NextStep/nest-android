@@ -13,12 +13,11 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="16dp"
         android:text="@string/title_register_page"
+        android:textAppearance="@style/TextAppearance.Heading1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guidelineTop"
-        android:textAppearance="@style/TextAppearance.Heading1"
-        />
+        app:layout_constraintTop_toBottomOf="@id/guidelineTop" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameEditTextLayout"
@@ -27,11 +26,10 @@
         android:layout_height="80dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="32dp"
+        android:hint="@string/username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        android:hint="@string/username"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/usernameEditText"
@@ -48,11 +46,10 @@
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:layout_marginHorizontal="24dp"
+        android:hint="@string/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameEditTextLayout"
-        android:hint="@string/email"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/usernameEditTextLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
@@ -69,20 +66,18 @@
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:layout_marginHorizontal="24dp"
+        android:hint="@string/password"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
-        android:hint="@string/password"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword"
-            />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -91,76 +86,73 @@
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:layout_marginHorizontal="24dp"
+        android:hint="@string/confirm_password"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout"
-        android:hint="@string/confirm_password"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/confirmPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword"
-            />
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditTextLayout"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="32dp">
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditTextLayout">
+
         <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:text="@string/register"
             tools:enabled="false"
-            tools:text=""
-            />
+            tools:text="" />
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:indeterminateTintMode="src_atop"
             android:indeterminateTint="?attr/colorPrimary"
+            android:indeterminateTintMode="src_atop"
             android:visibility="gone"
-            tools:visibility="visible"
-            />
+            tools:visibility="visible" />
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@id/guidelineBottom"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintTop_toBottomOf="@id/guidelineBottom">
+
         <TextView
             android:id="@+id/haveAccountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:text="@string/have_account"
-            app:layout_constraintEnd_toStartOf="@+id/registerNowTextView"
-            />
+            app:layout_constraintEnd_toStartOf="@+id/registerNowTextView" />
+
         <TextView
             android:id="@+id/loginNowTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_now"
-            app:layout_constraintStart_toEndOf="@+id/noAccountTextView"
             android:textColor="?attr/colorPrimary"
             android:textStyle="bold"
-            />
+            app:layout_constraintStart_toEndOf="@+id/noAccountTextView" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline

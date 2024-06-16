@@ -103,5 +103,11 @@
     <string name="unsaved_changes_confirmation">Are you sure you want to leave this page? Changes you made will not be saved.</string>
     <string name="discard">Discard</string>
     <string name="cancel">Cancel</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="reset">Reset</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="success_reset_password">Password reset successfully. Please login again!</string>
+    <string name="error_reset_password">Failed to reset password</string>
 
 </resources>
