@@ -34,24 +34,27 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bangkit.nest.R
+import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.request.TaskRequest
+import com.bangkit.nest.data.remote.response.Task
 import com.bangkit.nest.ui.Typography
 import com.bangkit.nest.ui.h3TextStyle
 import com.bangkit.nest.ui.main.MainActivity
 import com.bangkit.nest.ui.main.task.components.*
 import com.bangkit.nest.ui.subTitleFormStyle
 import com.bangkit.nest.ui.task.components.TimePickerComponent
-import com.bangkit.nest.data.Result
 import com.bangkit.nest.utils.ViewModelFactory
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.util.*
 
-class AddTaskFragment : Fragment() {
+class UpdateTaskFragment : Fragment() {
 
     private val taskViewModel: TaskViewModel by viewModels {
         ViewModelFactory.getInstance(requireContext())
@@ -67,7 +70,7 @@ class AddTaskFragment : Fragment() {
                 MaterialTheme(
                     typography = Typography
                 ) {
-                    AddTaskScreen(taskViewModel)
+                    UpdateTaskScreen(taskViewModel)
                 }
             }
         }
@@ -79,27 +82,91 @@ class AddTaskFragment : Fragment() {
     }
 
     @SuppressLint("UnrememberedMutableState")
-    @OptIn(ExperimentalMaterial3Api::class)
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
-    fun AddTaskScreen(viewModel: TaskViewModel) {
+    fun UpdateTaskScreen(viewModel: TaskViewModel) {
         val context = LocalContext.current
-        val createTaskResult by viewModel.createTaskResult.observeAsState()
-        val calendar = Calendar.getInstance()
-        var taskStartTime by remember { mutableStateOf(LocalTime.now()) }
-        var taskEndTime by remember { mutableStateOf(taskStartTime.plusHours(1)) }
-        var titleText by remember { mutableStateOf(TextFieldValue("")) }
-        var focusTimeText by remember { mutableStateOf(TextFieldValue("30")) }
-        var breakTimeText by remember { mutableStateOf(TextFieldValue("10")) }
-        var repeatSwitch by remember { mutableIntStateOf(0) }
-        var taskDuration by remember { mutableLongStateOf(60) }
+        val taskId = arguments?.getInt("taskId") ?: return
+
+        val taskDetail by viewModel.taskDetail.observeAsState()
+        val updateTaskResult by viewModel.updateTaskResult.observeAsState()
+        val deleteTaskResult by viewModel.deleteTaskResult.observeAsState()
+
+        LaunchedEffect(taskId) {
+            viewModel.fetchDetailTaskById(taskId.toString())
+        }
+
+        taskDetail?.let { result ->
+            when (result) {
+                is Result.Success -> {
+                    val task = result.data
+                    UpdateTaskForm(task, viewModel)
+                }
+                is Result.Error -> {
+                    Toast.makeText(context, "Failed to load task: ${result.error}", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                }
+                is Result.Loading -> {
+                    // Show loading indicator if needed
+                }
+            }
+        }
+
+        updateTaskResult?.let { result ->
+            when (result) {
+                is Result.Success -> {
+                    Toast.makeText(context, "Task updated successfully!", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                    viewModel.clearUpdateTaskResult()
+                }
+                is Result.Error -> {
+                    Toast.makeText(context, "Failed to edit task: ${result.error}", Toast.LENGTH_SHORT).show()
+                    viewModel.clearUpdateTaskResult()
+                }
+                is Result.Loading -> {
+                }
+            }
+        }
+
+        deleteTaskResult?.let { result ->
+            when (result) {
+                is Result.Success -> {
+                    Toast.makeText(context, "Task deleted successfully!", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                    viewModel.clearDeleteTaskResult() // Clear the result to avoid showing the toast again
+                }
+                is Result.Error -> {
+                    Toast.makeText(context, "Failed to delete task: ${result.error}", Toast.LENGTH_SHORT).show()
+                    viewModel.clearDeleteTaskResult() // Clear the result to avoid showing the toast again
+                }
+                is Result.Loading -> {
+                    // Show loading indicator if needed
+                }
+            }
+        }
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @SuppressLint("UnrememberedMutableState")
+    @RequiresApi(Build.VERSION_CODES.O)
+    @Composable
+    fun UpdateTaskForm(task: Task, viewModel: TaskViewModel) {
+        val context = LocalContext.current
+
+        var taskStartTime by remember { mutableStateOf(LocalTime.parse(task.startTime)) }
+        var taskEndTime by remember { mutableStateOf(LocalTime.parse(task.endTime)) }
+        var titleText by remember { mutableStateOf(TextFieldValue(task.title)) }
+        var focusTimeText by remember { mutableStateOf(TextFieldValue(task.focusTime.toString())) }
+        var breakTimeText by remember { mutableStateOf(TextFieldValue(task.breakTime.toString())) }
+        var repeatSwitch by remember { mutableIntStateOf(task.isRepeated) }
+        var taskDuration by remember { mutableLongStateOf(task.duration.toLong()) }
         var isTimeUpdated by remember { mutableStateOf(false) }
-        var selectedPriority by remember { mutableStateOf(Priority("low", Color(0xFFBEE797))) }
+        var selectedPriority by remember { mutableStateOf(Priority(task.priority, Color(0xFFBEE797))) }
         var isFocusedTitle by remember { mutableStateOf(false) }
         var isFocusedFocusTime by remember { mutableStateOf(false) }
         var isFocusedBreakTime by remember { mutableStateOf(false) }
         var showCustomDurationDialog by remember { mutableStateOf(false) }
-        var selectedDate by remember { mutableStateOf(calendar.time) }
+        var selectedDate by remember { mutableStateOf(SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(task.date)!!) }
 
         val focusRequester = FocusRequester()
 
@@ -108,12 +175,13 @@ class AddTaskFragment : Fragment() {
                 TopAppBar(
                     title = {
                         Text(
-                            text = "Create New Task",
+                            text = "Edit Task",
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(start = 64.dp),
+                                .wrapContentSize(Alignment.Center),
                             style = h3TextStyle
                         )
+
                     },
                     navigationIcon = {
                         IconButton(
@@ -137,9 +205,21 @@ class AddTaskFragment : Fragment() {
                         containerColor = Color.White
                     ),
                     modifier = Modifier
-                        .padding(start = 20.dp)
+                        .padding(start = 20.dp, end = 20.dp)
                         .background(Color.White),
-                    actions = {},
+                    actions = {
+                        IconButton(
+                            onClick = { showDeleteTaskDialog(task.id) },
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_delete),
+                                contentDescription = null,
+                                tint = colorResource(R.color.soft_red),
+                                modifier = Modifier
+                                    .size(30.dp)
+                            )
+                        }
+                    },
                 )
             },
             modifier = Modifier.background(Color.White)
@@ -191,7 +271,9 @@ class AddTaskFragment : Fragment() {
                                 .padding(10.dp)
                                 .border(
                                     width = 1.dp,
-                                    color = if (isFocusedTitle) colorResource(R.color.purple_500) else colorResource(R.color.gray_400),
+                                    color = if (isFocusedTitle) colorResource(R.color.purple_500) else colorResource(
+                                        R.color.gray_400
+                                    ),
                                     shape = RoundedCornerShape(8.dp)
                                 )
                                 .background(selectedPriority.color, RoundedCornerShape(8.dp))
@@ -209,9 +291,7 @@ class AddTaskFragment : Fragment() {
                                     unfocusedIndicatorColor = Color.Transparent,
                                 ),
                                 onValueChange = {
-                                    if (it.text.length <= 50) {
-                                        titleText = it
-                                    }
+                                    titleText = it
                                 },
                                 placeholder = {
                                     Text(
@@ -343,7 +423,9 @@ class AddTaskFragment : Fragment() {
                                 modifier = Modifier
                                     .border(
                                         width = 1.dp,
-                                        color = if (isFocusedFocusTime) colorResource(R.color.purple_500) else colorResource(R.color.gray_400),
+                                        color = if (isFocusedFocusTime) colorResource(R.color.purple_500) else colorResource(
+                                            R.color.gray_400
+                                        ),
                                         shape = RoundedCornerShape(8.dp)
                                     )
                                     .padding(start = 8.dp),
@@ -358,9 +440,7 @@ class AddTaskFragment : Fragment() {
                                 Spacer(modifier = Modifier.width(8.dp))
                                 TextField(
                                     value = focusTimeText,
-                                    onValueChange = {
-                                        focusTimeText = it
-                                    },
+                                    onValueChange = { focusTimeText = it },
                                     colors = TextFieldDefaults.colors(
                                         focusedContainerColor = Color.Transparent,
                                         unfocusedContainerColor = Color.Transparent,
@@ -405,7 +485,9 @@ class AddTaskFragment : Fragment() {
                                     .border(
                                         width = 1.dp,
                                         shape = RoundedCornerShape(8.dp),
-                                        color = if (isFocusedBreakTime) colorResource(R.color.purple_500) else colorResource(R.color.gray_400),
+                                        color = if (isFocusedBreakTime) colorResource(R.color.purple_500) else colorResource(
+                                            R.color.gray_400
+                                        ),
                                     )
                                     .padding(start = 8.dp),
                                 verticalAlignment = Alignment.CenterVertically
@@ -419,9 +501,7 @@ class AddTaskFragment : Fragment() {
                                 Spacer(modifier = Modifier.width(8.dp))
                                 TextField(
                                     value = breakTimeText,
-                                    onValueChange = {
-                                        breakTimeText = it
-                                    },
+                                    onValueChange = { breakTimeText = it },
                                     colors = TextFieldDefaults.colors(
                                         focusedContainerColor = Color.Transparent,
                                         unfocusedContainerColor = Color.Transparent,
@@ -492,25 +572,23 @@ class AddTaskFragment : Fragment() {
                         )
                     }
 
-                    // Add Task Button
+                    // Save Task Button
                     Button(
                         onClick = {
-                            if (validateInputs(titleText.text, focusTimeText.text, breakTimeText.text, taskStartTime, taskEndTime, context)) {
-                                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                                val taskRequest = TaskRequest(
-                                    taskName = titleText.text,
-                                    taskDate = dateFormat.format(selectedDate),
-                                    taskStartTime = "${taskStartTime.hour}:${taskStartTime.minute}:00",
-                                    taskEndTime = "${taskEndTime.hour}:${taskEndTime.minute}:00",
-                                    taskDuration = taskDuration.toInt(),
-                                    taskFocusTime = focusTimeText.text.toIntOrNull() ?: 30,
-                                    taskBreakTime = breakTimeText.text.toIntOrNull() ?: 10,
-                                    taskPriority = selectedPriority.displayText,
-                                    taskRepeat = repeatSwitch,
-                                    isCompleted = 0
-                                )
-                                viewModel.submitNewTask(taskRequest)
-                            }
+                            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                            val taskRequest = TaskRequest(
+                                taskName = titleText.text,
+                                taskDate = dateFormat.format(selectedDate),
+                                taskStartTime = "${taskStartTime.hour}:${taskStartTime.minute}:00",
+                                taskEndTime = "${taskEndTime.hour}:${taskEndTime.minute}:00",
+                                taskDuration = taskDuration.toInt(),
+                                taskFocusTime = focusTimeText.text.toIntOrNull() ?: 30,
+                                taskBreakTime = breakTimeText.text.toIntOrNull() ?: 10,
+                                taskPriority = selectedPriority.displayText,
+                                taskRepeat = repeatSwitch,
+                                isCompleted = task.isCompleted
+                            )
+                            viewModel.updateTask(task.id, taskRequest)
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -520,28 +598,10 @@ class AddTaskFragment : Fragment() {
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(
-                            text = "Add Task",
+                            text = "Save",
                             style = subTitleFormStyle
                         )
                     }
-                }
-            }
-        }
-
-        // Handle createTaskResult state
-        createTaskResult?.let { result ->
-            when (result) {
-                is Result.Success -> {
-                    Toast.makeText(context, "Task created successfully!", Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
-                    viewModel.clearCreateTaskResult() // Clear the result to avoid showing the toast again
-                }
-                is Result.Error -> {
-                    Toast.makeText(context, "Failed to create task: ${result.error}", Toast.LENGTH_SHORT).show()
-                    viewModel.clearCreateTaskResult() // Clear the result to avoid showing the toast again
-                }
-                is Result.Loading -> {
-                    // Show loading indicator if needed
                 }
             }
         }
@@ -572,45 +632,15 @@ class AddTaskFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun validateInputs(
-        title: String,
-        focusTime: String,
-        breakTime: String,
-        startTime: LocalTime,
-        endTime: LocalTime,
-        context: android.content.Context
-    ): Boolean {
-        when {
-            title.isEmpty() -> {
-                Toast.makeText(context, "Title must be filled.", Toast.LENGTH_SHORT).show()
-                return false
+    private fun showDeleteTaskDialog(taskId: Int) {
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.delete_task))
+            .setMessage(getString(R.string.delete_task_message))
+            .setPositiveButton(getString(R.string.delete)) { _, _ ->
+                taskViewModel.deleteTask(taskId)
             }
-            title.length > 50 -> {
-                Toast.makeText(context, "Title must be less than 50 characters.", Toast.LENGTH_SHORT).show()
-                return false
-            }
-            focusTime.isEmpty() -> {
-                Toast.makeText(context, "Focus Time must be filled.", Toast.LENGTH_SHORT).show()
-                return false
-            }
-            focusTime.toIntOrNull() == null || focusTime.toInt() < 5 -> {
-                Toast.makeText(context, "Focus Time must be at least 5 minutes.", Toast.LENGTH_SHORT).show()
-                return false
-            }
-            breakTime.isEmpty() -> {
-                Toast.makeText(context, "Break Time must be filled.", Toast.LENGTH_SHORT).show()
-                return false
-            }
-            breakTime.toIntOrNull() == null || breakTime.toInt() < 5 -> {
-                Toast.makeText(context, "Break Time must be at least 5 minutes.", Toast.LENGTH_SHORT).show()
-                return false
-            }
-            startTime.until(endTime, java.time.temporal.ChronoUnit.MINUTES) < 5 -> {
-                Toast.makeText(context, "Duration must be at least 5 minutes.", Toast.LENGTH_SHORT).show()
-                return false
-            }
-            else -> return true
-        }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .show()
+        dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE)?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
     }
 }

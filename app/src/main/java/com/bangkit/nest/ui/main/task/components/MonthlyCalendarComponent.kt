@@ -6,7 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,14 +29,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun CalendarComponent(
+fun MonthlyCalendarComponent(
     modifier: Modifier = Modifier,
     initialDate: Date = Calendar.getInstance().time,
+    tasks: List<Date> = emptyList(),
     onDateSelected: (Date) -> Unit
 ) {
     var selectedDate by remember { mutableStateOf(initialDate) }
     val calendar = Calendar.getInstance().apply { time = selectedDate }
-    var currentWeekStart by remember { mutableStateOf(getStartOfWeek(calendar)) }
+    var currentMonthStart by remember { mutableStateOf(getStartOfMonth(calendar)) }
     val daysOfWeek = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
 
     Column(
@@ -44,10 +46,10 @@ fun CalendarComponent(
             .border(1.dp, Color.Gray, RoundedCornerShape(16.dp))
             .padding(16.dp)
     ) {
-        CalendarHeader(
-            currentWeekStart = currentWeekStart,
-            onPreviousWeek = { currentWeekStart = changeWeek(currentWeekStart, -1) },
-            onNextWeek = { currentWeekStart = changeWeek(currentWeekStart, 1) }
+        MonthlyCalendarHeader(
+            currentMonthStart = currentMonthStart,
+            onPreviousMonth = { currentMonthStart = changeMonth(currentMonthStart, -1) },
+            onNextMonth = { currentMonthStart = changeMonth(currentMonthStart, 1) }
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -59,11 +61,12 @@ fun CalendarComponent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        DaysOfWeekHeader(daysOfWeek, selectedDate, currentWeekStart)
+        DaysOfWeekHeader(daysOfWeek)
 
         CalendarDays(
-            currentWeekStart = currentWeekStart,
+            currentMonthStart = currentMonthStart,
             selectedDate = selectedDate,
+            tasks = tasks,
             onDateSelected = {
                 selectedDate = it
                 onDateSelected(it)
@@ -73,12 +76,12 @@ fun CalendarComponent(
 }
 
 @Composable
-fun CalendarHeader(
-    currentWeekStart: Date,
-    onPreviousWeek: () -> Unit,
-    onNextWeek: () -> Unit
+fun MonthlyCalendarHeader(
+    currentMonthStart: Date,
+    onPreviousMonth: () -> Unit,
+    onNextMonth: () -> Unit
 ) {
-    val calendar = Calendar.getInstance().apply { time = currentWeekStart }
+    val calendar = Calendar.getInstance().apply { time = currentMonthStart }
     val monthYearFormat = SimpleDateFormat("MMMM, yyyy", Locale.getDefault())
     val monthYear = monthYearFormat.format(calendar.time)
 
@@ -89,10 +92,10 @@ fun CalendarHeader(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = onPreviousWeek) {
+        IconButton(onClick = onPreviousMonth) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_back_arrow),
-                contentDescription = "Previous Week",
+                contentDescription = "Previous Month",
                 modifier = Modifier.size(16.dp)
             )
         }
@@ -104,10 +107,10 @@ fun CalendarHeader(
             modifier = Modifier.align(Alignment.CenterVertically)
         )
 
-        IconButton(onClick = onNextWeek) {
+        IconButton(onClick = onNextMonth) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_forward_arrow),
-                contentDescription = "Next Week",
+                contentDescription = "Next Month",
                 modifier = Modifier.size(16.dp)
             )
         }
@@ -115,20 +118,14 @@ fun CalendarHeader(
 }
 
 @Composable
-fun DaysOfWeekHeader(daysOfWeek: List<String>, selectedDate: Date, currentWeekStart: Date) {
-    val selectedDayOfWeek = Calendar.getInstance().apply { time = selectedDate }.get(Calendar.DAY_OF_WEEK)
-    val calendar = Calendar.getInstance().apply { time = currentWeekStart }
-    val weekDays = List(7) { calendar.get(Calendar.DAY_OF_WEEK).also { calendar.add(Calendar.DAY_OF_MONTH, 1) } }
-
+fun DaysOfWeekHeader(daysOfWeek: List<String>) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        daysOfWeek.forEachIndexed { index, day ->
-            val isSelectedDay = weekDays[index] == selectedDayOfWeek
-
+        daysOfWeek.forEach { day ->
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -140,7 +137,7 @@ fun DaysOfWeekHeader(daysOfWeek: List<String>, selectedDate: Date, currentWeekSt
                 Text(
                     text = day,
                     style = bodyTextStyleMedium,
-                    color = if (isSelectedDay) colorResource(R.color.purple) else Color.Black
+                    color = Color.Black
                 )
             }
         }
@@ -149,18 +146,24 @@ fun DaysOfWeekHeader(daysOfWeek: List<String>, selectedDate: Date, currentWeekSt
 
 @Composable
 private fun CalendarDays(
-    currentWeekStart: Date,
+    currentMonthStart: Date,
     selectedDate: Date,
+    tasks: List<Date>,
     onDateSelected: (Date) -> Unit
 ) {
     val calendar = Calendar.getInstance()
-    calendar.time = currentWeekStart
+    calendar.time = currentMonthStart
 
-    val daysInWeek = List(7) { index ->
-        val date = calendar.time
+    val daysInMonth = mutableListOf<Date>()
+    val startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1
+    val precedingEmptyDays = (1..startDayOfWeek).map { Date(0) }  // Dates to fill the grid for empty days
+
+    while (calendar.get(Calendar.MONTH) == currentMonthStart.month) {
+        daysInMonth.add(calendar.time)
         calendar.add(Calendar.DAY_OF_MONTH, 1)
-        date
     }
+
+    val totalDays = precedingEmptyDays + daysInMonth
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(7),
@@ -169,36 +172,54 @@ private fun CalendarDays(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        itemsIndexed(daysInWeek) { index, date ->
+        items(totalDays) { date ->
             val isSelected = date == selectedDate
             val isToday = isSameDay(date, Date())
-            val isInCurrentMonth = isSameMonth(date, currentWeekStart)
+            val isInCurrentMonth = isSameMonth(date, currentMonthStart)
+            val hasTask = tasks.any { isSameDay(it, date) }
 
             Box(
                 modifier = Modifier
                     .aspectRatio(1f)
                     .background(
-                        if (isSelected) colorResource(R.color.purple_500) else Color.Transparent,
+                        if (isSelected) colorResource(R.color.purple_faded) else Color.Transparent,
                         shape = RoundedCornerShape(8.dp)
                     )
                     .border(
                         width = if (isToday) 1.dp else 0.dp,
-                        color = if (isToday) colorResource(R.color.purple_500) else Color.Transparent,
+                        color = if (isToday) colorResource(R.color.purple_faded) else Color.Transparent,
                         shape = RoundedCornerShape(8.dp)
                     )
                     .clickable {
-                        onDateSelected(date)
+                        if (date.time != 0L) {
+                            onDateSelected(date)
+                        }
                     },
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = SimpleDateFormat("d", Locale.getDefault()).format(date),
-                    style = bodyTextStyle,
-                    color = when {
-                        !isInCurrentMonth -> Color.Gray
-                        else -> Color.Black
-                    },
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    if (date.time != 0L) {
+                        Text(
+                            text = SimpleDateFormat("d", Locale.getDefault()).format(date),
+                            style = bodyTextStyle,
+                            color = when {
+                                !isInCurrentMonth -> Color.Gray
+                                else -> Color.Black
+                            },
+                        )
+                        if (hasTask) {
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Box(
+                                modifier = Modifier
+                                    .size(4.dp)
+                                    .background(colorResource(R.color.purple), CircleShape)
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -206,35 +227,47 @@ private fun CalendarDays(
 
 @Preview(showBackground = true)
 @Composable
-fun CalendarComponentPreview() {
+fun MonthlyCalendarComponentPreview() {
     MaterialTheme {
-        CalendarComponent(onDateSelected = {})
+        MonthlyCalendarComponent(onDateSelected = {})
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun MonthlyCalendarComponentWithTasksPreview() {
+    val sampleTasks = listOf(
+        Calendar.getInstance().apply { set(2023, Calendar.JUNE, 10) }.time,
+        Calendar.getInstance().apply { set(2023, Calendar.JUNE, 15) }.time,
+        Calendar.getInstance().apply { set(2023, Calendar.JUNE, 20) }.time
+    )
+
+    MaterialTheme {
+        MonthlyCalendarComponent(
+            initialDate = Calendar.getInstance().apply { set(2023, Calendar.JUNE, 1) }.time,
+            tasks = sampleTasks,
+            onDateSelected = {}
+        )
+    }
+}
+
+
 // Helper functions
-fun getStartOfWeek(calendar: Calendar): Date {
-    calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+fun getStartOfMonth(calendar: Calendar): Date {
+    calendar.set(Calendar.DAY_OF_MONTH, 1)
     return calendar.time
 }
 
-fun changeWeek(date: Date, weeks: Int): Date {
+fun changeMonth(date: Date, months: Int): Date {
     val calendar = Calendar.getInstance()
     calendar.time = date
-    calendar.add(Calendar.WEEK_OF_YEAR, weeks)
+    calendar.add(Calendar.MONTH, months)
     return calendar.time
 }
 
-fun isSameDay(date1: Date, date2: Date): Boolean {
-    val calendar1 = Calendar.getInstance().apply { time = date1 }
-    val calendar2 = Calendar.getInstance().apply { time = date2 }
-    return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
-            calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR)
-}
+private val Date.month: Int
+    get() = Calendar.getInstance().apply { time = this@month }.get(Calendar.MONTH)
 
-fun isSameMonth(date1: Date, date2: Date): Boolean {
-    val calendar1 = Calendar.getInstance().apply { time = date1 }
-    val calendar2 = Calendar.getInstance().apply { time = date2 }
-    return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
-            calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH)
-}
+private val Date.dayOfWeek: Int
+    get() = Calendar.getInstance().apply { time = this@dayOfWeek }.get(Calendar.DAY_OF_WEEK)
+

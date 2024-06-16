@@ -104,7 +104,6 @@
     <string name="unsaved_changes">Unsaved Changes</string>
     <string name="unsaved_changes_confirmation">Are you sure you want to leave this page? Changes you made will not be saved.</string>
     <string name="discard">Discard</string>
-    <string name="cancel">Cancel</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="reset">Reset</string>
@@ -120,7 +119,6 @@
     <string name="assessment_test_description3">The test takes about 30-45 minutes, so ensure you\'re in a comfortable environment where you can focus. At the end, you\'ll receive a result suggesting the major that best fits your profile.</string>
     <string name="assessment_test_description4">Ready to discover your recommended major?</string>
     <string name="assessment_test_description5">Let\'s get started!</string>
-    <string name="cancel">Cancel</string>
     <string name="begin">Begin</string>
     <string name="end_assessment_test">End Assessment Test</string>
     <string name="end_test_message">If you choose to end your test now, your progress won\'t be restored.</string>
@@ -142,4 +140,5 @@
     <string name="no_results_image">No test results image</string>
     <string name="no_tasks_image">No tasks available image</string>
     <string name="calendar">Calendar</string>
+    <string name="cancel">Cancel</string>
 </resources>
