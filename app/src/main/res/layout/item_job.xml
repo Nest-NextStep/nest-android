@@ -38,13 +38,26 @@
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
-            tools:text="@string/university_name" />
+            android:text="@string/salary_range" />
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/textViewJobSalaryRange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/urbanist_light"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:minTextSize="12sp"
+            app:precision="0.5"
+            android:lines="1"
+            android:textStyle="bold"
+             />
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/textViewJobDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:gravity="center_vertical"
             android:lines="3"
             android:textColor="@color/black"

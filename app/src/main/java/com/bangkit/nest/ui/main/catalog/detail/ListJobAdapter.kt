@@ -46,9 +46,7 @@ class ListJobAdapter() : ListAdapter<MajorJobItem, ListJobAdapter.MyViewHolder>(
         fun bind(job: MajorJobItem) {
             binding.textViewJobName.text = job.jobsName
             binding.textViewJobDescription.text = job.jobsDescription
-
-            val salary = "Salary: ${job.jobsSalary}"
-            binding.textViewJobSalary.text = salary
+            binding.textViewJobSalaryRange.text = job.jobsSalary
         }
     }
 

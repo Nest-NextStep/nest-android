@@ -109,5 +109,6 @@
     <string name="reset_password">Reset Password</string>
     <string name="success_reset_password">Password reset successfully. Please login again!</string>
     <string name="error_reset_password">Failed to reset password</string>
+    <string name="salary_range">Salary range:</string>
 
 </resources>

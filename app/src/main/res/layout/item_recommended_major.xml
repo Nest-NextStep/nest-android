@@ -22,7 +22,8 @@
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/major_icon"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_education" />
+            app:srcCompat="@drawable/ic_education"
+            app:tint="@color/white" />
 
         <!-- Text -->
         <LinearLayout
