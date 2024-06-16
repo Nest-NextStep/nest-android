@@ -20,37 +20,40 @@ class ListRecommendedMajorAdapter() : ListAdapter<MajorItem, ListRecommendedMajo
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val job = getItem(position)
-        holder.bind(job)
-
-        if (position == 0) {
-            val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
-            layoutParams.marginStart =
-                holder.itemView.context.resources.getDimension(R.dimen.l_margin)
-                    .toInt()
-            holder.itemView.layoutParams = layoutParams
-        } else if (position == itemCount - 1) {
-            val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
-            layoutParams.marginEnd =
-                holder.itemView.context.resources.getDimension(R.dimen.l_margin)
-                    .toInt()
-            holder.itemView.layoutParams = layoutParams
-            if (itemCount == 2) {
+        when (position) {
+            0 -> {
+                val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
                 layoutParams.marginStart =
-                    holder.itemView.context.resources.getDimension(R.dimen.s_margin)
+                    holder.itemView.context.resources.getDimension(R.dimen.l_margin)
+                        .toInt()
+                holder.itemView.layoutParams = layoutParams
+                layoutParams.marginEnd =
+                    holder.itemView.context.resources.getDimension(R.dimen.xs_margin)
                         .toInt()
                 holder.itemView.layoutParams = layoutParams
             }
-        } else {
-            val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
-            layoutParams.marginStart =
-                holder.itemView.context.resources.getDimension(R.dimen.s_margin)
-                    .toInt()
-            holder.itemView.layoutParams = layoutParams
-            layoutParams.marginEnd =
-                holder.itemView.context.resources.getDimension(R.dimen.s_margin)
-                    .toInt()
-            holder.itemView.layoutParams = layoutParams
+            itemCount - 1 -> {
+                val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
+                layoutParams.marginEnd =
+                    holder.itemView.context.resources.getDimension(R.dimen.l_margin)
+                        .toInt()
+                layoutParams.marginStart =
+                    holder.itemView.context.resources.getDimension(R.dimen.xs_margin)
+                        .toInt()
+                holder.itemView.layoutParams = layoutParams
+            }
+            else -> {
+                val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
+                layoutParams.marginStart =
+                    holder.itemView.context.resources.getDimension(R.dimen.xs_margin)
+                        .toInt()
+                layoutParams.marginEnd =
+                    holder.itemView.context.resources.getDimension(R.dimen.xs_margin)
+                        .toInt()
+                holder.itemView.layoutParams = layoutParams
+            }
         }
+        holder.bind(job)
     }
 
     class MyViewHolder(private val binding: ItemRecommendedMajorProfileBinding) : RecyclerView.ViewHolder(
