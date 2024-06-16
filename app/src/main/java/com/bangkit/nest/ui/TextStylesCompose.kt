@@ -61,4 +61,16 @@ val bodyTextStyleMedium = TextStyle(
 
 )
 
+val subBodyTextStyle = TextStyle(
+    fontSize = 12.sp,
+    fontFamily = urbanistFontFamily
+)
+
+val pomodoroTimerText = TextStyle(
+    fontSize = 48.sp,
+    fontFamily = urbanistFontFamily
+)
+
+
+
 

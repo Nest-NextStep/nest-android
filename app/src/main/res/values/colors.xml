@@ -13,9 +13,11 @@
     <color name="gray_50">#F3F3F3</color>
     <color name="soft_red">#FF7676</color>
     <color name="red">#DC3545</color>
+    <color name="faded_red">#FFD6D6</color>
     <color name="red_error">#B3261E</color>
     <color name="yellow">#FFB36D</color>
     <color name="green">#BEE797</color>
+    <color name="faded_green">#E6F6D6</color>
     <color name="dark_green">#198754</color>
     <color name="black">#1E232C</color>
     <color name="white">#FFFFFF</color>

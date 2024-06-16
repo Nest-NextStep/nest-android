@@ -74,6 +74,8 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.security.identity.credential)
 
     //testing
     testImplementation(libs.junit)
@@ -110,4 +112,14 @@ dependencies {
     //time picker
     implementation("com.github.commandiron:WheelPickerCompose:1.1.11")
 
+    //coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+
+    debugImplementation(libs.androidx.ui.tooling)
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 }

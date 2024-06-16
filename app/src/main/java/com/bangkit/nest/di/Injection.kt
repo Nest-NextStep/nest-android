@@ -7,6 +7,8 @@ import com.bangkit.nest.data.remote.retrofit.ApiConfig
 import com.bangkit.nest.data.remote.retrofit.AuthInterceptor
 import com.bangkit.nest.data.repository.AuthRepository
 import com.bangkit.nest.data.repository.MajorRepository
+import com.bangkit.nest.data.repository.AssessRepository
+import com.bangkit.nest.data.repository.TaskRepository
 import com.bangkit.nest.data.repository.ProfileRepository
 import com.bangkit.nest.data.repository.UserPrefRepository
 
@@ -28,6 +30,22 @@ object Injection {
     fun provideMajorRepository(context: Context): MajorRepository {
         val apiService = ApiConfig(provideAuthInterceptor(context)).getApiService()
         return MajorRepository.getInstance(
+            apiService,
+            provideUserPrefRepository(context)
+        )
+    }
+
+    fun provideAssessRepository(context: Context): AssessRepository {
+        val apiService = ApiConfig(provideAuthInterceptor(context)).getApiService()
+        return AssessRepository.getInstance(
+            apiService,
+            provideUserPrefRepository(context)
+        )
+    }
+
+    fun provideTaskRepository(context: Context): TaskRepository {
+        val apiService = ApiConfig(provideAuthInterceptor(context)).getApiService()
+        return TaskRepository.getInstance(
             apiService,
             provideUserPrefRepository(context)
         )

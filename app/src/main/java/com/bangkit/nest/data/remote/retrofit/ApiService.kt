@@ -5,6 +5,7 @@ import com.bangkit.nest.data.remote.request.LoginRequest
 import com.bangkit.nest.data.remote.request.ProfileRequest
 import com.bangkit.nest.data.remote.request.RefreshTokenRequest
 import com.bangkit.nest.data.remote.request.RegisterRequest
+import com.bangkit.nest.data.remote.request.TaskRequest
 import com.bangkit.nest.data.remote.response.AllMajorResponse
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
 import com.bangkit.nest.data.remote.response.ProfileSuccessResponse
@@ -12,6 +13,12 @@ import com.bangkit.nest.data.remote.response.FindMajorResponse
 import com.bangkit.nest.data.remote.response.LoginResponse
 import com.bangkit.nest.data.remote.response.ProfileResponse
 import com.bangkit.nest.data.remote.response.RegisterResponse
+import com.bangkit.nest.data.remote.response.QuestionsResponse
+import com.bangkit.nest.data.remote.response.ResultsResponseItem
+import com.bangkit.nest.data.remote.response.StatusResponse
+import com.bangkit.nest.data.remote.response.Task
+import com.bangkit.nest.data.remote.response.TaskResponse
+import com.bangkit.nest.data.remote.response.TestResultResponse
 import com.bangkit.nest.data.remote.response.TokenResponse
 import retrofit2.http.*
 
@@ -57,9 +64,61 @@ interface ApiService {
         @Path("id") id: Int
     ): DetailMajorResponse
 
-
     @GET("major/search")
     suspend fun findMajor (
         @Query("major_name") majorName: String
     ) : FindMajorResponse
+
+    @GET("task/user/{username}")
+    suspend fun getUserTasks(
+        @Path("username") username: String
+    ): TaskResponse
+
+    @GET("task/{id}")
+    suspend fun getDetailTaskById(
+        @Path("id") taskId: String
+    ): List<Task>
+
+    @GET("task/completed/{username}")
+    suspend fun getUserCompletedTasks(
+        @Path("username") username: String
+    ): List<Task>
+
+    @POST("/task/{username}")
+    suspend fun submitNewTask(
+        @Path("username") username: String,
+        @Body request: TaskRequest
+    ): StatusResponse
+
+    @PUT("/task/complete/{id}")
+    suspend fun setTaskCompleted(
+        @Path("id") id: Int,
+    ): StatusResponse
+
+    @PUT("/task/{id}")
+    suspend fun updateTask(
+        @Path("id") id: Int,
+        @Body request: TaskRequest
+    ): StatusResponse
+
+    @DELETE("/task/{id}")
+    suspend fun deleteTask(
+        @Path("id") id: Int,
+    ): StatusResponse
+
+    @GET("assessment/{category}")
+    suspend fun getQuestions(
+        @Path("category") category: String
+    ): QuestionsResponse
+
+    @GET("/assessment/data/{username}")
+    suspend fun getUserMajorResults(
+        @Path("username") username: String
+    ): List<ResultsResponseItem>
+
+    @POST("assessment/result/{username}")
+    suspend fun submitResults(
+        @Path("username") username: String,
+        @Body answers: Map<String, Int>
+    ): TestResultResponse
 }

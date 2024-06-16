@@ -38,7 +38,45 @@
         android:id="@+id/navigation_assess"
         android:name="com.bangkit.nest.ui.main.assess.AssessFragment"
         android:label="@string/title_assess"
-        tools:layout="@layout/fragment_assess" />
+        tools:layout="@layout/fragment_assess">
+        <action
+            android:id="@+id/action_assessFragment_to_beginFragment"
+            app:destination="@id/beginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/beginFragment"
+        android:name="com.bangkit.nest.ui.main.assess.question.BeginFragment"
+        android:label="Begin">
+        <action
+            android:id="@+id/action_beginFragment_to_questionFragment"
+            app:destination="@id/questionFragment" />
+        <action
+            android:id="@+id/action_beginFragment_to_navigation_assess"
+            app:destination="@id/navigation_assess" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.bangkit.nest.ui.main.assess.question.QuestionFragment"
+        android:label="@string/title_assessment_test">
+        <action
+            android:id="@+id/action_questionFragment_to_navigation_assess"
+            app:destination="@id/navigation_assess" />
+        <action
+            android:id="@+id/action_questionFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.bangkit.nest.ui.main.assess.result.ResultFragment"
+        android:label="Result"
+        tools:layout="@layout/fragment_result">
+        <action
+            android:id="@+id/action_resultFragment_to_navigation_assess"
+            app:destination="@id/navigation_assess" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_task"
@@ -48,12 +86,45 @@
         <action
             android:id="@+id/action_taskFragment_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_taskFragment_to_completedTaskFragment"
+            app:destination="@id/completedTaskFragment" />
+        <action
+            android:id="@+id/action_taskFragment_to_updateTaskFragment"
+            app:destination="@id/updateTaskFragment" />
+        <action
+            android:id="@+id/action_taskFragment_to_pomodoroFragment"
+            app:destination="@id/navigation_pomodoro" />
+        <action
+            android:id="@+id/action_taskFragment_to_calendarTaskFragment"
+            app:destination="@id/calendarTaskFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/completedTaskFragment"
+        android:name="com.bangkit.nest.ui.main.task.CompletedTaskFragment"
+        android:label="@string/title_completed_task"
+        tools:layout="@layout/fragment_completed_task" />
 
     <fragment
         android:id="@+id/addTaskFragment"
         android:name="com.bangkit.nest.ui.main.task.AddTaskFragment"
-        android:label="Add_Task" />
+        android:label="@string/title_new_task" />
+
+    <fragment
+        android:id="@+id/updateTaskFragment"
+        android:name="com.bangkit.nest.ui.main.task.UpdateTaskFragment"
+        android:label="@string/title_edit_task" />
+
+    <fragment
+        android:id="@+id/navigation_pomodoro"
+        android:name="com.bangkit.nest.ui.main.task.PomodoroFragment"
+        android:label="@string/pomodoro" />
+
+    <fragment
+        android:id="@+id/calendarTaskFragment"
+        android:name="com.bangkit.nest.ui.main.task.CalendarTaskFragment"
+        android:label="@string/calendar" />
 
     <fragment
         android:id="@+id/navigation_profile"
