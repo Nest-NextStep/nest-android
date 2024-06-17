@@ -41,16 +41,20 @@
                 android:maxLines="2"
                 android:textAppearance="@style/TextAppearance.Heading5"
                 android:textColor="@color/black"
-                app:minTextSize="15sp"
+                app:minTextSize="12sp"
                 app:precision="0.5"
                 tools:text="@string/university_name" />
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/textUniversityLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textColor="?attr/colorSecondaryVariant"
+                app:minTextSize="12sp"
+                app:precision="0.5"
+                android:maxLines="1"
+                android:ellipsize="end"
                 tools:text="@string/university_location" />
 
             <TextView

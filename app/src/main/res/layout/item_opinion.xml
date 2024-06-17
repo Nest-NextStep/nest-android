@@ -61,12 +61,12 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:ellipsize="end"
-                    android:fontFamily="@font/urbanist_light"
                     android:lines="2"
                     android:textColor="@color/gray_150"
                     app:minTextSize="12sp"
                     app:precision="0.5"
-                    tools:text="@string/university_name" />
+                    android:fontFamily="@font/urbanist_light"
+                    tools:text="Sistem Informasi - Universitas Indonesia" />
             </LinearLayout>
 
 
