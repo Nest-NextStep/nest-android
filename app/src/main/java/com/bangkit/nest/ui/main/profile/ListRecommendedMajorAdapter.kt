@@ -26,7 +26,6 @@ class ListRecommendedMajorAdapter() : ListAdapter<MajorItem, ListRecommendedMajo
                 layoutParams.marginStart =
                     holder.itemView.context.resources.getDimension(R.dimen.l_margin)
                         .toInt()
-                holder.itemView.layoutParams = layoutParams
                 layoutParams.marginEnd =
                     holder.itemView.context.resources.getDimension(R.dimen.xs_margin)
                         .toInt()
@@ -34,11 +33,11 @@ class ListRecommendedMajorAdapter() : ListAdapter<MajorItem, ListRecommendedMajo
             }
             itemCount - 1 -> {
                 val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
-                layoutParams.marginEnd =
-                    holder.itemView.context.resources.getDimension(R.dimen.l_margin)
-                        .toInt()
                 layoutParams.marginStart =
                     holder.itemView.context.resources.getDimension(R.dimen.xs_margin)
+                        .toInt()
+                layoutParams.marginEnd =
+                    holder.itemView.context.resources.getDimension(R.dimen.l_margin)
                         .toInt()
                 holder.itemView.layoutParams = layoutParams
             }

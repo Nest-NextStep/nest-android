@@ -47,7 +47,13 @@ class AssessRepository private constructor(
             val userModel = runBlocking { userPrefRepository.getSession().first() }
             val username = userModel.username ?: throw Exception("Username is null")
             val response = apiService.submitResults(username, answers)
+
             emit(Result.Success(response))
+            val recommendedMajors = userPrefRepository.getMajors().toMutableList()
+            if (response.majorName !in recommendedMajors) {
+                response.majorName?.let { recommendedMajors.add(it) }
+            }
+            userPrefRepository.saveMajors(recommendedMajors)
         } catch (e: Exception) {
             emit(Result.Error(e.message ?: "Unknown error occurred"))
         }

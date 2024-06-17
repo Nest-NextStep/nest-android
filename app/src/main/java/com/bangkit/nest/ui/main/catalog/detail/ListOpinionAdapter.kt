@@ -51,6 +51,7 @@ class ListOpinionAdapter(private val fragment: CatalogDetailFragment) : ListAdap
             binding.textViewStudentName.text = opinion.opinionName
             binding.textViewStudentOpinion.text = opinion.opinionsContent
 
+            //TODO
 //            val majorUni = "$opinion.major - $opinion.uni"
             val majorUni = "Sistem Informasi - Universitas Indonesia"
             binding.textViewMajorUni.text = majorUni

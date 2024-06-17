@@ -68,7 +68,7 @@ class CatalogDetailFragment : Fragment() {
 
     private fun setupBackButton() {
         binding?.backButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_catalogDetail_to_catalog)
+            findNavController().popBackStack()
         }
     }
     private fun setupAdapter() {
