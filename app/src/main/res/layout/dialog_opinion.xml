@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="16sp"
+        android:textSize="17sp"
         tools:text="@string/university_name"
         />
 

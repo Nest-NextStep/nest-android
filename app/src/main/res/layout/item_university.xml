@@ -57,13 +57,16 @@
                 android:ellipsize="end"
                 tools:text="@string/university_location" />
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/textViewUniversityAccreditation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
+                app:minTextSize="12sp"
+                app:precision="0.5"
+                android:maxLines="1"
                 tools:text="@string/university_accreditation" />
 
             <Button

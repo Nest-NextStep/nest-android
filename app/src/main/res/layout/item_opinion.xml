@@ -66,7 +66,7 @@
                     app:minTextSize="12sp"
                     app:precision="0.5"
                     android:fontFamily="@font/urbanist_light"
-                    tools:text="Sistem Informasi - Universitas Indonesia" />
+                    tools:text="@string/university_name" />
             </LinearLayout>
 
 
