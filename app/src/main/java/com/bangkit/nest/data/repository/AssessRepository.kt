@@ -52,8 +52,8 @@ class AssessRepository private constructor(
             val recommendedMajors = userPrefRepository.getMajors().toMutableList()
             if (response.majorName !in recommendedMajors) {
                 response.majorName?.let { recommendedMajors.add(it) }
+                userPrefRepository.saveMajors(recommendedMajors)
             }
-            userPrefRepository.saveMajors(recommendedMajors)
         } catch (e: Exception) {
             emit(Result.Error(e.message ?: "Unknown error occurred"))
         }

@@ -144,7 +144,6 @@
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.PositiveButton</item>
     </style>
-
     <style name="ThemeOverlay.App.PositiveButton" parent="ThemeOverlay.Material3.Button">
         <item name="colorContainer">?attr/colorPrimary</item>
         <item name="colorOnContainer">?attr/colorOnPrimary</item>
@@ -155,7 +154,6 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.NegativeButton</item>
         <item name="android:layout_marginEnd">@dimen/m_margin</item>
     </style>
-
     <style name="ThemeOverlay.App.NegativeButton" parent="ThemeOverlay.Material3.Button.TonalButton">
         <item name="colorContainer">@color/gray_200</item>
         <item name="colorOnContainer">@color/white</item>
