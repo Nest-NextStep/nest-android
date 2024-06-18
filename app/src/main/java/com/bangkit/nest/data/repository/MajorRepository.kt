@@ -22,19 +22,16 @@ class MajorRepository private constructor(
             val userModel = userPrefRepository.getSession().first()
             val username = userModel.username
             val response = apiService.getMajorByUsername(username)
-            Log.d(TAG, "majorsAllResponse ${response.majorsAll}")
 
             // Categorize the search result
             val majorRecommended = response.majorRecommended ?: emptyList()
             val majorsAll = response.majorsAll.toMutableList()
-//            Log.d(TAG, "majorsAllBeforeRemove $majorsAll.toString()")
 
             val majorsToRemove = majorsAll.filter { major ->
                 majorRecommended.any {
                     it.majorId == major.majorId
                 }
             }.toMutableList()
-//            Log.d(TAG, "majorsToRemove $majorsToRemove.toString()")
 
             majorsAll.removeAll(majorsToRemove)
 
@@ -43,7 +40,6 @@ class MajorRepository private constructor(
                 majorRecommended = majorRecommended
             )
 
-//            Log.d(TAG, "majorsAllAfterRemove $majorsAll.toString()")
             emit(Result.Success(categorizedResponse))
         } catch (e: HttpException) {
             Log.e(TAG, "Failed to get all major: ${e.message.toString()} ")

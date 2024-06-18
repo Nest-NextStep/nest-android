@@ -22,32 +22,46 @@ class HomeViewModel(
     private val _majorData = MutableLiveData<List<MajorItem>>()
     val majorData: LiveData<List<MajorItem>> = _majorData
 
-    private val _state = MutableLiveData<Result<Unit>>()
-    val state: LiveData<Result<Unit>> = _state
+    private val _stateProfile = MutableLiveData<Result<Unit>>()
+    val stateProfile: LiveData<Result<Unit>> = _stateProfile
 
-    private var isDataLoaded = false
+    private val _stateMajor = MutableLiveData<Result<Unit>>()
+    val stateMajor: LiveData<Result<Unit>> = _stateMajor
 
-    fun reloadProfileData() {
-        isDataLoaded = false
+    init {
+        getProfileData()
+        getRandomMajor()
     }
 
     fun getProfileData() {
-        if (isDataLoaded) {
-            _state.value = Result.Success(Unit)
-            return
-        }
         profileRepository.getProfileData().observeForever { result ->
             when (result) {
                 is Result.Loading -> {
-                    _state.value = Result.Loading
+                    _stateProfile.value = Result.Loading
                 }
                 is Result.Success -> {
                     _profileData.value = result.data.profileData
-                    _state.value = Result.Success(Unit)
-                    isDataLoaded = true
+                    _stateProfile.value = Result.Success(Unit)
                 }
                 is Result.Error -> {
-                    _state.value = Result.Error(result.error)
+                    _stateProfile.value = Result.Error(result.error)
+                }
+            }
+        }
+    }
+
+    fun getRandomMajor() {
+        majorRepository.getRandomMajor(2).observeForever { result ->
+            when (result) {
+                is Result.Loading -> {
+                    _stateMajor.value = Result.Loading
+                }
+                is Result.Success -> {
+                    _majorData.value = result.data
+                    _stateMajor.value = Result.Success(Unit)
+                }
+                is Result.Error -> {
+                    _stateMajor.value = Result.Error(result.error)
                 }
             }
         }
