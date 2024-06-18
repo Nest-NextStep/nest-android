@@ -111,6 +111,7 @@
                 android:contentDescription="@string/major_icon"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_education"
+                android:layout_gravity="center_vertical"
                 app:tint="@color/white" />
 
             <!-- Text -->
@@ -135,6 +136,8 @@
                     android:layout_marginTop="8dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/white"
+                    android:lines="3"
+                    android:ellipsize="end"
                     tools:text="@string/major_description" />
             </LinearLayout>
         </LinearLayout>

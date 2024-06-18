@@ -4,19 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.nest.R
 import com.bangkit.nest.data.Result
 import com.bangkit.nest.databinding.FragmentHomeBinding
-import com.bangkit.nest.databinding.FragmentProfileBinding
 import com.bangkit.nest.ui.main.catalog.ListMajorAdapter
-import com.bangkit.nest.ui.main.profile.ProfileViewModel
 import com.bangkit.nest.utils.ViewModelFactory
 
 class HomeFragment : Fragment() {
@@ -96,7 +92,7 @@ class HomeFragment : Fragment() {
                 }
                 is Result.Success -> {
                     binding?.progressBar?.isVisible = false
-                    val adapter = ListMajorAdapter("another")
+                    val adapter = ListMajorAdapter("another", fragmentHome = this)
                     adapter.submitList(viewModel.majorData.value)
                     binding?.randomMajorRecyclerView?.adapter = adapter
                     binding?.randomMajorRecyclerView?.isVisible = true

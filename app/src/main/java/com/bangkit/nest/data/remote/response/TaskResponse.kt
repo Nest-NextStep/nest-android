@@ -1,8 +1,6 @@
 package com.bangkit.nest.data.remote.response
 
 import com.google.gson.annotations.SerializedName
-import java.time.LocalTime
-import java.util.Date
 
 data class TaskResponse(
 

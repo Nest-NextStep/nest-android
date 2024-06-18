@@ -24,6 +24,9 @@
             app:destination="@id/navigation_catalog"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_home_to_catalogDetail"
+            app:destination="@id/navigation_catalog_detail" />
     </fragment>
 
     <fragment
@@ -88,6 +91,9 @@
         <action
             android:id="@+id/action_resultFragment_to_navigation_assess"
             app:destination="@id/navigation_assess" />
+        <action
+            android:id="@+id/action_result_to_catalogDetail"
+            app:destination="@id/navigation_catalog_detail" />
     </fragment>
 
     <fragment

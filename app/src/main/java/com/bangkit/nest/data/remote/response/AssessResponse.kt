@@ -45,6 +45,8 @@ data class ResultsResponseItem(
 )
 
 data class TestResultResponse(
+	@field:SerializedName("major_id")
+	val majorId: Int? = null,
 
 	@field:SerializedName("major_description")
 	val majorDescription: String? = null,

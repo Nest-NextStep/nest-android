@@ -203,7 +203,7 @@ class CatalogFragment : Fragment() {
     }
 
     private fun setListMajorData(recyclerView: RecyclerView, majors: List<MajorItem>, viewType: String) {
-        val adapter = ListMajorAdapter(viewType, this)
+        val adapter = ListMajorAdapter(viewType, fragment = this)
         adapter.submitList(majors)
         recyclerView.adapter = adapter
     }

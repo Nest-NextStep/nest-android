@@ -2,7 +2,6 @@ package com.bangkit.nest.ui.main.catalog
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
@@ -13,12 +12,13 @@ import com.bangkit.nest.R
 import com.bangkit.nest.data.remote.response.MajorItem
 import com.bangkit.nest.databinding.ItemAnotherMajorBinding
 import com.bangkit.nest.databinding.ItemRecommendedMajorBinding
+import com.bangkit.nest.ui.main.home.HomeFragment
 import com.bangkit.nest.utils.dpToPx
-
 
 class ListMajorAdapter(
     private val type: String,
-    private val fragment: CatalogFragment? = null
+    private val fragment: CatalogFragment? = null,
+    private val fragmentHome: HomeFragment? = null
 ) :
     ListAdapter<MajorItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
@@ -40,7 +40,7 @@ class ListMajorAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
 
-        if (fragment == null) {
+        if (fragmentHome != null) {
             val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
             layoutParams.width = 320.dpToPx(holder.itemView.context)
             layoutParams.bottomMargin = 6.dpToPx(holder.itemView.context)
@@ -70,6 +70,19 @@ class ListMajorAdapter(
             is RecommendedMajorViewHolder -> holder.bind(item)
             is AnotherMajorViewHolder -> holder.bind(item)
         }
+
+        holder.itemView.setOnClickListener {
+            val bundle = Bundle()
+            item.majorId?.let {
+                bundle.putInt("itemId", it)
+            }
+
+            if (fragment != null) {
+                fragment.findNavController().navigate(R.id.action_catalog_to_catalogDetail, bundle)
+            } else if (fragmentHome != null) {
+                fragmentHome.findNavController().navigate(R.id.action_home_to_catalogDetail, bundle)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -90,17 +103,6 @@ class ListMajorAdapter(
         fun bind(item: MajorItem) {
             binding.textViewMajorName.text = item.majorName
             binding.textViewMajorDescription.text = item.majorDescription
-
-            if (fragment != null) {
-                itemView.setOnClickListener {
-                    val bundle = Bundle()
-                    item.majorId?.let {
-                        bundle.putInt("itemId", it)
-                    }
-
-                    fragment.findNavController().navigate(R.id.action_catalog_to_catalogDetail, bundle)
-                }
-            }
         }
     }
 
@@ -109,17 +111,6 @@ class ListMajorAdapter(
         fun bind(item: MajorItem) {
             binding.textViewMajorName.text = item.majorName
             binding.textViewMajorDescription.text = item.majorDescription
-
-            if (fragment != null) {
-                itemView.setOnClickListener {
-                    val bundle = Bundle()
-                    item.majorId?.let {
-                        bundle.putInt("itemId", it)
-                    }
-
-                    fragment.findNavController().navigate(R.id.action_catalog_to_catalogDetail, bundle)
-                }
-            }
         }
     }
 

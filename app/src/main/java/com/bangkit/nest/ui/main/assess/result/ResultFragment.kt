@@ -51,6 +51,12 @@ class ResultFragment : Fragment() {
         binding.textViewMajorName.text = result.majorName
         binding.textViewMajorDescription.text = result.majorDescription
         binding.recommendedMajorCard.visibility = View.VISIBLE
+        binding.recommendedMajorCard.setOnClickListener {
+            val bundle = Bundle()
+            result.majorId?.let { id -> bundle.putInt("itemId", id) }
+            findNavController().navigate(R.id.action_result_to_catalogDetail, bundle)
+        }
+
         binding.errorTextView.visibility = View.GONE
     }
 

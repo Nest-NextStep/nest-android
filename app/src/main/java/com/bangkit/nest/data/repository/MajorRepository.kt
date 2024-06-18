@@ -7,7 +7,6 @@ import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.response.AllMajorResponse
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
 import com.bangkit.nest.data.remote.response.MajorItem
-import com.bangkit.nest.data.remote.response.TokenResponse
 import com.bangkit.nest.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
