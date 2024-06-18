@@ -12,6 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +85,7 @@
         android:id="@+id/recommendedMajorCard"
         style="?attr/materialCardViewFilledStyle"
         android:layout_width="326dp"
-        android:layout_height="144dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
@@ -107,10 +108,10 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
                 android:contentDescription="@string/major_icon"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/ic_education" />
+                app:srcCompat="@drawable/ic_education"
+                app:tint="@color/white" />
 
             <!-- Text -->
             <LinearLayout
@@ -132,9 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:lines="3"
                     android:textColor="@color/white"
                     tools:text="@string/major_description" />
             </LinearLayout>

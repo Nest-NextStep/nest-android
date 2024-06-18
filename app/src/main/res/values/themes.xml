@@ -25,8 +25,20 @@
         <item name="android:textViewStyle">@style/CustomTextView</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <item name="materialSearchBarStyle">@style/CustomSearchBar</item>
-        <!--        <item name="materialSearchViewStyle">@style/CustomSearchView</item>-->
         <item name="materialCalendarTheme">@style/ThemeOverlay.App.DatePicker</item>
+    </style>
+
+    <!-- Splash Screen -->
+    <style name="Theme.AppSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/purple</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.Nest</item>
+
+        <!-- Status bar and Nav bar configs -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/purple</item>
+        <item name="android:navigationBarColor">@color/purple</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <!-- Small component style -->

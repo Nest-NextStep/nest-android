@@ -47,7 +47,6 @@ import com.bangkit.nest.ui.h3TextStyle
 import com.bangkit.nest.ui.main.MainActivity
 import com.bangkit.nest.ui.main.task.components.*
 import com.bangkit.nest.ui.subTitleFormStyle
-import com.bangkit.nest.ui.main.task.components.TimePickerComponent
 import com.bangkit.nest.utils.ViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
@@ -159,9 +158,16 @@ class UpdateTaskFragment : Fragment() {
         var focusTimeText by remember { mutableStateOf(TextFieldValue(task.focusTime.toString())) }
         var breakTimeText by remember { mutableStateOf(TextFieldValue(task.breakTime.toString())) }
         var repeatSwitch by remember { mutableIntStateOf(task.isRepeated) }
-        var taskDuration by remember { mutableLongStateOf(task.duration.toLong()) }
         var isTimeUpdated by remember { mutableStateOf(false) }
-        var selectedPriority by remember { mutableStateOf(Priority(task.priority, Color(0xFFBEE797))) }
+        var selectedPriority by remember {
+            mutableStateOf(
+                when (task.priority.lowercase()) {
+                    "medium" -> Priority(task.priority, Color(0xFFFFB36D))
+                    "high" -> Priority(task.priority, Color(0xFFFF7676))
+                    else -> Priority(task.priority, Color(0xFFBEE797))
+                }
+            )
+        }
         var isFocusedTitle by remember { mutableStateOf(false) }
         var isFocusedFocusTime by remember { mutableStateOf(false) }
         var isFocusedBreakTime by remember { mutableStateOf(false) }
@@ -205,7 +211,7 @@ class UpdateTaskFragment : Fragment() {
                         containerColor = Color.White
                     ),
                     modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp)
+                        .padding(start = 20.dp, end = 20.dp, top = 20.dp)
                         .background(Color.White),
                     actions = {
                         IconButton(
@@ -392,7 +398,7 @@ class UpdateTaskFragment : Fragment() {
                         modifier = Modifier
                             .padding(horizontal = 8.dp),
                         durationList = listOf(30, 60, 90, 0),
-                        defaultDuration = taskDuration
+                        defaultDuration = taskStartTime.until(taskEndTime, java.time.temporal.ChronoUnit.MINUTES).toLong()
                     ) { duration ->
                         if (duration == 0L) {
                             showCustomDurationDialog = true
@@ -575,20 +581,22 @@ class UpdateTaskFragment : Fragment() {
                     // Save Task Button
                     Button(
                         onClick = {
-                            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                            val taskRequest = TaskRequest(
-                                taskName = titleText.text,
-                                taskDate = dateFormat.format(selectedDate),
-                                taskStartTime = "${taskStartTime.hour}:${taskStartTime.minute}:00",
-                                taskEndTime = "${taskEndTime.hour}:${taskEndTime.minute}:00",
-                                taskDuration = taskDuration.toInt(),
-                                taskFocusTime = focusTimeText.text.toIntOrNull() ?: 30,
-                                taskBreakTime = breakTimeText.text.toIntOrNull() ?: 10,
-                                taskPriority = selectedPriority.displayText,
-                                taskRepeat = repeatSwitch,
-                                isCompleted = task.isCompleted
-                            )
-                            viewModel.updateTask(task.id, taskRequest)
+                            if (validateInputs(titleText.text, focusTimeText.text, breakTimeText.text, taskStartTime, taskEndTime, context)) {
+                                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                                val taskRequest = TaskRequest(
+                                    taskName = titleText.text,
+                                    taskDate = dateFormat.format(selectedDate),
+                                    taskStartTime = "${taskStartTime.hour}:${taskStartTime.minute}:00",
+                                    taskEndTime = "${taskEndTime.hour}:${taskEndTime.minute}:00",
+                                    taskDuration = taskStartTime.until(taskEndTime, java.time.temporal.ChronoUnit.MINUTES).toInt(),
+                                    taskFocusTime = focusTimeText.text.toIntOrNull() ?: 30,
+                                    taskBreakTime = breakTimeText.text.toIntOrNull() ?: 10,
+                                    taskPriority = selectedPriority.displayText,
+                                    taskRepeat = repeatSwitch,
+                                    isCompleted = task.isCompleted
+                                )
+                                viewModel.updateTask(task.id, taskRequest)
+                            }
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -626,9 +634,69 @@ class UpdateTaskFragment : Fragment() {
         val hoursString = if (hours == 1) "hour" else "hours"
 
         return when {
+            taskDuration < 0 -> {
+                val absDuration = Math.abs(taskDuration)
+                val absHours = absDuration / 3600
+                val absMinutes = (absDuration % 3600) / 60
+                if (absHours > 0) {
+                    String.format("-%dh %02dm", absHours, absMinutes)
+                } else {
+                    String.format("-%dmin", absMinutes)
+                }
+            }
             hours > 0 && minutes > 0 -> String.format("%dh %02dm", hours, minutes)
             hours > 0 -> String.format("%d $hoursString", hours)
             else -> String.format("%dmin", minutes)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun validateInputs(
+        title: String,
+        focusTime: String,
+        breakTime: String,
+        startTime: LocalTime,
+        endTime: LocalTime,
+        context: android.content.Context
+    ): Boolean {
+        when {
+            title.isEmpty() -> {
+                Toast.makeText(context, "Title must be filled.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            title.length > 50 -> {
+                Toast.makeText(context, "Title must be less than 50 characters.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            focusTime.isEmpty() -> {
+                Toast.makeText(context, "Focus Time must be filled.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            focusTime.toIntOrNull() == null -> {
+                Toast.makeText(context, "Focus Time must be a valid number.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            focusTime.toInt() < 5 -> {
+                Toast.makeText(context, "Focus Time must be at least 5 minutes.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            breakTime.isEmpty() -> {
+                Toast.makeText(context, "Break Time must be filled.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            breakTime.toIntOrNull() == null -> {
+                Toast.makeText(context, "Break Time must be a valid number.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            breakTime.toInt() < 1 -> {
+                Toast.makeText(context, "Break Time must be at least 1 minute.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            startTime.until(endTime, java.time.temporal.ChronoUnit.MINUTES) < 5 -> {
+                Toast.makeText(context, "Duration must be at least 5 minutes.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            else -> return true
         }
     }
 

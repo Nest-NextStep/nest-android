@@ -92,7 +92,6 @@ class AddTaskFragment : Fragment() {
         var focusTimeText by remember { mutableStateOf(TextFieldValue("30")) }
         var breakTimeText by remember { mutableStateOf(TextFieldValue("10")) }
         var repeatSwitch by remember { mutableIntStateOf(0) }
-        var taskDuration by remember { mutableLongStateOf(60) }
         var isTimeUpdated by remember { mutableStateOf(false) }
         var selectedPriority by remember { mutableStateOf(Priority("low", Color(0xFFBEE797))) }
         var isFocusedTitle by remember { mutableStateOf(false) }
@@ -137,7 +136,7 @@ class AddTaskFragment : Fragment() {
                         containerColor = Color.White
                     ),
                     modifier = Modifier
-                        .padding(start = 20.dp)
+                        .padding(start = 20.dp, top = 20.dp)
                         .background(Color.White),
                     actions = {},
                 )
@@ -311,8 +310,7 @@ class AddTaskFragment : Fragment() {
                     DurationComponent(
                         modifier = Modifier
                             .padding(horizontal = 8.dp),
-                        durationList = listOf(30, 60, 90, 0),
-                        defaultDuration = taskDuration
+                        durationList = listOf(30, 60, 90, 0)
                     ) { duration ->
                         if (duration == 0L) {
                             showCustomDurationDialog = true
@@ -502,7 +500,7 @@ class AddTaskFragment : Fragment() {
                                     taskDate = dateFormat.format(selectedDate),
                                     taskStartTime = "${taskStartTime.hour}:${taskStartTime.minute}:00",
                                     taskEndTime = "${taskEndTime.hour}:${taskEndTime.minute}:00",
-                                    taskDuration = taskDuration.toInt(),
+                                    taskDuration = taskStartTime.until(taskEndTime, java.time.temporal.ChronoUnit.MINUTES).toInt(),
                                     taskFocusTime = focusTimeText.text.toIntOrNull() ?: 30,
                                     taskBreakTime = breakTimeText.text.toIntOrNull() ?: 10,
                                     taskPriority = selectedPriority.displayText,
@@ -566,6 +564,16 @@ class AddTaskFragment : Fragment() {
         val hoursString = if (hours == 1) "hour" else "hours"
 
         return when {
+            taskDuration < 0 -> {
+                val absDuration = Math.abs(taskDuration)
+                val absHours = absDuration / 3600
+                val absMinutes = (absDuration % 3600) / 60
+                if (absHours > 0) {
+                    String.format("-%dh %02dm", absHours, absMinutes)
+                } else {
+                    String.format("-%dmin", absMinutes)
+                }
+            }
             hours > 0 && minutes > 0 -> String.format("%dh %02dm", hours, minutes)
             hours > 0 -> String.format("%d $hoursString", hours)
             else -> String.format("%dmin", minutes)
@@ -594,7 +602,11 @@ class AddTaskFragment : Fragment() {
                 Toast.makeText(context, "Focus Time must be filled.", Toast.LENGTH_SHORT).show()
                 return false
             }
-            focusTime.toIntOrNull() == null || focusTime.toInt() < 5 -> {
+            focusTime.toIntOrNull() == null -> {
+                Toast.makeText(context, "Focus Time must be a valid number.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            focusTime.toInt() < 5 -> {
                 Toast.makeText(context, "Focus Time must be at least 5 minutes.", Toast.LENGTH_SHORT).show()
                 return false
             }
@@ -602,8 +614,12 @@ class AddTaskFragment : Fragment() {
                 Toast.makeText(context, "Break Time must be filled.", Toast.LENGTH_SHORT).show()
                 return false
             }
-            breakTime.toIntOrNull() == null || breakTime.toInt() < 5 -> {
-                Toast.makeText(context, "Break Time must be at least 5 minutes.", Toast.LENGTH_SHORT).show()
+            breakTime.toIntOrNull() == null -> {
+                Toast.makeText(context, "Break Time must be a valid number.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            breakTime.toInt() < 1 -> {
+                Toast.makeText(context, "Break Time must be at least 1 minute.", Toast.LENGTH_SHORT).show()
                 return false
             }
             startTime.until(endTime, java.time.temporal.ChronoUnit.MINUTES) < 5 -> {

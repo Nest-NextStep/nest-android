@@ -2,8 +2,10 @@ package com.bangkit.nest.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 val intent = Intent(this, AuthActivity::class.java)
@@ -45,6 +48,10 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         navView.setupWithNavController(navController)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
     }
 
     fun setStatusBarTextColor(isDark: Boolean) {
