@@ -49,7 +49,7 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="searchbar_hint">Search major</string>
     <string name="recommended_major">Your recommended majors</string>
-    <string name="all_major">Check out another majors</string>
+    <string name="all_major">Check out other majors</string>
     <string name="major_icon">Icon major</string>
     <string name="major_name">Major Name</string>
     <string name="major_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</string>
