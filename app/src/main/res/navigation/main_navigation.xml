@@ -9,7 +9,22 @@
         android:id="@+id/navigation_home"
         android:name="com.bangkit.nest.ui.main.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_beginFragment"
+            app:destination="@id/beginFragment" />
+        <action
+            android:id="@+id/action_home_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_home_to_calendarTaskFragment"
+            app:destination="@id/calendarTaskFragment" />
+        <action
+            android:id="@+id/action_home_to_CatalogFragment"
+            app:destination="@id/navigation_catalog"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_catalog"

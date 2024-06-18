@@ -2,6 +2,7 @@ package com.bangkit.nest.ui.main.catalog
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
@@ -20,8 +21,6 @@ class ListMajorAdapter(
 ) :
     ListAdapter<MajorItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    private lateinit var recyclerView: RecyclerView
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
@@ -39,10 +38,17 @@ class ListMajorAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
+        val majorId = item.majorId
+        Log.d("ListMajorAdapter", "getItemCount: ${item.majorId}")
         when (holder) {
             is RecommendedMajorViewHolder -> holder.bind(item)
             is AnotherMajorViewHolder -> holder.bind(item)
         }
+    }
+
+    override fun getItemCount(): Int {
+        val itemCount = super.getItemCount()
+        return itemCount
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -93,12 +99,12 @@ class ListMajorAdapter(
 
         private val DIFF_CALLBACK= object : DiffUtil.ItemCallback<MajorItem>() {
             override fun areItemsTheSame(oldItem: MajorItem, newItem: MajorItem): Boolean {
-                return oldItem.majorId == newItem.majorId
+                return oldItem == newItem
             }
 
             @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(oldItem: MajorItem, newItem: MajorItem): Boolean {
-                return oldItem.majorName == newItem.majorName
+                return oldItem.majorId == newItem.majorId
             }
         }
     }

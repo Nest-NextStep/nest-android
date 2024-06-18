@@ -171,29 +171,20 @@ class CatalogFragment : Fragment() {
             recommendedMajorRecyclerView.isVisible = true
             setListMajorData(recommendedMajorRecyclerView, recommendedMajors, "recommended")
             val isEmptyRecommended = recommendedMajors.isEmpty()
-            updateBottomPadding(isEmptyRecommended)
+            if (isEmptyRecommended) {
+                recommendedMajorRecyclerView.layoutParams.height = 70.dpToPx(requireContext())
+            } else {
+                recommendedMajorRecyclerView.layoutParams.height = (149 * recommendedMajors.size).dpToPx(requireContext()) + 32.dpToPx(requireContext())
+            }
             noRecommendedMajorTextView.isVisible = isEmptyRecommended
 
             allMajorTextView.isVisible = true
             allMajorRecyclerView.isVisible = true
+            allMajorRecyclerView.layoutParams.height = (149 * anotherMajors.size).dpToPx(requireContext()) + 80.dpToPx(requireContext())
+            setListMajorData(allMajorRecyclerView, anotherMajors, "another")
             val isEmptyAnother = anotherMajors.isEmpty()
             noAnotherMajorTextView.isVisible = isEmptyAnother
-            setListMajorData(allMajorRecyclerView, anotherMajors, "another")
         }
-    }
-
-    private fun updateBottomPadding(isEmpty: Boolean) {
-        val paddingInPixels = if (isEmpty) {
-            70.dpToPx(requireContext())
-        } else {
-            32.dpToPx(requireContext())
-        }
-        binding?.recommendedMajorRecyclerView?.setPadding(
-            0,
-            0,
-            0,
-            paddingInPixels
-        )
     }
 
     private fun setupError(errorMessage: String) {

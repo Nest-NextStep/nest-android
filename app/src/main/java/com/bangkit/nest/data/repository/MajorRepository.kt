@@ -22,16 +22,19 @@ class MajorRepository private constructor(
             val userModel = userPrefRepository.getSession().first()
             val username = userModel.username
             val response = apiService.getMajorByUsername(username)
+            Log.d(TAG, "majorsAllResponse ${response.majorsAll}")
 
             // Categorize the search result
             val majorRecommended = response.majorRecommended ?: emptyList()
             val majorsAll = response.majorsAll.toMutableList()
+//            Log.d(TAG, "majorsAllBeforeRemove $majorsAll.toString()")
 
             val majorsToRemove = majorsAll.filter { major ->
                 majorRecommended.any {
                     it.majorId == major.majorId
                 }
             }.toMutableList()
+//            Log.d(TAG, "majorsToRemove $majorsToRemove.toString()")
 
             majorsAll.removeAll(majorsToRemove)
 
@@ -40,6 +43,7 @@ class MajorRepository private constructor(
                 majorRecommended = majorRecommended
             )
 
+//            Log.d(TAG, "majorsAllAfterRemove $majorsAll.toString()")
             emit(Result.Success(categorizedResponse))
         } catch (e: HttpException) {
             Log.e(TAG, "Failed to get all major: ${e.message.toString()} ")
@@ -64,6 +68,29 @@ class MajorRepository private constructor(
             emit(Result.Error(e.message.toString()))
         } catch (e: Exception) {
             Log.e(TAG, "Failed to get detail major: ${e.message.toString()} ")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun getRandomMajor(count: Int): LiveData<Result<List<MajorItem>>> = liveData {
+        emit(Result.Loading)
+        try {
+            val resultList = mutableListOf<MajorItem>()
+            val random = java.util.Random()
+            for (i in 1..count) {
+                val randomId = random.nextInt(50) + 1 // Generates random number between 1 and 50
+                val response = apiService.getMajorDetail(randomId)
+
+                if (response.major != null) {
+                    resultList.add(response.major)
+                }
+            }
+            emit(Result.Success(resultList))
+        } catch (e: HttpException) {
+            Log.e(TAG, "Failed to get random major: ${e.message.toString()} ")
+            emit(Result.Error(e.message.toString()))
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to get random major: ${e.message.toString()} ")
             emit(Result.Error(e.message.toString()))
         }
     }

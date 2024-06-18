@@ -358,7 +358,6 @@
                     android:indeterminateTint="?attr/colorPrimary"
                     android:indeterminateTintMode="src_atop"
                     android:visibility="gone" />
-
             </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

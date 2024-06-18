@@ -6,49 +6,56 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.bangkit.nest.R
 import com.bangkit.nest.databinding.FragmentHomeBinding
+import com.bangkit.nest.databinding.FragmentProfileBinding
+import com.bangkit.nest.ui.main.profile.ProfileViewModel
+import com.bangkit.nest.utils.ViewModelFactory
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private val viewModel by viewModels<HomeViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+    ): View? {
+        _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        return binding?.root
+    }
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        binding?.testCard?.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_beginFragment)
         }
 
-//        setStatusBarTextColor(isDark = false)
+        binding?.addTaskCard?.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_addTaskFragment)
+        }
 
-        return root
+        binding?.checkCalendarCard?.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_calendarTaskFragment)
+        }
+
+        binding?.seeAllButton?.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_CatalogFragment)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-//    private fun setStatusBarTextColor(isDark: Boolean) {
-//        activity?.window?.let { window ->
-//            val decorView = window.decorView
-//            val windowInsetsController = WindowCompat.getInsetsController(window, decorView)
-//            windowInsetsController.isAppearanceLightStatusBars = isDark
-//        }
-//    }
 
 }
