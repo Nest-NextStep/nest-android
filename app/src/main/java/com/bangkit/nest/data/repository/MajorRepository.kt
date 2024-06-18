@@ -68,6 +68,29 @@ class MajorRepository private constructor(
         }
     }
 
+    fun getRandomMajor(count: Int): LiveData<Result<List<MajorItem>>> = liveData {
+        emit(Result.Loading)
+        try {
+            val resultList = mutableListOf<MajorItem>()
+            val random = java.util.Random()
+            for (i in 1..count) {
+                val randomId = random.nextInt(50) + 1 // Generates random number between 1 and 50
+                val response = apiService.getMajorDetail(randomId)
+
+                if (response.major != null) {
+                    resultList.add(response.major)
+                }
+            }
+            emit(Result.Success(resultList))
+        } catch (e: HttpException) {
+            Log.e(TAG, "Failed to get random major: ${e.message.toString()} ")
+            emit(Result.Error(e.message.toString()))
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to get random major: ${e.message.toString()} ")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
     fun findMajor(majorName: String): LiveData<Result<AllMajorResponse>> = liveData {
         emit(Result.Loading)
         try {

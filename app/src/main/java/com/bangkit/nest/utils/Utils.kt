@@ -8,7 +8,7 @@ import java.util.Calendar
 import java.util.Locale
 
 fun Int.dpToPx(context: Context): Int {
-    return (this * context.resources.displayMetrics.density).toInt()
+    return (this * context.resources.displayMetrics.density + 0.5f).toInt()
 }
 
 fun dpToPixels(dp: Float, context: Context): Float {

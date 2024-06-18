@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recommendedMajorCard"
     style="?attr/materialCardViewElevatedStyle"
-    android:layout_width="250dp"
+    android:layout_width="275dp"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginTop="12dp"
@@ -18,7 +18,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <me.grantland.widget.AutofitTextView
             android:id="@+id/textViewJobName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,6 +27,9 @@
             android:textColor="?attr/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:minTextSize="12sp"
+            app:precision="0.5"
+            android:lines="1"
             tools:text="@string/university_name" />
 
         <TextView

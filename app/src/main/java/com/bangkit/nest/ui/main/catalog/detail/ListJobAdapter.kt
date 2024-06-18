@@ -3,7 +3,6 @@ package com.bangkit.nest.ui.main.catalog.detail
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,23 +19,28 @@ class ListJobAdapter() : ListAdapter<MajorJobItem, ListJobAdapter.MyViewHolder>(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val job = getItem(position)
+        val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
+        val lMargin = holder.itemView.context.resources.getDimension(R.dimen.l_margin).toInt()
+        val xsMargin = holder.itemView.context.resources.getDimension(R.dimen.xs_margin).toInt()
+        when (position) {
+            0 -> {
+                // First item
+                layoutParams.marginStart = lMargin
+                layoutParams.marginEnd = xsMargin
+            }
+            itemCount - 1 -> {
+                // Last item
+                layoutParams.marginStart = xsMargin
+                layoutParams.marginEnd = lMargin
+            }
+            else -> {
+                // Middle items
+                layoutParams.marginStart = xsMargin
+                layoutParams.marginEnd = xsMargin
+            }
+        }
+        holder.itemView.layoutParams = layoutParams
         holder.bind(job)
-
-        if (position == 0) {
-            val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
-            layoutParams.marginStart =
-                holder.itemView.context.resources.getDimension(R.dimen.l_margin)
-                    .toInt()
-            holder.itemView.layoutParams = layoutParams
-        }
-
-        if (position == itemCount - 1) {
-            val layoutParams = holder.itemView.layoutParams as MarginLayoutParams
-            layoutParams.marginEnd =
-                holder.itemView.context.resources.getDimension(R.dimen.l_margin)
-                    .toInt()
-            holder.itemView.layoutParams = layoutParams
-        }
     }
 
     class MyViewHolder(private val binding: ItemJobBinding) : RecyclerView.ViewHolder(

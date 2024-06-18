@@ -338,7 +338,7 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun backToProfilePage() {
-        findNavController().navigate(R.id.action_editProfile_to_profile)
+        findNavController().popBackStack()
     }
 
     private fun setupFieldFill() {
