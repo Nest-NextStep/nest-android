@@ -19,7 +19,7 @@ class TestResultsAdapter(private val testResults: List<ResultsResponseItem?>) :
 
     override fun onBindViewHolder(holder: TestResultsViewHolder, position: Int) {
         val testResult = testResults[position]
-        holder.titleTextView.text = "Recommended Major ${position + 1}"
+        holder.titleTextView.text = "Recommended Major"
         holder.recommendedMajorTextView.text = testResult?.majorName
         holder.dateTextView.text = testResult?.userMajorDate
     }

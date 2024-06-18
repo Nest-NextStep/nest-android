@@ -51,7 +51,7 @@ class HomeViewModel(
     }
 
     fun getRandomMajor() {
-        majorRepository.getRandomMajor(2).observeForever { result ->
+        majorRepository.getRandomMajor(3).observeForever { result ->
             when (result) {
                 is Result.Loading -> {
                     _stateMajor.value = Result.Loading

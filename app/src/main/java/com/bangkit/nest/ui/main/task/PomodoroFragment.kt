@@ -219,7 +219,7 @@ fun PomodoroContent(
                 }
             },
             modifier = Modifier
-                .padding(start = 20.dp)
+                .padding(start = 20.dp, top = 20.dp)
                 .background(Color.White),
             actions = {
                 IconButton(onClick = {
