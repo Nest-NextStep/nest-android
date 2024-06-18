@@ -25,4 +25,4 @@ jobs:
         uses: actions/upload-artifact@v4.3.3
         with:
           name: Nest.apk
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          path: app/release/app-release.apk
