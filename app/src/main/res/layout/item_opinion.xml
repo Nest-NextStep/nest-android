@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recommendedMajorCard"
+    style="?attr/materialCardViewElevatedStyle"
+    android:layout_width="275dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="?attr/colorPrimary"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Subject -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Media -->
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/major_icon"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_students"
+                tools:srcCompat="@drawable/ic_students" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/textViewStudentName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/urbanist_light"
+                    android:lines="1"
+                    android:textColor="@color/white"
+                    app:minTextSize="12sp"
+                    app:precision="0.5"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="@string/full_name_placeholder" />
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/textViewMajorUni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:lines="2"
+                    android:textColor="@color/gray_150"
+                    app:minTextSize="12sp"
+                    app:precision="0.5"
+                    android:fontFamily="@font/urbanist_light"
+                    tools:text="@string/university_name" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewStudentOpinion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:lines="3"
+            android:ellipsize="end"
+            android:textColor="@color/white"
+            tools:text="@string/major_description" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

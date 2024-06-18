@@ -3,36 +3,228 @@
     <style name="Base.Theme.Nest" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple</item>
-        <item name="colorPrimaryVariant">@color/purple_30</item>
+        <item name="colorPrimaryDark">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_300</item>
         <item name="colorOnPrimary">@color/white</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/gray</item>
+        <item name="colorSecondaryVariant">@color/gray_400</item>
         <item name="colorOnSecondary">@color/white</item>
 
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/white</item>
+        <item name="android:navigationBarColor">@color/white</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        <item name="android:fontFamily">@font/urbanist</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
+        <item name="android:textViewStyle">@style/CustomTextView</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="materialSearchBarStyle">@style/CustomSearchBar</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.App.DatePicker</item>
     </style>
 
+    <!-- Splash Screen -->
+    <style name="Theme.AppSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/purple</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.Nest</item>
+
+        <!-- Status bar and Nav bar configs -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/purple</item>
+        <item name="android:navigationBarColor">@color/purple</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!-- Small component style -->
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">@dimen/s_corner_radius</item>
+    </style>
+    <!-- Medium component style -->
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">@dimen/m_corner_radius</item>
+    </style>
+    <!-- Custom component style -->
+    <style name="ShapeAppearance.App.CardHome" parent="ShapeAppearance.Material3.Corner.Large">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeTopRight">32dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+    <!-- Custom card style -->
+    <style name="ShapeAppearance.App.Card" parent="">
+        <item name="cornerSize">@dimen/l_corner_radius</item>
+    </style>
+
+    <!-- Navbar style -->
     <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="colorSurfaceContainer">@color/white</item>
-
         <!-- Active indicator color -->
         <item name="colorSecondaryContainer">@color/white</item>
-
         <!-- Active icon and label color -->
         <item name="colorOnSecondaryContainer">?attr/colorPrimary</item>
         <item name="colorOnSurface">?attr/colorPrimary</item>
-
         <!-- Inactive icon and label color -->
         <item name="colorOnSurfaceVariant">?attr/colorSecondary</item>
     </style>
 
-    <style name="Theme.Nest" parent="Base.Theme.Nest"/>
+    <!-- Button style -->
+    <style name="Widget.App.Button" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+    <style name="Widget.App.Button.Elevated" parent="Widget.Material3.Button.ElevatedButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/gray_150</item>
+        <item name="elevation">2dp</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="RoundedFAB" parent="ShapeAppearanceOverlay.Material3.FloatingActionButton">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Custom card style -->
+    <style name="recommendedCardProfile" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">4dp</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.Card</item>
+    </style>
+
+    <!-- Text style -->
+    <style name="CustomTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Body</item>
+    </style>
+    <style name="TextAppearance.Heading1" parent="">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Heading2" parent="">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Heading3" parent="">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Heading5" parent="">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Body" parent="">
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="TextAppearance.Small" parent="">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="TextAppearance.DialogBody" parent="">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="TextAppearance.SectionTitle" parent="">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Alert dialog style -->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Body.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.PositiveButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.NegativeButton</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.Material3">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="backgroundInsetStart">@dimen/s_margin</item>
+        <item name="backgroundInsetEnd">@dimen/s_margin</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+    <!-- Alert dialog title text style -->
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textAppearance">@style/TextAppearance.Heading2</item>
+    </style>
+    <!-- Alert dialog body text style -->
+    <style name="MaterialAlertDialog.App.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textAppearance">@style/TextAppearance.DialogBody</item>
+    </style>
+    <!-- Alert dialog positive button style -->
+    <style name="Widget.App.PositiveButton" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.PositiveButton</item>
+    </style>
+    <style name="ThemeOverlay.App.PositiveButton" parent="ThemeOverlay.Material3.Button">
+        <item name="colorContainer">?attr/colorPrimary</item>
+        <item name="colorOnContainer">?attr/colorOnPrimary</item>
+    </style>
+    <!-- Alert dialog negative button style -->
+    <style name="Widget.App.NegativeButton" parent="Widget.Material3.Button.TonalButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.NegativeButton</item>
+        <item name="android:layout_marginEnd">@dimen/m_margin</item>
+    </style>
+    <style name="ThemeOverlay.App.NegativeButton" parent="ThemeOverlay.Material3.Button.TonalButton">
+        <item name="colorContainer">@color/gray_200</item>
+        <item name="colorOnContainer">@color/white</item>
+    </style>
+
+    <!-- Date picker style -->
+    <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorSurfaceContainerHigh">@color/white</item>
+        <item name="materialCalendarHeaderSelection">@style/Custom.Widget.Material3.MaterialCalendar.HeaderSelection</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.NegativeButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.PositiveButton</item>
+    </style>
+    <style name="Custom.Widget.Material3.MaterialCalendar.HeaderSelection" parent="Widget.Material3.MaterialCalendar.HeaderSelection">
+        <item name="android:textAppearance">@style/TextAppearance.Heading3</item>
+    </style>
+
+    <style name="Custom.TextInputLayout.OutlinedBox.Dropdown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
+    <style name="CustomSearchBar" parent="Widget.Material3.SearchBar.Outlined">
+        <item name="defaultMarginsEnabled">false</item>
+        <item name="strokeColor">?attr/colorSecondary</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="android:textAppearance">@style/TextAppearance.SearchBar</item>
+    </style>
+
+    <style name="TextAppearance.SearchBar" parent="TextAppearance.Material3.SearchBar">
+        <item name="android:textColorHint">@color/gray_300</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CustomSearchView" parent="Widget.Material3.SearchView">
+        <item name="backgroundTint">@color/purple_300</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
+    <!-- Snackbar -->
+    <style name="CustomSnackbar" parent="Widget.Design.Snackbar">
+        <item name="android:background">@color/purple_400</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Theme.Nest" parent="Base.Theme.Nest" />
+
+    <style name="Theme.Nest.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Nest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Nest.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
