@@ -29,6 +29,7 @@ android {
             )
 
             buildConfigField("String", "API_URL", "\"https://nest-capstoneproject.et.r.appspot.com/\"")
+            signingConfig = signingConfigs.getByName("debug")
         }
 
         debug {
