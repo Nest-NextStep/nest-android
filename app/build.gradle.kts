@@ -97,6 +97,7 @@ dependencies {
 
     //autotextview
     implementation(libs.grantland.autofittextview)
+
     //layout
     implementation("com.google.android.flexbox:flexbox:3.0.0")
 
@@ -120,6 +121,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
 }

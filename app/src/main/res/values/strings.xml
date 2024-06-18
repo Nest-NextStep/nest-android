@@ -63,9 +63,8 @@
     <string name="check_university">University page</string>
     <string name="back">Back</string>
     <string name="incomplete_profile">Profile Incomplete</string>
-    <string name="complete_profile">Please make sure to complete it before taking the assessment test!</string>
+    <string name="complete_profile">Please make sure to complete your profile before taking the assessment test!</string>
     <string name="no_test">No test taken</string>
-
     <string name="last_education">Pendidikan saat ini</string>
     <string name="label_education_1">Kurang dari sekolah menengah (SMP, SD)</string>
     <string name="label_education_2">Sekolah menengah (SMA)</string>

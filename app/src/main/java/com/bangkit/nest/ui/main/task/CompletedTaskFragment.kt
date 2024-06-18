@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
@@ -69,6 +70,25 @@ class CompletedTaskFragment : Fragment() {
             CompletedTaskList(taskViewModel)
         }
 
+        // Observe the result of uncompleting a task
+        taskViewModel.setTaskCompletedResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Success -> {
+                    Toast.makeText(context, "Task marked as uncompleted!", Toast.LENGTH_SHORT).show()
+                    // Refresh completed tasks
+                    taskViewModel.fetchUserCompletedTasks()
+                    // Clear the result
+                    taskViewModel.clearSetTaskCompletedResult()
+                }
+                is Result.Error -> {
+                    Toast.makeText(context, "Failed to mark task as uncompleted: ${result.error}", Toast.LENGTH_SHORT).show()
+                    // Clear the result
+                    taskViewModel.clearSetTaskCompletedResult()
+                }
+                else -> {}
+            }
+        }
+
         return root
     }
 
@@ -101,7 +121,7 @@ fun CompletedTaskList(taskViewModel: TaskViewModel) {
                         TaskComponent(
                             task = task,
                             onEdit = { taskId -> /* can not be triggered due to isCompleted true */ },
-                            onComplete = { taskId -> /* can not be triggered due to isCompleted true */ },
+                            onComplete = { taskId -> taskViewModel.setTaskCompleted(taskId) },
                             onPomodoro = { taskId -> /* can not be triggered due to isCompleted true */ }
                         )
                         Spacer(modifier = Modifier.height(10.dp))
