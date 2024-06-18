@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.nest.R
 import com.bangkit.nest.data.Result
 import com.bangkit.nest.data.remote.response.DetailMajorResponse
+import com.bangkit.nest.data.remote.response.MajorOpinionItem
+import com.bangkit.nest.databinding.DialogOpinionBinding
 import com.bangkit.nest.databinding.FragmentCatalogDetailBinding
 import com.bangkit.nest.ui.main.MainActivity
 import com.bangkit.nest.utils.ViewModelFactory
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class CatalogDetailFragment : Fragment() {
 
@@ -66,7 +69,7 @@ class CatalogDetailFragment : Fragment() {
 
     private fun setupBackButton() {
         binding?.backButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_catalogDetail_to_catalog)
+            findNavController().popBackStack()
         }
     }
     private fun setupAdapter() {
@@ -142,10 +145,69 @@ class CatalogDetailFragment : Fragment() {
 
             opinionsTextView.isVisible = true
             opinionsRecyclerView.isVisible = true
-            val adapterOpinion = ListOpinionAdapter()
+            val adapterOpinion = ListOpinionAdapter(this@CatalogDetailFragment)
+//            val opinionList = listOf(
+//                MajorOpinionItem(
+//                    opinionsContent = "I believe that the major is highly demanding but equally rewarding.",
+//                    opinionId = 1,
+//                    opinionName = "John Doe"
+//                ),
+//                MajorOpinionItem(
+//                    opinionsContent = "The curriculum is very comprehensive and covers all essential aspects.",
+//                    opinionId = 2,
+//                    opinionName = "Jane Smith"
+//                ),
+//                MajorOpinionItem(
+//                    opinionsContent = "I found the teaching methods to be very engaging and effective.",
+//                    opinionId = 3,
+//                    opinionName = "Alice Johnson"
+//                ),
+//                MajorOpinionItem(
+//                    opinionsContent = "There is a good balance between theoretical and practical learning.",
+//                    opinionId = 4,
+//                    opinionName = "Bob Brown"
+//                ),
+//                MajorOpinionItem(
+//                    opinionsContent = "I believe that the major is highly demanding but equally rewarding. " +
+//                            "The professors are very knowledgeable and the resources provided are excellent. " +
+//                            "There are plenty of opportunities to engage in research and projects that are related to real-world applications. " +
+//                            "The coursework is challenging but manageable if you stay on top of your studies. " +
+//                            "The campus facilities are top-notch and there are many student organizations that you can join to enrich your experience. " +
+//                            "Overall, I highly recommend this major to anyone who is interested in this field.",
+//                    opinionId = 5,
+//                    opinionName = "John Doe"
+//                ),
+//                MajorOpinionItem(
+//                    opinionsContent = "The curriculum is very comprehensive and covers all essential aspects. " +
+//                            "You will get a strong foundation in both theory and practice. " +
+//                            "The faculty members are always willing to help and provide guidance. " +
+//                            "There are many networking events and career fairs that you can attend to meet professionals from the industry. " +
+//                            "The learning environment is very supportive and collaborative, which makes it easier to succeed. " +
+//                            "I am very happy with my decision to pursue this major.",
+//                    opinionId = 6,
+//                    opinionName = "Jane Smith"
+//                )
+//            )
+//            adapterOpinion.submitList(opinionList)
+
+            if (response.majorOpinion.isEmpty()) {
+                binding?.opinionsTextView?.isVisible = false
+            }
             adapterOpinion.submitList(response.majorOpinion)
             opinionsRecyclerView.adapter = adapterOpinion
         }
+    }
+
+     fun showOpinionDialog(studentName: String?, majorUni: String?, opinion: String?) {
+        val dialogBinding = DialogOpinionBinding.inflate(layoutInflater)
+        val changePasswordView = dialogBinding.root
+        dialogBinding.textViewMajorUni.text = majorUni
+        dialogBinding.textViewStudentOpinion.text = opinion
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(studentName)
+            .setView(changePasswordView)
+            .setPositiveButton(getString(R.string.ok), null)
+            .show()
     }
 
     override fun onDestroyView() {

@@ -133,6 +133,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:enabled="false"
+                    android:textColor="@color/black"
                     android:hint="@string/birth_date_placeholder"
                     android:inputType="date" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -357,7 +358,6 @@
                     android:indeterminateTint="?attr/colorPrimary"
                     android:indeterminateTintMode="src_atop"
                     android:visibility="gone" />
-
             </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

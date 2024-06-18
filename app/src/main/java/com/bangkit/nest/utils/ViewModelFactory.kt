@@ -18,6 +18,7 @@ import com.bangkit.nest.ui.main.assess.question.QuestionViewModel
 import com.bangkit.nest.ui.main.assess.result.ResultViewModel
 import com.bangkit.nest.ui.main.catalog.CatalogViewModel
 import com.bangkit.nest.ui.main.catalog.detail.CatalogDetailViewModel
+import com.bangkit.nest.ui.main.home.HomeViewModel
 import com.bangkit.nest.ui.main.profile.ProfileViewModel
 import com.bangkit.nest.ui.main.profile.edit.EditProfileViewModel
 import com.bangkit.nest.ui.main.task.TaskViewModel
@@ -40,6 +41,10 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(authRepository) as T
+            }
+
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(userPrefRepository, profileRepository, majorRepository) as T
             }
 
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
