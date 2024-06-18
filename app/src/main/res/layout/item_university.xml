@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recommendedMajorCard"
+    style="?attr/materialCardViewOutlinedStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    app:cardBackgroundColor="@color/white"
+    app:strokeColor="?attr/colorSecondary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <!-- Media -->
+        <ImageView
+            android:id="@+id/imageViewUniversityLogo"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/major_icon"
+            android:scaleType="fitCenter"
+            tools:srcCompat="@drawable/ic_education"
+            tools:tint="?attr/colorSecondary" />
+
+        <!-- Text -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="vertical">
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/textViewUniversityName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textAppearance="@style/TextAppearance.Heading5"
+                android:textColor="@color/black"
+                app:minTextSize="12sp"
+                app:precision="0.5"
+                tools:text="@string/university_name" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/textUniversityLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="?attr/colorSecondaryVariant"
+                app:minTextSize="12sp"
+                app:precision="0.5"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="@string/university_location" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/textViewUniversityAccreditation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                app:minTextSize="12sp"
+                app:precision="0.5"
+                android:maxLines="1"
+                tools:text="@string/university_accreditation" />
+
+            <Button
+                android:id="@+id/buttonUniversity"
+                style="@style/Widget.App.Button.Elevated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/check_university" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

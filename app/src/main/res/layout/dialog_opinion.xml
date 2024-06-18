@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="24dp"
+    android:paddingTop="8dp"
+    >
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/textViewMajorUni"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="17sp"
+        tools:text="@string/university_name"
+        />
+
+    <me.grantland.widget.AutofitTextView
+        android:layout_marginTop="8dp"
+        android:id="@+id/textViewStudentOpinion"
+        app:layout_constraintTop_toBottomOf="@id/textViewMajorUni"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/black"
+        android:maxLines="20"
+        app:minTextSize="12sp"
+        app:precision="0.5"
+        tools:text="@string/major_description" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
