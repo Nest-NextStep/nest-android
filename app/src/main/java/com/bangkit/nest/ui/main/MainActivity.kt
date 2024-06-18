@@ -23,23 +23,31 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
+    private var isSessionChecked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        val splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition {
+            !isSessionChecked
+        }
+
+        super.onCreate(savedInstanceState)
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
+                isSessionChecked = true
                 val intent = Intent(this, AuthActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
+            } else {
+                isSessionChecked = true
+                binding = ActivityMainBinding.inflate(layoutInflater)
+                setContentView(binding.root)
+                setupView()
+                setStatusBarTextColor(isDark = true)
             }
         }
 
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setupView()
-        setStatusBarTextColor(isDark = true)
     }
 
     private fun setupView() {
