@@ -73,15 +73,12 @@ class CalendarTaskFragment : Fragment() {
                         }
                     }
                     if (tasks.isEmpty()) {
-                        binding.imgNoTasks.isVisible = true
                         binding.composeView.isVisible = false
                     } else {
-                        binding.imgNoTasks.isVisible = false
                         updateTaskListForDate(SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()))
                     }
                 }
                 is Result.Error -> {
-                    binding.imgNoTasks.isVisible = true
                     binding.composeView.isVisible = false
                 }
                 else -> {}
