@@ -71,7 +71,10 @@ data class MajorOpinionItem(
 	val opinionId: Int? = null,
 
 	@field:SerializedName("opinion_name")
-	val opinionName: String? = null
+	val opinionName: String? = null,
+
+	@field:SerializedName("opinion_university")
+	val opinionUniversity: String? = null
 )
 
 data class MajorJobItem(

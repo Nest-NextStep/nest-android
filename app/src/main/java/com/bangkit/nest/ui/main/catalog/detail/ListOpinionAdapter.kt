@@ -50,14 +50,10 @@ class ListOpinionAdapter(private val fragment: CatalogDetailFragment) : ListAdap
         fun bind(opinion: MajorOpinionItem) {
             binding.textViewStudentName.text = opinion.opinionName
             binding.textViewStudentOpinion.text = opinion.opinionsContent
-
-            //TODO
-//            val majorUni = "$opinion.major - $opinion.uni"
-            val majorUni = "Sistem Informasi - Universitas Indonesia"
-            binding.textViewMajorUni.text = majorUni
+            binding.textViewMajorUni.text = opinion.opinionUniversity
 
             itemView.setOnClickListener {
-                fragment.showOpinionDialog(opinion.opinionName, majorUni, opinion.opinionsContent)
+                fragment.showOpinionDialog(opinion.opinionName, opinion.opinionUniversity, opinion.opinionsContent)
             }
         }
     }
