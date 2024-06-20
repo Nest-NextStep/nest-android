@@ -172,7 +172,8 @@ class QuestionFragment : Fragment() {
                     val bundle = Bundle().apply {
                         putString("result", resultJson)
                     }
-                    findNavController().navigate(R.id.action_questionFragment_to_resultFragment, bundle)
+                    findNavController().navigate(R.id.action_questionFragment_to_resultFragment, bundle,
+                        NavOptions.Builder().setPopUpTo(R.id.navigation_assess, true).build())
                 }
                 is Result.Error -> {
                     binding.progressBar.isVisible = false
