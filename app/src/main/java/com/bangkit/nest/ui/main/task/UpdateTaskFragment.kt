@@ -610,6 +610,7 @@ class UpdateTaskFragment : Fragment() {
                             style = subTitleFormStyle
                         )
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }
