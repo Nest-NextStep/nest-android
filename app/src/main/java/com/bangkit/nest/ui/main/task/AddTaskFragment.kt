@@ -515,13 +515,15 @@ class AddTaskFragment : Fragment() {
                             .height(56.dp)
                             .padding(horizontal = 8.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.purple)),
-                        shape = RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(8.dp),
+
                     ) {
                         Text(
                             text = "Add Task",
                             style = subTitleFormStyle
                         )
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }
