@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bangkit.nest.R
 import com.bangkit.nest.databinding.FragmentResultBinding
 import com.bangkit.nest.ui.main.MainActivity
 import com.bangkit.nest.data.remote.response.TestResultResponse
 import com.google.gson.Gson
-
 class ResultFragment : Fragment() {
 
     private var _binding: FragmentResultBinding? = null
@@ -21,7 +21,7 @@ class ResultFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentResultBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -32,7 +32,9 @@ class ResultFragment : Fragment() {
         (activity as? MainActivity)?.setBottomNavigationVisibility(false)
 
         binding.doneButton.setOnClickListener {
-            findNavController().navigate(R.id.action_resultFragment_to_navigation_assess)
+            findNavController().navigate(R.id.action_resultFragment_to_navigation_assess,
+                null,
+                NavOptions.Builder().setPopUpTo(R.id.navigation_assess, true).build())
         }
 
         val resultJson = arguments?.getString("result")

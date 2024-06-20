@@ -77,7 +77,10 @@
         android:label="@string/title_assessment_test">
         <action
             android:id="@+id/action_questionFragment_to_navigation_assess"
-            app:destination="@id/navigation_assess" />
+            app:destination="@id/navigation_assess"
+            app:popUpTo="@id/navigation_assess"
+            app:popUpToInclusive="true"/>
+
         <action
             android:id="@+id/action_questionFragment_to_resultFragment"
             app:destination="@id/resultFragment" />

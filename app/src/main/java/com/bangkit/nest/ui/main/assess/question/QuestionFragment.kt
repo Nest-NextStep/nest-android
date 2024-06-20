@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.nest.R
@@ -138,12 +139,15 @@ class QuestionFragment : Fragment() {
             .setTitle(getString(R.string.end_assessment_test))
             .setMessage(getString(R.string.end_test_message))
             .setPositiveButton(getString(R.string.end_test)) { _, _ ->
-                findNavController().navigate(R.id.action_questionFragment_to_navigation_assess)
+                findNavController().navigate(R.id.action_questionFragment_to_navigation_assess,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.navigation_assess, true).build())
             }
             .setNegativeButton(getString(R.string.cancel), null)
             .show()
         dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE)?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
     }
+
 
     private fun setupLoading() {
         binding.apply {
@@ -168,7 +172,8 @@ class QuestionFragment : Fragment() {
                     val bundle = Bundle().apply {
                         putString("result", resultJson)
                     }
-                    findNavController().navigate(R.id.action_questionFragment_to_resultFragment, bundle)
+                    findNavController().navigate(R.id.action_questionFragment_to_resultFragment, bundle,
+                        NavOptions.Builder().setPopUpTo(R.id.navigation_assess, true).build())
                 }
                 is Result.Error -> {
                     binding.progressBar.isVisible = false
