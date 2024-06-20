@@ -41,13 +41,12 @@ class MainActivity : AppCompatActivity() {
                 finish()
             } else {
                 isSessionChecked = true
-                binding = ActivityMainBinding.inflate(layoutInflater)
-                setContentView(binding.root)
-                setupView()
-                setStatusBarTextColor(isDark = true)
             }
         }
-
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupView()
+        setStatusBarTextColor(isDark = true)
     }
 
     private fun setupView() {
