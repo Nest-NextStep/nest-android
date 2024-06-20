@@ -1,5 +1,9 @@
 # Nest
-Nest is a cutting-edge mobile application designed to revolutionize educational guidance for high school and university students. By leveraging the power of AI, Nest provides personalized major recommendations based on the RIASEC assessment test, helping students make informed decisions about their academic and career paths. In addition to tailored guidance, Nest offers a comprehensive catalog of educational resources, tracks important dates, and features robust organizational tools such as customizable to-do lists and an integrated Pomodoro timer to boost productivity. With Nest, students can confidently navigate their educational journey, unlock their full potential, and prepare for a successful future.
+[![Github Release](https://github.com/Nest-NextStep/nest-android/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/Nest-NextStep/nest-android/actions/workflows/release.yml)
+
+## Repository of Nest Mobile Development
+
+<img src="nest_design.png" style="width:100%; max-width:600px;" alt="My project screenshot">
 
 ## Figma Design
 
